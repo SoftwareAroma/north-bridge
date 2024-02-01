@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { ThemeSwitcher } from "./components/theme/ThemeSwitcher";
 
 export default function Home() {
   return (
@@ -107,6 +108,7 @@ export default function Home() {
             Instantly deploy your Next.js site to a shareable URL with Vercel.
           </p>
         </a>
+          <ThemeSwitcher />
       </div>
     </main>
   );
