@@ -1,5 +1,5 @@
 import React from 'react';
-import {SelectType, countries} from "./data";
+import {countries} from "./data";
 
 const SelectCountry = () => {
     return (
@@ -10,7 +10,7 @@ const SelectCountry = () => {
                 className='bg-transparent border border-none active:border-none focus:border-none outline-none focus:outline-none active:outline-none h-10 px-2'
             >
                 {
-                    countries.map((country: SelectType, index: number) => {
+                    countries.map((country, index: number) => {
                         return (
                             <option 
                                 key={index}

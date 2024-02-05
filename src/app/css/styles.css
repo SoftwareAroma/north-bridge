@@ -3587,6 +3587,10 @@ li {
   overflow: hidden;
 }
 
+/* .shop-category-single-item:hover {
+  transform: scale(1.1);
+} */
+
 .section-title {
   color: var(--heading-color);
   text-transform: capitalize;

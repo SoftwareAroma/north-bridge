@@ -1,6 +1,6 @@
 import React from 'react';
-import SelectLanguage from '../language/SelectLanguage';
-import SelectCountry from '../language/SelectCountry';
+import SelectLanguage from '@components/language/SelectLanguage';
+import SelectCountry from '@components/language/SelectCountry';
 
 const TopBar = () => {
     return (

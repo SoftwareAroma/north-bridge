@@ -21,6 +21,8 @@
       "@/*": ["./src/*"],
       "@components": ["./src/components"],
       "@components/*": ["./src/components/*"],
+      "@widgets": ["./src/widgets"],
+      "@widgets/*": ["./src/widgets/*"],
       "@providers": ["./src/providers"],
       "@providers/*": ["./src/providers/*"],
     }

@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./css/globals.css";
-import "./css/styles.css";
 import AppProviders from "@providers/AppProviders";
 import { ThemeModeScript } from 'flowbite-react';
+import "./css/globals.css";
+import "./css/styles.css";
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +26,7 @@ export default function RootLayout({
       <head>
         <ThemeModeScript />
       </head>
-    {/* className='dark' */}
+      {/* className='dark' */}
       <body className={`${inter.className} bg-white dark:bg-black`}>
         <AppProviders>
           {children}
