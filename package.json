@@ -9,19 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@nextui-org/react": "^2.2.9",
     "@tanstack/react-query": "^5.18.0",
     "@tanstack/react-query-devtools": "^5.18.0",
-    "add": "^2.0.6",
+    "flowbite-react": "^0.7.2",
     "framer-motion": "^11.0.3",
     "next": "14.1.0",
-    "next-themes": "^0.2.1",
     "react": "^18",
     "react-dom": "^18",
     "react-fast-marquee": "^1.6.3",
-    "swiper": "^11.0.5",
-    "use-dark-mode": "^2.3.1",
-    "yarn": "^1.22.21"
+    "styled-components": "^6.1.8",
+    "swiper": "^11.0.5"
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.18.0",

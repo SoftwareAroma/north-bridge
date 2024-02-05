@@ -1,0 +1,162 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 2px;
+  background-color: #aaa;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #231f1e;
+  border-radius: 10px;
+}
+
+.opacity-20 {
+  opacity: 0.2;
+}
+
+.jetboost-list-wrapper-znmz {
+  -webkit-animation: none !important;
+  -moz-animation: none !important;
+  -o-animation: none !important;
+  animation: none !important;
+}
+
+/* Progress */
+.swiper-pagination-progressbar {
+  background-color: rgba(35, 31, 30, 0.2);
+  position: relative;
+}
+
+.swiper-pagination-progressbar .swiper-pagination-progressbar-fill {
+  background-color: #231f1e;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  transform: scale(0);
+  transform-origin: left top;
+}
+
+.swiper-container-horizontal > .swiper-pagination-progressbar,
+.swiper-container-vertical > .swiper-pagination-progressbar.swiper-pagination-progressbar-opposite {
+  /*width: 100%;
+  height: 4px;
+  left: 0;
+  top: 0;*/
+  width: calc(100vw * 1.7 / 12);
+  height: 2px;
+  right: calc(100vw * 0.75 / 12);
+  bottom: 10px;
+  border-radius: 50px;
+}
+
+.swiper-container-vertical > .swiper-pagination-progressbar,
+.swiper-container-horizontal > .swiper-pagination-progressbar.swiper-pagination-progressbar-opposite {
+  width: 2px;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+
+.swiper-pagination-white {
+  --swiper-pagination-color: #ffffff;
+}
+
+.swiper-pagination-black {
+  --swiper-pagination-color: #000000;
+}
+
+.swiper-pagination-lock {
+  display: none;
+}
+
+/* Snippet prevents all click and hover interaction with an element */
+.clickable-off {
+  pointer-events: none;
+}
+
+/* Snippet enables all click and hover interaction with an element */
+.clickable-on {
+  pointer-events: auto;
+}
+
+.cursor-off {
+  cursor: none;
+}
+
+@media only screen and (min-device-width: 1024px) and (max-device-width: 1024px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 2) {
+  .d-ipad-pro-none {
+    display: none;
+  }
+
+  .banner-stage-wrap {
+    display: none;
+  }
+
+  .category-title {
+    font-size: 18px;
+  }
+
+  .shop-category-wrap {
+    grid-column-gap: 16px;
+  }
+
+  .get-discount-content {
+    padding: 20px;
+  }
+
+  .discount-paragraph {
+    font-size: 14px;
+  }
+
+  .discount-banner-content-two {
+    padding: 90px 80px 40px;
+    text-align: left;
+  }
+
+  .footer-columns {
+    grid-column-gap: 30px;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  }
+
+  .service-help-content {
+    padding: 30px;
+  }
+
+  .topbar-left-menu {
+    margin-right: 15px;
+  }
+
+  img.copyright-menu-icon {
+    width: 14px;
+  }
+
+  .footer-menu-text {
+    font-size: 14px;
+  }
+
+  .footer-menu-link.two {
+    margin-left: 30px;
+    font-size: 14px;
+  }
+
+  .choose-brand-thumbnail-wrap {
+    margin-right: 10px;
+  }
+
+  .choose-brand-single-item {
+    padding: 15px;
+  }
+
+  .brand-title {
+    margin-bottom: 10px;
+  }
+
+  .service-help-title {
+    margin-bottom: 15px;
+  }
+}
