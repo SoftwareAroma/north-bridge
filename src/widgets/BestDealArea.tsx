@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import ProductCard from '@/widgets/ProductCard';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';

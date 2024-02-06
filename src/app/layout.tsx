@@ -8,6 +8,8 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
+import MainHeader from "@/components/header/MainHeader";
+import MainFooter from "@/components/footer/MainFooter";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,7 +31,11 @@ export default function RootLayout({
       {/* className='dark' */}
       <body className={`${inter.className} bg-white dark:bg-black`}>
         <AppProviders>
-          {children}
+          <MainHeader />
+          <main>
+            {children}
+          </main>
+          <MainFooter />
         </AppProviders>
       </body>
     </html>

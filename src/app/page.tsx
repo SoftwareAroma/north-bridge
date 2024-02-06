@@ -1,23 +1,19 @@
-
-'use client';
 import React from 'react';
-import MainHeader from '@/components/header/MainHeader';
-import { ThemeSwitcher } from '@/components';
 import BannerArea from '@/widgets/BannerArea';
 import TopCategories from '@/widgets/TopCategories';
 import BestDealArea from '@/widgets/BestDealArea';
+import ChooseByBrand from '@/widgets/ChooseByBrand';
+import DiscountArea from '@/widgets/DiscountArea';
 
 
 const Home = () => {
   return (
     <React.Fragment>
-      <MainHeader />
-      <main>
-        <BannerArea />
-        <TopCategories />
-        <BestDealArea />
-        <ThemeSwitcher />
-      </main>
+      <BannerArea />
+      <TopCategories />
+      <BestDealArea />
+      <ChooseByBrand />
+      <DiscountArea />
     </React.Fragment>
   );
 }
