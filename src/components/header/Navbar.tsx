@@ -47,7 +47,7 @@ const Navbar = () => {
                                             id="search-input"
                                             autoComplete="off"
                                             placeholder="Search Product"
-                                            // type="search"
+                                            type="search"
                                             className="search-input jetboost-list-search-input-znwz w-input"
                                         />
                                         <div className="search-loader"></div>
@@ -65,22 +65,18 @@ const Navbar = () => {
                                                 </div>
                                             </div>
                                         </button>
-                                        {/* Search Results here */}
-                                        <div id="search-results" className="search-results">
-
-                                        </div>
                                     </form>
                                 </div>
                             </nav>
                             <div className="nav-right-content">
-                                <a href="#" className="nav-right-link w-inline-block">
+                                <Link href="/auth/" className="nav-right-link w-inline-block">
                                     <div className="nav-icon">
                                         <img src="/images/user.png"
                                             loading="lazy" alt="" />
                                     </div>
                                     <div>Account</div>
-                                </a>
-                                <a href="#" className="nav-right-link mr-45 w-inline-block">
+                                </Link>
+                                <a href="/checkout/" className="nav-right-link mr-45 w-inline-block">
                                     <div className="nav-icon">
                                         <img
                                             src="/images/shopping-cart-add.png" loading="lazy"

@@ -15,6 +15,10 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
         "banner-area": "url('/images/background-bg.min.png')",
+        "background-one": "url('/background/background-1.jpg')",
+        "background-two": "url('/background/background-2.jpg')",
+        "background-three": "url('/background/background-3.jpg')",
+        "background-four": "url('/background/background-4.jpg')",
       },
     },
   },
