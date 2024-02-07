@@ -8,8 +8,11 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-import MainHeader from "@/components/header/MainHeader";
-import MainFooter from "@/components/footer/MainFooter";
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,11 +34,9 @@ export default function RootLayout({
       {/* className='dark' */}
       <body className={`${inter.className} bg-white dark:bg-black`}>
         <AppProviders>
-          <MainHeader />
           <main>
             {children}
           </main>
-          <MainFooter />
         </AppProviders>
       </body>
     </html>

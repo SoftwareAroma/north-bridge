@@ -1,9 +1,15 @@
-import React from 'react'
 
-const VendorHomePage = () => {
+import React from 'react';
+import VendorNavbar from './components/VendorNavbar';
+import ProductsTable from './components/ProductsTable';
+
+const VendorHome = () => {
     return (
-        <React.Fragment>VendorHomePage</React.Fragment>
-    )
+        <React.Fragment>
+            <VendorNavbar />
+            <ProductsTable />
+        </React.Fragment>
+    );
 }
 
-export default VendorHomePage;
+export default VendorHome;

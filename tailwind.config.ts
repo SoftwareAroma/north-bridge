@@ -11,9 +11,6 @@ const config: Config = {
   theme: {
     extend: {
       backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
         "banner-area": "url('/images/background-bg.min.png')",
         "background-one": "url('/background/background-1.jpg')",
         "background-two": "url('/background/background-2.jpg')",
@@ -25,6 +22,7 @@ const config: Config = {
   darkMode: "class",
   plugins: [
     require("flowbite/plugin"),
+    require('daisyui'),
   ],
 };
 export default config;

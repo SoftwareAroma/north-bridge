@@ -30,7 +30,7 @@ const Navbar = () => {
                                                 </div>
                                             </div>
                                             <nav className="navmenu-dropdown w-dropdown-list">
-                                                {/* category list here */}
+                                                {/* category list */}
                                             </nav>
                                         </div>
                                     </li>
@@ -42,7 +42,7 @@ const Navbar = () => {
                                     <div className="zero-widht">
                                         <div className="card-star"></div>
                                     </div>
-                                    <form action="/search" className="search-form w-form">
+                                    <form action="/products/" className="search-form w-form">
                                         <input
                                             id="search-input"
                                             autoComplete="off"

@@ -2,13 +2,26 @@ import Link from 'next/link';
 import React from 'react';
 import WishListIcon from './WishListIcon';
 import RatingStarIcon from './RatingStart';
+import { Rating } from 'flowbite-react';
 
 const ProductCard = (props: any) => {
-    const { image, name, price, rating, currency, description, isExt } = props;
+    const {
+        image,
+        name,
+        price,
+        rating,
+        currency,
+        description,
+        isExt,
+        isCursorOff = true,
+        showShaddow = false
+    } = props;
     return (
         <React.Fragment>
-            <div className="product-single-item swiper-slide">
-                <div className="product-thumbnail-wrap cursor-off">
+            <div
+                className={`product-single-item swiper-slide bg-white dark:bg-gray-950 ${showShaddow ? "shadow-md" : ""}`}
+            >
+                <div className={`product-thumbnail-wrap ${isCursorOff ? 'cursor-off' : ''}`}>
                     <img
                         src={image}
                         loading="lazy"
@@ -19,7 +32,7 @@ const ProductCard = (props: any) => {
                         <WishListIcon />
                     </div>
                 </div>
-                <div className="product-content">
+                <div className="product-content px-2 py-1">
                     <div className="product-title-wrap">
                         <h3 className="product-title">{name}</h3>
                         <div className="product-price">
@@ -31,11 +44,13 @@ const ProductCard = (props: any) => {
                     <div className="product-color">{description}</div>
                     <div className="product-rating mb-15">
                         <div className="star-wrap">
-                            <RatingStarIcon />
-                            <RatingStarIcon />
-                            <RatingStarIcon />
-                            <RatingStarIcon />
-                            <RatingStarIcon />
+                            <Rating>
+                                <RatingStarIcon />
+                                <RatingStarIcon />
+                                <RatingStarIcon />
+                                <RatingStarIcon />
+                                <RatingStarIcon filled={false} />
+                            </Rating>
                         </div>
                         <div className="total-rating">({rating})</div>
                     </div>

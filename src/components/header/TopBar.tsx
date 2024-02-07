@@ -1,6 +1,7 @@
 import React from 'react';
 import SelectLanguage from '@components/language/SelectLanguage';
 import SelectCountry from '@components/language/SelectCountry';
+import Link from 'next/link';
 
 const TopBar = () => {
     return (
@@ -13,9 +14,14 @@ const TopBar = () => {
                             <div className="contact-number">+001234567890</div>
                         </div>
                         <div id="button" className="topbar-left-menu">
-                        <div className="text-block-6">
-                            Get 50% Off on Selected Items &nbsp; &nbsp;| &nbsp; &nbsp; &nbsp;Shop Now
-                        </div>
+                            <div className="text-block-6">
+                                Get 50% Off on Selected Items &nbsp; &nbsp;| &nbsp; &nbsp; &nbsp;
+                                <span>
+                                    <Link href='/products/' className='no-underline hover:underline'>
+                                        Shop Now
+                                    </Link>
+                                </span>
+                            </div>
                         </div>
                         <div className="flex flex-row justify-center items-center space-x-2">
                             <div className="">

@@ -5,18 +5,14 @@ import ProductCard from '@/widgets/ProductCard';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-const BestDealArea = () => {
+const MostSellingProductArea = () => {
     return (
         <React.Fragment>
-            <section className="best-deal-for-you-area">
+            <section className="most-selling-product-area">
                 <div className="container">
                     <div className="section-title-wrap">
-                        <h3
-                            className="section-title mb-40">
-                            Todays Best Deals for you!
-                        </h3>
+                        <h3 className="section-title mb-40">Most Selling Products</h3>
                     </div>
-
                     <Swiper
                         modules={[Navigation, Pagination, Scrollbar, A11y]}
                         spaceBetween={80}
@@ -29,20 +25,9 @@ const BestDealArea = () => {
                     >
                         <SwiperSlide>
                             <ProductCard
-                                image="/images/homepad-mini-min.png"
-                                name="HomePod mini"
-                                price="239"
-                                description="Table with air purifier, stained veneer/black"
-                                rating="121"
-                                currency="GH¢"
-                                isExt={true}
-                            />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <ProductCard
-                                image="/images/instax mini 9-min.png"
-                                name="Instax Mini 9"
-                                price="99"
+                                image="/images/instax mini 11-min.png"
+                                name="Instax Mini 11"
+                                price="89"
                                 description="Selfie mode and selfie mirror, Macro mode"
                                 rating="121"
                                 currency="GH¢"
@@ -51,10 +36,10 @@ const BestDealArea = () => {
                         </SwiperSlide>
                         <SwiperSlide>
                             <ProductCard
-                                image="/images/base camp duffel 02-min.png"
-                                name="Base Camp Duffel M"
-                                price="159"
-                                description="Table with air purifier, stained veneer/black"
+                                image="/images/watch-min.png"
+                                name="Instax Mini 11"
+                                price="89"
+                                description="Selfie mode and selfie mirror, Macro mode"
                                 rating="121"
                                 currency="GH¢"
                                 isExt={true}
@@ -62,11 +47,33 @@ const BestDealArea = () => {
                         </SwiperSlide>
                         <SwiperSlide>
                             <ProductCard
-                                image="/images/Tote Medium-min.png"
-                                name="Tot e Medium"
-                                price="239"
-                                description="Canvas, full grain leather"
-                                rating="239"
+                                image="/images/adidas sneakers-min.png"
+                                name="Instax Mini 11"
+                                price="89"
+                                description="Selfie mode and selfie mirror, Macro mode"
+                                rating="121"
+                                currency="GH¢"
+                                isExt={true}
+                            />
+                        </SwiperSlide>
+                        <SwiperSlide>
+                            <ProductCard
+                                image="/images/pendleton water bottle-min.png"
+                                name="Instax Mini 11"
+                                price="89"
+                                description="Selfie mode and selfie mirror, Macro mode"
+                                rating="121"
+                                currency="GH¢"
+                                isExt={true}
+                            />
+                        </SwiperSlide>
+                        <SwiperSlide>
+                            <ProductCard
+                                image="/images/cabin-min.png"
+                                name="Instax Mini 11"
+                                price="89"
+                                description="Selfie mode and selfie mirror, Macro mode"
+                                rating="121"
                                 currency="GH¢"
                                 isExt={true}
                             />
@@ -75,7 +82,7 @@ const BestDealArea = () => {
                 </div>
             </section>
         </React.Fragment>
-    )
+    );
 }
 
-export default BestDealArea;
+export default MostSellingProductArea;

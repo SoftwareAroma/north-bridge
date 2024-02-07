@@ -1,14 +1,13 @@
+'use client';
+
+import { Rating } from 'flowbite-react';
 import React from 'react';
 
-const RatingStarIcon = () => {
+const RatingStarIcon = (props: any) => {
+    const { filled = true } = props;
     return (
         <React.Fragment>
-            <img
-                src="/images/Star.svg"
-                loading="lazy"
-                alt=""
-                className="product-star"
-            />
+            <Rating.Star filled={filled} />
         </React.Fragment>
     )
 }
