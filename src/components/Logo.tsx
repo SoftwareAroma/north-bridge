@@ -4,10 +4,8 @@ import Link from 'next/link';
 const Logo = () => {
     return (
         <React.Fragment>
-            <Link href="/" className='no-underline '>
-                <p className="font-bold tracking-wider text-green-800 uppercase text-md">
-                    North Briddge
-                </p>
+            <Link href="/" className='no-underline font-bold tracking-wider text-green-800 uppercase text-md'>
+                North Briddge
             </Link>
         </React.Fragment>
     )

@@ -1,11 +1,14 @@
 'use client';
 
+import MainFooter from '@/components/footer/MainFooter';
+import MainHeader from '@/components/header/MainHeader';
 import ProductCard from '@/widgets/ProductCard';
 import React from 'react';
 
 const ProductsPage = () => {
     return (
         <React.Fragment>
+            <MainHeader />
             <div className="flex flex-col justify-center items-center h-full px-4">
                 <div className='w-full px-12 items-center align-center-both py-4'>
                     <input
@@ -198,6 +201,7 @@ const ProductsPage = () => {
                     </main>
                 </div>
             </div>
+            <MainFooter />
         </React.Fragment>
     )
 }
