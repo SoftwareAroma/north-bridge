@@ -5,10 +5,10 @@ const Logo = () => {
     return (
         <React.Fragment>
             <Link href="/" className='no-underline font-bold tracking-wider text-green-800 uppercase text-md'>
-                North Briddge
+                North Bridge
             </Link>
         </React.Fragment>
-    )
+    );
 }
 
 export default Logo;

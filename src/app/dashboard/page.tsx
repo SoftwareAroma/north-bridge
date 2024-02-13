@@ -1,11 +1,24 @@
-import React from 'react'
+'use client';
 
-const DashBoard = () => {
+import * as React from 'react';
+import { BarChart } from '@mui/x-charts/BarChart';
+
+const Dashboard = () => {
     return (
-        <React.Fragment>
-            <h1>DashBoard</h1>
-        </React.Fragment>
+        <div className="h-screen w-full py-4 px-8">
+            <BarChart
+                series={[
+                    { data: [35, 44, 24, 34] },
+                    { data: [51, 6, 49, 30] },
+                    { data: [15, 25, 30, 50] },
+                    { data: [60, 50, 15, 25] },
+                ]}
+                xAxis={[{ data: ['Q1', 'Q2', 'Q3', 'Q4'], scaleType: 'band' }]}
+                margin={{ top: 10, bottom: 30, left: 40, right: 10 }}
+                className='h-screen w-full'
+            />
+        </div>
     );
 }
 
-export default DashBoard;
+export default Dashboard;

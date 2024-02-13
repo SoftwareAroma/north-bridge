@@ -1,21 +1,20 @@
 'use client';
+
 import React, { useEffect, useState } from 'react';
-import ProductsTable from './components/ProductsTable';
+import StoresTable from '../components/StoresTable';
 import { useQuery } from '@tanstack/react-query';
+import { setVendor } from '@/providers/reducers/VendorReducer';
 import axios from 'axios';
 import { vendorProfile } from '@/providers/utils';
-import LoadingSkeleton from './components/LoadingSkeleton';
-import { useRouter } from 'next/navigation';
-import UnAuthorizedView from './components/UnAuthorizedView';
-import { useDispatch, useSelector } from 'react-redux';
-import { setVendor } from '@/providers/reducers/VendorReducer';
+import { useDispatch } from 'react-redux';
+import LoadingSkeleton from '../components/LoadingSkeleton';
+import UnAuthorizedView from '../components/UnAuthorizedView';
 
-const VendorHome = () => {
-    const router = useRouter();
-    const vendor = useSelector((state: any) => state.vendor.vendor);
+const StoresPage = () => {
 
-    const dispatch = useDispatch();
     const [isAuthorized, setIsAuthorized] = useState(false);
+    const dispatch = useDispatch();
+
     const getVendorProfile = async () => {
         return await axios({
             url: vendorProfile,
@@ -50,14 +49,13 @@ const VendorHome = () => {
         }
     }, [data]);
 
-
     return (
         <React.Fragment>
             {isLoading && <LoadingSkeleton />}
-            {(isAuthorized && data) && <ProductsTable />}
+            {(isAuthorized && data) && <StoresTable />}
             {(!isAuthorized && !isLoading) && <UnAuthorizedView />}
         </React.Fragment>
     );
 }
 
-export default VendorHome;
+export default StoresPage;

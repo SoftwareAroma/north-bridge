@@ -2,9 +2,13 @@
 'use client';
 
 import { Sidebar } from 'flowbite-react';
-import { HiArrowSmRight, HiChartPie, HiInbox, HiShoppingBag, HiTable, HiUser } from 'react-icons/hi';
+import { HiArrowSmRight, HiShoppingBag, HiTable, HiUser } from 'react-icons/hi';
+import { useSelector } from 'react-redux';
 
 const SideBar = () => {
+
+    const vendor = useSelector((state: any) => state.vendor.vendor);
+
     return (
         <Sidebar aria-label="Sidebar with multi-level dropdown example" className='h-screen rounded-none'>
             <Sidebar.Items className='h-full'>
@@ -22,12 +26,14 @@ const SideBar = () => {
                     <Sidebar.Item href="/vendor/" icon={HiShoppingBag} className='no-underline'>
                         Products
                     </Sidebar.Item>
-                    <Sidebar.Item href="/vendor/" icon={HiTable} className='no-underline'>
+                    <Sidebar.Item href="/vendor/stores/" icon={HiTable} className='no-underline'>
                         Stores
                     </Sidebar.Item>
-                    <Sidebar.Item href="/vendor/auth/" icon={HiArrowSmRight} className='no-underline'>
-                        Sign In
-                    </Sidebar.Item>
+                    {
+                        !vendor && <Sidebar.Item href="/vendor/auth/" icon={HiArrowSmRight} className='no-underline'>
+                            Sign In
+                        </Sidebar.Item>
+                    }
                 </Sidebar.ItemGroup>
             </Sidebar.Items>
         </Sidebar>

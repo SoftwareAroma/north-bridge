@@ -10,6 +10,9 @@ import {
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Flowbite } from 'flowbite-react';
 import theme from '@/components/theme';
+import store from './store';
+import { Provider } from 'react-redux';
+
 
 
 /**
@@ -22,17 +25,19 @@ const AppProviders = ({ children }: { children: React.ReactNode }) => {
     return (
         <QueryClientProvider client={queryClient}>
             <AppRouterCacheProvider options={{ enableCssLayer: true }}>
-                <ThemeProvider theme={theme}>
-                    {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-                    <CssBaseline />
-                    <Flowbite>
-                        {children}
-                    </Flowbite>
-                </ThemeProvider>
+                <Provider store={store}>
+                    <ThemeProvider theme={theme}>
+                        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+                        <CssBaseline />
+                        <Flowbite>
+                            {children}
+                        </Flowbite>
+                    </ThemeProvider>
+                </Provider>
             </AppRouterCacheProvider>
             {/* React Query Dev Tools */}
             <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>
+        </QueryClientProvider >
     );
 }
 

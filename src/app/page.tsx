@@ -16,6 +16,7 @@ import MainFooter from '@/components/footer/MainFooter';
 const Home = () => {
   return (
     <React.Fragment>
+      {/* header */}
       <MainHeader />
 
       <BannerArea />
@@ -29,6 +30,7 @@ const Home = () => {
       <BestSellingStore />
       <ServiceHelpArea />
 
+      {/* footer */}
       <MainFooter />
     </React.Fragment>
   );

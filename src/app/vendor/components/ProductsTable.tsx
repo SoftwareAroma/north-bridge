@@ -1,81 +1,75 @@
-
-import { Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from 'flowbite-react';
+'use client';
+import {
+    Table,
+    TableBody,
+    TableHead,
+    TableHeadCell,
+} from 'flowbite-react';
+import TableItem from './TableItem';
+import { useSelector } from 'react-redux';
+import { deleteProduct } from '@/providers/utils';
+import axios from 'axios';
 
 const ProductsTable = () => {
+
+    const vendor = useSelector((state: any) => state.vendor.vendor);
+    const products: any = [];
+
+    // map through the stores and add the products to the products array
+    vendor?.stores.map((store: any) => {
+        store.products.map((product: any) => {
+            products.push(product);
+        });
+    });
+
+    console.log(products)
+
+    const _productDeletion = async (id: string) => {
+        const response = await axios({
+            url: deleteProduct(id),
+            method: "DELETE",
+            withCredentials: true,
+            headers: {
+                "Accept": "application/json",
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+            },
+        });
+        if (response.data.success === true) {
+            console.log(response.data);
+            // refresh the page
+            window.location.reload();
+        }
+    }
+
     return (
         <div className="overflow-x-auto rounded-none mt-4 bg-white dark:bg-gray-950">
             <Table striped>
                 <TableHead>
                     <TableHeadCell>Product name</TableHeadCell>
-                    <TableHeadCell>Color</TableHeadCell>
                     <TableHeadCell>Category</TableHeadCell>
                     <TableHeadCell>Price</TableHeadCell>
                     <TableHeadCell>
-                        <span className="sr-only">Edit</span>
+                        <span className="sr-only">Action</span>
                     </TableHeadCell>
                 </TableHead>
                 <TableBody className="divide-y">
-                    <TableRow className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                        <TableCell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                            {'Apple MacBook Pro 17"'}
-                        </TableCell>
-                        <TableCell>Sliver</TableCell>
-                        <TableCell>Laptop</TableCell>
-                        <TableCell>$2999</TableCell>
-                        <TableCell>
-                            <a href="#" className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
-                                Edit
-                            </a>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                        <TableCell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                            Microsoft Surface Pro
-                        </TableCell>
-                        <TableCell>White</TableCell>
-                        <TableCell>Laptop PC</TableCell>
-                        <TableCell>$1999</TableCell>
-                        <TableCell>
-                            <a href="#" className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
-                                Edit
-                            </a>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                        <TableCell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">Magic Mouse 2</TableCell>
-                        <TableCell>Black</TableCell>
-                        <TableCell>Accessories</TableCell>
-                        <TableCell>$99</TableCell>
-                        <TableCell>
-                            <a href="#" className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
-                                Edit
-                            </a>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                        <TableCell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                            Google Pixel Phone
-                        </TableCell>
-                        <TableCell>Gray</TableCell>
-                        <TableCell>Phone</TableCell>
-                        <TableCell>$799</TableCell>
-                        <TableCell>
-                            <a href="#" className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
-                                Edit
-                            </a>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                        <TableCell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">Apple Watch 5</TableCell>
-                        <TableCell>Red</TableCell>
-                        <TableCell>Wearables</TableCell>
-                        <TableCell>$999</TableCell>
-                        <TableCell>
-                            <a href="#" className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
-                                Edit
-                            </a>
-                        </TableCell>
-                    </TableRow>
+                    {
+                        products.map((product: any, index: number) => {
+                            return (
+                                <TableItem
+                                    key={index}
+                                    name={product.name}
+                                    category={product.category}
+                                    price={product.price.amount}
+                                    currency={product.price.currency}
+                                    onDelete={_productDeletion.bind(this, product.id)}
+                                    onEdit={() => { }}
+                                    onClick={() => { }}
+                                />
+                            );
+                        })
+                    }
                 </TableBody>
             </Table>
         </div>
