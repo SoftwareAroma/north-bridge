@@ -6,7 +6,7 @@ const LoginPage = () => {
         <React.Fragment>
             <div className="w-full h-screen flex flex-col justify-center items-center bg-background-two bg-cover py-32 px-12">
                 <div className="w-full max-w-sm p-4 bg-white shadow-md border border-gray-200 rounded-lg sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
-                    <form className="space-y-6" action="#">
+                    <form className="space-y-6">
                         <h5 className="text-xl font-medium text-gray-900 dark:text-white uppercase">Sign In</h5>
                         <div>
                             <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>

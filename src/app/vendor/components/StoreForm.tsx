@@ -4,7 +4,7 @@ import { Alert, Button, Label, TextInput, Textarea } from 'flowbite-react';
 import React, { useState } from 'react';
 import { HiInformationCircle } from 'react-icons/hi';
 import axios, { AxiosResponse } from 'axios';
-import { createStore, updateStore } from '@/providers/utils';
+import { storeCreateApi, updateStore } from '@shared';
 import { useSelector } from 'react-redux';
 
 const initialValues = {
@@ -51,38 +51,38 @@ const StoreForm = (props: StoreFormProps) => {
     }
 
     const updateExistingStore = async (data: IStore) => {
-        const name = data.name;
-        const about = data.about;
-        const address = data.address;
-        const location = data.location;
-        const vendorId = data.vendorId;
-        const storeCategories = data.storeCategories;
-        // remove the first zero of the phone number and replace it with +233
-        const newPhone = data.phone.replace(/^0/, '+233');
-        const phone = newPhone;
-
-        const _data = {
-            name,
-            about,
-            phone,
-            address,
-            location,
-            vendorId,
-            storeCategories,
-        }
-
-        // console.log("data >>>", _data);
-        return await axios({
-            url: updateStore(store.id),
-            method: "PATCH",
-            withCredentials: true,
-            headers: {
-                "Accept": "application/json",
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-            },
-            data: _data,
-        });
+        // const name = data.name;
+        // const about = data.about;
+        // const address = data.address;
+        // const location = data.location;
+        // const vendorId = data.vendorId;
+        // const storeCategories = data.storeCategories;
+        // // remove the first zero of the phone number and replace it with +233
+        // const newPhone = data.phone.replace(/^0/, '+233');
+        // const phone = newPhone;
+        //
+        // const _data = {
+        //     name,
+        //     about,
+        //     phone,
+        //     address,
+        //     location,
+        //     vendorId,
+        //     storeCategories,
+        // }
+        //
+        // // console.log("data >>>", _data);
+        // return await axios({
+        //     url: updateStore(store.id),
+        //     method: "PATCH",
+        //     withCredentials: true,
+        //     headers: {
+        //         "Accept": "application/json",
+        //         'Content-Type': 'application/json',
+        //         'Access-Control-Allow-Origin': '*',
+        //     },
+        //     data: _data,
+        // });
     };
 
     const createNewStore = async (data: IStore) => {
@@ -108,7 +108,7 @@ const StoreForm = (props: StoreFormProps) => {
 
         // console.log("data >>>", _data);
         return await axios({
-            url: createStore,
+            url: storeCreateApi,
             method: "POST",
             withCredentials: true,
             headers: {
@@ -131,22 +131,22 @@ const StoreForm = (props: StoreFormProps) => {
             ...formValues,
             vendorId: vendor.id,
         };
-        const response: AxiosResponse<any, any> = isEdditing ? await updateExistingStore(_data) : await createNewStore(_data);
-        // console.log("response >>>", response);
-        if (response.data.success === true) {
-            setInfo(response.data.message);
-            setFormValues(initialValues);
-            if (isEdditing) {
-                closeModal && closeModal();
-            }
-        } else {
-            // if message is an array, join the array seperated by a comma
-            if (Array.isArray(response.data.message)) {
-                setError(response.data.message.join(', '));
-            } else {
-                setError(response.data.message);
-            }
-        }
+        // const response: AxiosResponse<any, any> = isEdditing ? await updateExistingStore(_data) : await createNewStore(_data);
+        // // console.log("response >>>", response);
+        // if (response.data.success === true) {
+        //     setInfo(response.data.message);
+        //     setFormValues(initialValues);
+        //     if (isEdditing) {
+        //         closeModal && closeModal();
+        //     }
+        // } else {
+        //     // if message is an array, join the array seperated by a comma
+        //     if (Array.isArray(response.data.message)) {
+        //         setError(response.data.message.join(', '));
+        //     } else {
+        //         setError(response.data.message);
+        //     }
+        // }
     };
 
     return (

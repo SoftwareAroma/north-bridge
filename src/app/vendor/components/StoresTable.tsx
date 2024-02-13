@@ -9,7 +9,7 @@ import {
 import { useSelector } from 'react-redux';
 import StoreTableItem from './StoreTableItem';
 import axios from 'axios';
-import { deleteStore } from '@/providers/utils';
+import { deleteStore } from '@shared';
 import StoreForm from './StoreForm';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -23,21 +23,21 @@ const StoresTable = () => {
     // console.log(stores);
 
     const _storeDeletion = async (id: string) => {
-        const response = await axios({
-            url: deleteStore(id),
-            method: "DELETE",
-            withCredentials: true,
-            headers: {
-                "Accept": "application/json",
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-            },
-        });
-        if (response.data.success === true) {
-            console.log(response?.data);
-            // refresh the page
-            window.location.reload();
-        }
+        // const response = await axios({
+        //     url: deleteStore(id),
+        //     method: "DELETE",
+        //     withCredentials: true,
+        //     headers: {
+        //         "Accept": "application/json",
+        //         'Content-Type': 'application/json',
+        //         'Access-Control-Allow-Origin': '*',
+        //     },
+        // });
+        // if (response.data.success === true) {
+        //     console.log(response?.data);
+        //     // refresh the page
+        //     window.location.reload();
+        // }
     }
 
     return (

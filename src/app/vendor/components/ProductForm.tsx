@@ -1,5 +1,5 @@
 'use client';
-import { createProduct } from '@/providers/utils';
+import { productCreateApi } from '@shared';
 import axios from 'axios';
 import { Alert, Button, Label, TextInput, Textarea } from 'flowbite-react';
 import { useState } from 'react';
@@ -60,7 +60,7 @@ const ProductForm = (props: ProductFormProps) => {
         };
 
         return axios({
-            url: createProduct,
+            url: productCreateApi,
             method: 'POST',
             data: _data,
             headers: {

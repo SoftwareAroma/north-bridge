@@ -1,9 +1,8 @@
 'use client';
-
-import MainFooter from '@/components/footer/MainFooter';
-import MainHeader from '@/components/header/MainHeader';
-import ProductCard from '@/widgets/ProductCard';
 import React from 'react';
+import ProductCard from "@shared/widgets/ProductCard";
+import MainFooter from "@shared/components/footer/MainFooter";
+import MainHeader from "@shared/components/header/MainHeader";
 
 const ProductsPage = () => {
     return (
@@ -107,7 +106,7 @@ const ProductsPage = () => {
                             rating="121"
                             currency="GH¢"
                             isExt={true}
-                            showShaddow={true}
+                            showShadow={true}
                             isCursorOff={false}
                         />
                         <ProductCard
@@ -118,7 +117,7 @@ const ProductsPage = () => {
                             rating="121"
                             currency="GH¢"
                             isExt={true}
-                            showShaddow={true}
+                            showShadow={true}
                             isCursorOff={false}
                         />
                         <ProductCard
@@ -129,7 +128,7 @@ const ProductsPage = () => {
                             rating="121"
                             currency="GH¢"
                             isExt={true}
-                            showShaddow={true}
+                            showShadow={true}
                             isCursorOff={false}
                         />
                         <ProductCard
@@ -140,7 +139,7 @@ const ProductsPage = () => {
                             rating="121"
                             currency="GH¢"
                             isExt={true}
-                            showShaddow={true}
+                            showShadow={true}
                             isCursorOff={false}
                         />
                         <ProductCard
@@ -151,7 +150,7 @@ const ProductsPage = () => {
                             rating="121"
                             currency="GH¢"
                             isExt={true}
-                            showShaddow={true}
+                            showShadow={true}
                             isCursorOff={false}
                         />
                         <ProductCard
@@ -162,7 +161,7 @@ const ProductsPage = () => {
                             rating="121"
                             currency="GH¢"
                             isExt={true}
-                            showShaddow={true}
+                            showShadow={true}
                             isCursorOff={false}
                         />
                         <ProductCard
@@ -173,7 +172,7 @@ const ProductsPage = () => {
                             rating="121"
                             currency="GH¢"
                             isExt={true}
-                            showShaddow={true}
+                            showShadow={true}
                             isCursorOff={false}
                         />
                         <ProductCard
@@ -184,7 +183,7 @@ const ProductsPage = () => {
                             rating="121"
                             currency="GH¢"
                             isExt={true}
-                            showShaddow={true}
+                            showShadow={true}
                             isCursorOff={false}
                         />
                         <ProductCard
@@ -195,7 +194,7 @@ const ProductsPage = () => {
                             rating="121"
                             currency="GH¢"
                             isExt={true}
-                            showShaddow={true}
+                            showShadow={true}
                             isCursorOff={false}
                         />
                     </main>

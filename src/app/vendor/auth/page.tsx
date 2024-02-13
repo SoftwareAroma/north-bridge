@@ -2,14 +2,14 @@
 
 import Link from 'next/link';
 import React from 'react';
-import { vendorLogin } from '@/providers/utils';
-import { Alert, TextInput } from 'flowbite-react';
-import { HiEye, HiEyeOff, HiInformationCircle, HiLockOpen, HiMail } from 'react-icons/hi';
+import { Alert } from 'flowbite-react';
+import { HiInformationCircle} from 'react-icons/hi';
 import { useRouter } from 'next/navigation';
-import axios, { AxiosResponse } from 'axios';
-import { useMutation } from '@tanstack/react-query';
+import { AxiosResponse } from 'axios';
+import {ILoginFormValues, loginVendor} from "@shared";
 
-const defaltValues = {
+
+const defaultValues: ILoginFormValues = {
     'email': '',
     'password': '',
     'rememberMe': 'no',
@@ -17,41 +17,23 @@ const defaltValues = {
 }
 
 const LoginPage = () => {
-    const [formValues, setFormValues] = React.useState(defaltValues);
+    const [formValues, setFormValues] = React.useState(defaultValues);
     const [error, setError] = React.useState('');
     const [showPassword, setShowPassword] = React.useState(false);
     const router = useRouter();
 
-    const handleFormChange = (e: any) => {
+    const handleFormChange = (e: any): void => {
         // set error to empty
         setError('');
         const { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
     }
 
-    const loginVendor = async (loginCreds: { email: string, password: string }) => {
-        const email = loginCreds.email;
-        const password = loginCreds.password;
-        return await axios({
-            url: vendorLogin,
-            method: "POST",
-            withCredentials: true,
-            headers: {
-                "Accept": "application/json",
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-            },
-            data: JSON.stringify({
-                email,
-                password,
-            }),
-        });
-    }
 
-    const submitForm = async (e: any) => {
+    const submitForm = async (e: any): Promise<void> => {
         e.preventDefault();
-        const email = formValues.email;
-        const password = formValues.password;
+        const email: string = formValues.email;
+        const password: string = formValues.password;
 
         // if email and password are empty, return
         if (!email.includes('@') || !email.includes('.com')) {
@@ -64,7 +46,7 @@ const LoginPage = () => {
             return;
         }
 
-        const data = {
+        const data: {email:string, password:string} = {
             email,
             password
         };
@@ -132,8 +114,8 @@ const LoginPage = () => {
                                     type="checkbox"
                                     value={formValues.showPassword}
                                     onChange={
-                                        () => {
-                                            handleFormChange
+                                        (e: any) => {
+                                            handleFormChange(e);
                                             setShowPassword(!showPassword);
                                         }
                                     }

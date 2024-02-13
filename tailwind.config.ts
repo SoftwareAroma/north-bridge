@@ -21,6 +21,7 @@ const config: Config = {
   },
   darkMode: "class",
   plugins: [
+    require('@tailwindcss/forms'),
     require("flowbite/plugin"),
     require('daisyui'),
   ],

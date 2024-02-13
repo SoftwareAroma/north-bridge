@@ -7,8 +7,6 @@ import {
 } from 'flowbite-react';
 import TableItem from './TableItem';
 import { useSelector } from 'react-redux';
-import { deleteProduct } from '@/providers/utils';
-import axios from 'axios';
 
 const ProductsTable = () => {
 
@@ -25,21 +23,21 @@ const ProductsTable = () => {
     console.log(products)
 
     const _productDeletion = async (id: string) => {
-        const response = await axios({
-            url: deleteProduct(id),
-            method: "DELETE",
-            withCredentials: true,
-            headers: {
-                "Accept": "application/json",
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-            },
-        });
-        if (response.data.success === true) {
-            console.log(response.data);
-            // refresh the page
-            window.location.reload();
-        }
+        // const response = await axios({
+        //     url: deleteProduct(id),
+        //     method: "DELETE",
+        //     withCredentials: true,
+        //     headers: {
+        //         "Accept": "application/json",
+        //         'Content-Type': 'application/json',
+        //         'Access-Control-Allow-Origin': '*',
+        //     },
+        // });
+        // if (response.data.success === true) {
+        //     console.log(response.data);
+        //     // refresh the page
+        //     window.location.reload();
+        // }
     }
 
     return (

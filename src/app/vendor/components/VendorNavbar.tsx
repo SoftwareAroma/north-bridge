@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { Button, Modal } from 'flowbite-react';
 import axios from 'axios';
 import {
@@ -13,12 +13,11 @@ import {
     NavbarBrand,
     NavbarToggle,
 } from 'flowbite-react';
-import ProductForm from './ProductForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
-import { vendorLogout } from '@/providers/utils';
-import { setVendor } from '@/providers/reducers/VendorReducer';
 import StoreForm from './StoreForm';
+import {useQuery} from "@tanstack/react-query";
+import {getVendorProfile, setVendor, TQuery, vendorLogoutApi} from '@shared';
 
 const VendorNavbar = () => {
     const router = useRouter();
@@ -28,11 +27,24 @@ const VendorNavbar = () => {
     const vendor = useSelector((state: any) => state.vendor.vendor);
     const dispatch = useDispatch();
 
+    // Queries
+    const { data }: TQuery = useQuery({
+        queryKey: ['vendorProfile'],
+        queryFn: getVendorProfile,
+        enabled: true,
+    });
+
+    useEffect((): void => {
+        if (data) {
+            dispatch(setVendor(data?.data.data.vendor));
+        }
+    },[data]);
+
     // console.log(vendor);
 
     const logout = async () => {
         const response = await axios({
-            url: vendorLogout,
+            url: vendorLogoutApi,
             method: "GET",
             withCredentials: true,
             headers: {

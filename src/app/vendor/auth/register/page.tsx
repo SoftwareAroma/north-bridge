@@ -3,12 +3,12 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react';
-import axios, { AxiosResponse } from 'axios';
-import { vendorRegister } from '@/providers/utils';
+import { AxiosResponse } from 'axios';
 import { Alert } from 'flowbite-react';
 import { HiInformationCircle } from 'react-icons/hi';
+import {IVendorRegisterData, IVendorRegisterFormValues, registerVendor} from "@shared";
 
-const defaltValues = {
+const defaultValues: IVendorRegisterFormValues = {
     'email': '',
     'password': '',
     'userName': '',
@@ -19,69 +19,30 @@ const defaltValues = {
     'showPassword': 'no',
 }
 
-type RegisterProp = {
-    email: string,
-    password: string,
-    userName: string,
-    firstName: string,
-    lastName: string,
-    otherName?: string,
-    phone: string,
-}
 
-const RegissterPage = () => {
+const RegisterPage = () => {
 
-    const [formValues, setFormValues] = React.useState(defaltValues);
+    const [formValues, setFormValues] = React.useState(defaultValues);
     const [error, setError] = React.useState('');
     const [showPassword, setShowPassword] = React.useState(false);
     const router = useRouter();
 
-    const handleFormChange = (e: any) => {
+    const handleFormChange = (e: any): void => {
         // set error to empty
         setError('');
         const { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
     }
 
-    const registerVendor = async (loginCreds: RegisterProp) => {
-        const email = loginCreds.email;
-        const password = loginCreds.password;
-        const userName = loginCreds.userName;
-        const firstName = loginCreds.firstName;
-        const lastName = loginCreds.lastName;
-        const otherName = loginCreds.otherName;
-        const phone = loginCreds.phone;
-        const _data = {
-            "email": email,
-            "password": password,
-            "userName": userName,
-            "firstName": firstName,
-            "lastName": lastName,
-            "otherName": otherName,
-            "phone": phone,
-        }
-        return await axios({
-            url: vendorRegister,
-            method: "POST",
-            withCredentials: true,
-            headers: {
-                "Accept": "application/json",
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-            },
-            data: JSON.stringify(_data),
-        });
-    }
-
-    const submitForm = async (e: any) => {
+    const submitForm = async (e: any): Promise<void> => {
         e.preventDefault();
-        const email = formValues.email;
-        const password = formValues.password;
-        const userName = formValues.userName;
-        const firstName = formValues.firstName;
-        const lastName = formValues.lastName;
-        const otherName = formValues.otherName;
-        const phone = formValues.phone;
+        const email:string = formValues.email;
+        const password:string = formValues.password;
+        const userName:string = formValues.userName;
+        const firstName:string = formValues.firstName;
+        const lastName:string = formValues.lastName;
+        const otherName: string|undefined = formValues.otherName;
+        const phone:string = formValues.phone;
 
         // if email and password are empty, return
         if (!email.includes('@') || !email.includes('.com')) {
@@ -98,9 +59,7 @@ const RegissterPage = () => {
             setError("Please fill all required fields");
             return;
         }
-
-
-        const _data = {
+        const _data: IVendorRegisterData = {
             email,
             password,
             userName,
@@ -127,7 +86,6 @@ const RegissterPage = () => {
     return (
         <React.Fragment>
             <div className="w-full h-screen flex flex-col justify-center items-center bg-background-one bg-cover bg-no-repeat py-32 px-12">
-
                 {
                     error &&
                     <Alert
@@ -231,8 +189,8 @@ const RegissterPage = () => {
                                 type="checkbox"
                                 value={formValues.showPassword}
                                 onChange={
-                                    () => {
-                                        handleFormChange
+                                    (e:any): void => {
+                                        handleFormChange(e);
                                         setShowPassword(!showPassword);
                                     }
                                 }
@@ -263,4 +221,4 @@ const RegissterPage = () => {
     );
 }
 
-export default RegissterPage
+export default RegisterPage

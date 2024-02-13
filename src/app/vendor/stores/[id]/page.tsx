@@ -1,6 +1,6 @@
 'use client';
 
-import { deleteProduct, storeDetail } from '@/providers/utils';
+import { deleteProduct, storeDetail } from '@/utils/utils';
 import { Skeleton } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';

@@ -5,7 +5,7 @@ import StoresTable from '../components/StoresTable';
 import { useQuery } from '@tanstack/react-query';
 import { setVendor } from '@/providers/reducers/VendorReducer';
 import axios from 'axios';
-import { vendorProfile } from '@/providers/utils';
+import { vendorProfileApi } from '@/utils/utils';
 import { useDispatch } from 'react-redux';
 import LoadingSkeleton from '../components/LoadingSkeleton';
 import UnAuthorizedView from '../components/UnAuthorizedView';
@@ -17,7 +17,7 @@ const StoresPage = () => {
 
     const getVendorProfile = async () => {
         return await axios({
-            url: vendorProfile,
+            url: vendorProfileApi,
             method: "GET",
             withCredentials: true,
             headers: {
