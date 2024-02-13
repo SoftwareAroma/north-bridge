@@ -3,9 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import StoresTable from '../components/StoresTable';
 import { useQuery } from '@tanstack/react-query';
-import { setVendor } from '@/providers/reducers/VendorReducer';
+import { setVendor, vendorProfileApi } from '@shared';
 import axios from 'axios';
-import { vendorProfileApi } from '@/utils/utils';
 import { useDispatch } from 'react-redux';
 import LoadingSkeleton from '../components/LoadingSkeleton';
 import UnAuthorizedView from '../components/UnAuthorizedView';

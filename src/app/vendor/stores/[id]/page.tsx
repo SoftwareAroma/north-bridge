@@ -1,7 +1,6 @@
 'use client';
 
-import { deleteProduct, storeDetail } from '@/utils/utils';
-import { Skeleton } from '@mui/material';
+import { deleteProduct, storeDetailApi } from '@shared';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import React, { useState } from 'react';
@@ -16,7 +15,7 @@ const StoreView = ({ params }: { params: { id: string } }) => {
 
     const getStoreDetail = async () => {
         return await axios({
-            url: storeDetail(id),
+            url: storeDetailApi(id),
             method: "GET",
             withCredentials: true,
             headers: {
@@ -72,21 +71,21 @@ const DetailView = (props: any) => {
     const { data } = props;
 
     const _productDeletion = async (id: string) => {
-        const response = await axios({
-            url: deleteProduct(id),
-            method: "DELETE",
-            withCredentials: true,
-            headers: {
-                "Accept": "application/json",
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-            },
-        });
-        if (response.data.success === true) {
-            console.log(response.data);
-            // refresh the page
-            window.location.reload();
-        }
+        // const response = await axios({
+        //     url: deleteProduct(id),
+        //     method: "DELETE",
+        //     withCredentials: true,
+        //     headers: {
+        //         "Accept": "application/json",
+        //         'Content-Type': 'application/json',
+        //         'Access-Control-Allow-Origin': '*',
+        //     },
+        // });
+        // if (response.data.success === true) {
+        //     console.log(response.data);
+        //     // refresh the page
+        //     window.location.reload();
+        // }
     }
 
     return (
