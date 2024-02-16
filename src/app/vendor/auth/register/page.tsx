@@ -6,7 +6,7 @@ import React from 'react';
 import { AxiosResponse } from 'axios';
 import { Alert } from 'flowbite-react';
 import { HiInformationCircle } from 'react-icons/hi';
-import {IVendorRegisterData, IVendorRegisterFormValues, registerVendor} from "@shared";
+import { IVendorRegisterData, IVendorRegisterFormValues, registerVendor } from "@shared";
 
 const defaultValues: IVendorRegisterFormValues = {
     'email': '',
@@ -36,13 +36,13 @@ const RegisterPage = () => {
 
     const submitForm = async (e: any): Promise<void> => {
         e.preventDefault();
-        const email:string = formValues.email;
-        const password:string = formValues.password;
-        const userName:string = formValues.userName;
-        const firstName:string = formValues.firstName;
-        const lastName:string = formValues.lastName;
-        const otherName: string|undefined = formValues.otherName;
-        const phone:string = formValues.phone;
+        const email: string = formValues.email;
+        const password: string = formValues.password;
+        const userName: string = formValues.userName;
+        const firstName: string = formValues.firstName;
+        const lastName: string = formValues.lastName;
+        const otherName: string | undefined = formValues.otherName;
+        const phone: string = formValues.phone;
 
         // if email and password are empty, return
         if (!email.includes('@') || !email.includes('.com')) {
@@ -189,7 +189,7 @@ const RegisterPage = () => {
                                 type="checkbox"
                                 value={formValues.showPassword}
                                 onChange={
-                                    (e:any): void => {
+                                    (e: any): void => {
                                         handleFormChange(e);
                                         setShowPassword(!showPassword);
                                     }

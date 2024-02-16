@@ -18,22 +18,22 @@ const HomePage = () => {
     return (
         <React.Fragment>
             {/* header */}
-            <MainHeader/>
+            <MainHeader />
 
-            <BannerArea/>
-            <TopCategories/>
-            <BestDealArea/>
-            <ChooseByBrand/>
-            <ProductTabARea/>
-            <DiscountArea/>
-            <DiscountBannerArea/>
-            <MostSellingProductArea/>
-            <TrendingProductsArea/>
-            <BestSellingStore/>
-            <ServiceHelpArea/>
+            <BannerArea />
+            <TopCategories />
+            <BestDealArea />
+            <ChooseByBrand />
+            <ProductTabARea />
+            <DiscountArea />
+            <DiscountBannerArea />
+            <MostSellingProductArea />
+            <TrendingProductsArea />
+            <BestSellingStore />
+            <ServiceHelpArea />
 
             {/* footer */}
-            <MainFooter/>
+            <MainFooter />
         </React.Fragment>
     );
 }
