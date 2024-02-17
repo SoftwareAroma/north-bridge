@@ -13,7 +13,7 @@ const UnAuthorizedView = () => {
                         <div className="text-lg">
                             Login as an admin to continue
                         </div>
-                        <Link href='/Dashboard/auth/' className="no-underline bg-blue-600 px-8 py-2 text-white hover:bg-blue-500">
+                        <Link href='/dashboard/auth/' className="no-underline bg-blue-600 px-8 py-2 text-white hover:bg-blue-500">
                             login
                         </Link>
                     </div>
