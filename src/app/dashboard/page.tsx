@@ -1,13 +1,20 @@
 'use client';
 
-import * as React from 'react';
+import React from "react";
+import { useSelector } from "react-redux";
+import DasboardContent from "./widgets/DasboardContent";
+import UnAuthorizedView from "./widgets/UnAuthorizedView";
 
 const Dashboard = () => {
-    return (
-        <div className="h-screen w-full">
 
-        </div>
-    );
+    const admin = useSelector((state: any) => state.admin.admin);
+
+    return (
+        <React.Fragment>
+            {(admin) && <DasboardContent />}
+            {(!admin) && <UnAuthorizedView />}
+        </React.Fragment>
+    )
 }
 
 export default Dashboard;

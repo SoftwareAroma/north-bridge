@@ -1,6 +1,6 @@
 
 // create store
-import {AxiosResponse} from "axios";
+import { AxiosResponse } from "axios";
 import {
     storeAddProductApi,
     storeCategoriesApi,
@@ -41,7 +41,7 @@ export const getStore = async (id: string): Promise<AxiosResponse<any, any>> => 
  * Get Stores
  */
 export const getStores = async (): Promise<AxiosResponse<any, any>> => {
-    return PostRequest(storesApi, {});
+    return GetRequest(storesApi);
 }
 
 /**
@@ -106,7 +106,7 @@ export const deleteStoreCategory = async (id: string): Promise<AxiosResponse<any
  * @param id
  * @param data
  */
-export const addStoreCategoryToStore = async (id: string, data:any): Promise<AxiosResponse<any, any>> => {
+export const addStoreCategoryToStore = async (id: string, data: any): Promise<AxiosResponse<any, any>> => {
     return PatchRequest(storeCategoryAddApi(id), data);
 }
 
@@ -115,7 +115,7 @@ export const addStoreCategoryToStore = async (id: string, data:any): Promise<Axi
  * @param id
  * @param data
  */
-export const removeStoreCategoryFromStore = async (id: string, data:any): Promise<AxiosResponse<any, any>> => {
+export const removeStoreCategoryFromStore = async (id: string, data: any): Promise<AxiosResponse<any, any>> => {
     return PatchRequest(storeCategoryRemoveApi(id), data);
 }
 
@@ -124,7 +124,7 @@ export const removeStoreCategoryFromStore = async (id: string, data:any): Promis
  * @param id
  * @param data
  */
-export const addProductToStore = async (id: string, data:any): Promise<AxiosResponse<any, any>> => {
+export const addProductToStore = async (id: string, data: any): Promise<AxiosResponse<any, any>> => {
     return PatchRequest(storeAddProductApi(id), data);
 }
 
@@ -133,6 +133,6 @@ export const addProductToStore = async (id: string, data:any): Promise<AxiosResp
  * @param id
  * @param data
  */
-export const removeProductFromStore = async (id: string, data:any): Promise<AxiosResponse<any, any>> => {
+export const removeProductFromStore = async (id: string, data: any): Promise<AxiosResponse<any, any>> => {
     return PatchRequest(storeRemoveProductApi(id), data);
 }

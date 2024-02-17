@@ -1,10 +1,11 @@
 import React from 'react';
+import UsersTable from '../widgets/UsersTable';
 
 const UsersPage = () => {
     return (
-        <div>
-
-        </div>
+        <React.Fragment>
+            <UsersTable />
+        </React.Fragment>
     );
 }
 

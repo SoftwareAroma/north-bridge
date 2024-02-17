@@ -1,4 +1,4 @@
-import {AxiosResponse} from "axios";
+import { AxiosResponse } from "axios";
 import {
     vendorDeleteApi,
     vendorDetailApi,
@@ -24,16 +24,16 @@ export const registerVendor = async (data: any): Promise<AxiosResponse<any, any>
  * Login Vendor
  * @param data
  */
-export const loginVendor = async (data: { email: string, password: string }): Promise<AxiosResponse<any,any>> => {
+export const loginVendor = async (data: { email: string, password: string }): Promise<AxiosResponse<any, any>> => {
     const email: string = data.email;
     const password: string = data.password;
-    return PostRequest(vendorLoginApi, {email, password});
+    return PostRequest(vendorLoginApi, { email, password });
 }
 
 /**
  * Get Vendor Profile
  */
-export const getVendorProfile = async (): Promise<AxiosResponse<any,any>> => {
+export const getVendorProfile = async (): Promise<AxiosResponse<any, any>> => {
     return GetRequest(vendorProfileApi);
 };
 
@@ -42,14 +42,14 @@ export const getVendorProfile = async (): Promise<AxiosResponse<any,any>> => {
  * @param id
  * @param data
  */
-export const updateVendorProfile = async (id:string, data: any): Promise<AxiosResponse<any,any>> => {
+export const updateVendorProfile = async (id: string, data: any): Promise<AxiosResponse<any, any>> => {
     return PatchRequest(vendorUpdateApi(id), data);
 }
 
 /**
  * Get Vendors
  */
-export const getVendors = async (): Promise<AxiosResponse<any,any>> => {
+export const getVendors = async (): Promise<AxiosResponse<any, any>> => {
     return GetRequest(vendorListApi);
 }
 
@@ -57,7 +57,7 @@ export const getVendors = async (): Promise<AxiosResponse<any,any>> => {
  * Delete Vendor Profile
  * @param id
  */
-export const deleteVendorProfile = async (id: string): Promise<AxiosResponse<any,any>> => {
+export const deleteVendor = async (id: string): Promise<AxiosResponse<any, any>> => {
     return DeleteRequest(vendorDeleteApi(id));
 }
 
@@ -65,13 +65,13 @@ export const deleteVendorProfile = async (id: string): Promise<AxiosResponse<any
  * Get Vendor By Id
  * @param id
  */
-export const getVendorById = async (id: string): Promise<AxiosResponse<any,any>> => {
+export const getVendorById = async (id: string): Promise<AxiosResponse<any, any>> => {
     return GetRequest(vendorDetailApi(id));
 }
 
 /**
  * Logout Vendor
  */
-export const logoutVendor = async (): Promise<AxiosResponse<any,any>> => {
+export const logoutVendor = async (): Promise<AxiosResponse<any, any>> => {
     return GetRequest(vendorLogoutApi);
 }

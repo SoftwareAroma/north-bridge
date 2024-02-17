@@ -8,8 +8,6 @@ import {
 } from 'flowbite-react';
 import { useSelector } from 'react-redux';
 import StoreTableItem from './StoreTableItem';
-import axios from 'axios';
-import { deleteStore } from '@shared';
 import StoreForm from './StoreForm';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';

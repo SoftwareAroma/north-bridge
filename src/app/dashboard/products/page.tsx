@@ -1,10 +1,11 @@
 import React from 'react';
+import ProductsTable from '../widgets/ProductsTable';
 
 const ProductsPage = () => {
     return (
-        <div>
-
-        </div>
+        <React.Fragment>
+            <ProductsTable />
+        </React.Fragment>
     )
 }
 

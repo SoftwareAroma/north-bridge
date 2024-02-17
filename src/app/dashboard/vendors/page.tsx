@@ -1,11 +1,12 @@
 import React from 'react';
+import VendorsTable from '../widgets/VendorsTable';
 
 const VendorsPage = () => {
     return (
-        <div>
-
-        </div>
-    )
+        <React.Fragment>
+            <VendorsTable />
+        </React.Fragment>
+    );
 }
 
 export default VendorsPage;

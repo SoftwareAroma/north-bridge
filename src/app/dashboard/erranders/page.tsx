@@ -1,10 +1,11 @@
 import React from 'react'
+import ErrandersTable from '../widgets/ErrandersTable'
 
 const ErrandersPage = () => {
     return (
-        <div>
-
-        </div>
+        <React.Fragment>
+            <ErrandersTable />
+        </React.Fragment>
     )
 }
 

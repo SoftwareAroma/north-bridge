@@ -1,10 +1,11 @@
 import React from 'react'
+import SalesTable from '../widgets/SalesTable'
 
 const SalesPage = () => {
     return (
-        <div>
-
-        </div>
+        <React.Fragment>
+            <SalesTable />
+        </React.Fragment>
     )
 }
 

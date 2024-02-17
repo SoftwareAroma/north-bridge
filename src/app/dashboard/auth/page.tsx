@@ -6,7 +6,7 @@ import { Alert } from 'flowbite-react';
 import { HiInformationCircle } from 'react-icons/hi';
 import { useRouter } from 'next/navigation';
 import { AxiosResponse } from 'axios';
-import { ILoginFormValues, loginAdmin, loginVendor } from "@shared";
+import { ILoginFormValues, loginAdmin } from "@shared";
 
 
 const defaultValues: ILoginFormValues = {
