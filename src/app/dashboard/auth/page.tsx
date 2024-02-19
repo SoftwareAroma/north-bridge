@@ -53,6 +53,7 @@ const LoginPage = () => {
         const login: AxiosResponse<any, any> = await loginAdmin(data);
         // console.log("Login>>>", login);
         if (login.data.success === true) {
+            window.location.reload();
             // navigate to the dashboard
             router.push('/dashboard/');
         } else {

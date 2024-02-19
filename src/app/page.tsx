@@ -13,9 +13,6 @@ import MainHeader from '@shared/components/header/MainHeader';
 import MainFooter from '@shared/components/footer/MainFooter';
 import ProductTabARea from "@shared/widgets/ProductTabARea";
 
-// preparing to clone moves
-
-
 const HomePage = () => {
     return (
         <React.Fragment>
