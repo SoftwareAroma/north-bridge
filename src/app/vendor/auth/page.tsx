@@ -1,12 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Alert } from 'flowbite-react';
-import { HiInformationCircle} from 'react-icons/hi';
+import { HiInformationCircle } from 'react-icons/hi';
 import { useRouter } from 'next/navigation';
 import { AxiosResponse } from 'axios';
-import {ILoginFormValues, loginVendor} from "@shared";
+import { ILoginFormValues, TQuery, getVendorProfile, loginVendor, setVendor } from "@shared";
+import { useQuery } from '@tanstack/react-query';
+import { useDispatch } from 'react-redux';
 
 
 const defaultValues: ILoginFormValues = {
@@ -20,7 +22,9 @@ const LoginPage = () => {
     const [formValues, setFormValues] = React.useState(defaultValues);
     const [error, setError] = React.useState('');
     const [showPassword, setShowPassword] = React.useState(false);
+    const [isLogin, setIsLogIn] = React.useState(false);
     const router = useRouter();
+    const dispatch = useDispatch();
 
     const handleFormChange = (e: any): void => {
         // set error to empty
@@ -28,7 +32,6 @@ const LoginPage = () => {
         const { name, value } = e.target;
         setFormValues({ ...formValues, [name]: value });
     }
-
 
     const submitForm = async (e: any): Promise<void> => {
         e.preventDefault();
@@ -46,7 +49,7 @@ const LoginPage = () => {
             return;
         }
 
-        const data: {email:string, password:string} = {
+        const data: { email: string, password: string } = {
             email,
             password
         };
@@ -54,6 +57,8 @@ const LoginPage = () => {
         // console.log("Login>>>", login);
         if (login.data.success === true) {
             // navigate to the vendor dashboard
+            // Queries
+            setIsLogIn(true);
             router.push('/vendor/');
         } else {
             // if message is an array, join the array seperated by a comma
@@ -64,6 +69,19 @@ const LoginPage = () => {
             }
         }
     }
+
+    const { data }: TQuery = useQuery({
+        queryKey: ['vendorProfile'],
+        queryFn: getVendorProfile,
+        enabled: true,
+    });
+
+    useMemo(() => {
+        if (data) {
+            dispatch(setVendor(data?.data.data.vendor));
+        }
+    }, [data, isLogin]);
+
 
     return (
         <React.Fragment>

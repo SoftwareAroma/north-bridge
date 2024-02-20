@@ -1,8 +1,9 @@
-import axios, {AxiosResponse} from "axios";
+import axios, { AxiosResponse } from "axios";
 
 export const PostRequest = async (
     url: string,
     data: any,
+    contentType?: string
 ): Promise<AxiosResponse<any, any>> => {
     return axios({
         url: url,
@@ -10,7 +11,7 @@ export const PostRequest = async (
         withCredentials: true,
         headers: {
             "Accept": "application/json",
-            'Content-Type': 'application/json',
+            'Content-Type': contentType ?? 'application/json',
             'Access-Control-Allow-Origin': '*',
         },
         data: JSON.stringify(data),
@@ -33,6 +34,7 @@ export const GetRequest = async (url: string): Promise<AxiosResponse<any, any>> 
 export const PatchRequest = async (
     url: string,
     data: any,
+    contentType?: string
 ): Promise<AxiosResponse<any, any>> => {
     return axios({
         url: url,
@@ -40,7 +42,7 @@ export const PatchRequest = async (
         withCredentials: true,
         headers: {
             "Accept": "application/json",
-            'Content-Type': 'application/json',
+            'Content-Type': contentType ?? 'application/json',
             'Access-Control-Allow-Origin': '*',
         },
         data: JSON.stringify(data),

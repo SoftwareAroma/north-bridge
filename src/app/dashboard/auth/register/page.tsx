@@ -2,11 +2,13 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { AxiosResponse } from 'axios';
 import { Alert } from 'flowbite-react';
 import { HiInformationCircle } from 'react-icons/hi';
-import { IVendorRegisterData, IVendorRegisterFormValues, registerAdmin, registerVendor } from "@shared";
+import { IVendorRegisterData, IVendorRegisterFormValues, TQuery, getAdminProfile, registerAdmin, registerVendor, setVendor } from "@shared";
+import { useDispatch } from 'react-redux';
+import { useQuery } from '@tanstack/react-query';
 
 const defaultValues: IVendorRegisterFormValues = {
     'email': '',
@@ -25,7 +27,9 @@ const RegisterPage = () => {
     const [formValues, setFormValues] = React.useState(defaultValues);
     const [error, setError] = React.useState('');
     const [showPassword, setShowPassword] = React.useState(false);
+    const [isLogin, setIsLogIn] = React.useState(false);
     const router = useRouter();
+    const dispatch = useDispatch();
 
     const handleFormChange = (e: any): void => {
         // set error to empty
@@ -72,6 +76,7 @@ const RegisterPage = () => {
         // console.log("Login>>>", response);
         if (response.data.success === true) {
             // navigate to the vendor dashboard
+            setIsLogIn(true);
             router.push('/dashboard/');
         } else {
             // if message is an array, join the array seperated by a comma
@@ -82,6 +87,18 @@ const RegisterPage = () => {
             }
         }
     }
+
+    const { data }: TQuery = useQuery({
+        queryKey: ['adminProfile'],
+        queryFn: getAdminProfile,
+        enabled: true,
+    });
+
+    useMemo(() => {
+        if (data) {
+            dispatch(setVendor(data?.data.data.vendor));
+        }
+    }, [data, isLogin]);
 
     return (
         <React.Fragment>
