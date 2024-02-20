@@ -14,7 +14,7 @@ import {
     Textarea,
 } from 'flowbite-react';
 import { useQuery } from '@tanstack/react-query';
-import { createStoreCategory, deleteStoreCategory, deleteUser, getStoreCategories, getVendors } from '@/shared';
+import { IStoreCategory, createStoreCategory, deleteStoreCategory, deleteUser, getStoreCategories, getVendors, updateStoreCategory } from '@/shared';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { TableCell, TableRow } from 'flowbite-react';
@@ -38,6 +38,7 @@ const StoreCategoriesTable = () => {
     const [storeCategories, setStoreCategories] = useState([])
     const [formValues, setFormValues] = useState(initialValues);
     const [openModal, setOpenModal] = useState(false);
+    const [category, setCategory]: any = useState(null);
     const [error, setError] = useState('');
     const router = useRouter();
     const { data, refetch } = useQuery({
@@ -47,11 +48,17 @@ const StoreCategoriesTable = () => {
     });
 
     useMemo(() => {
-        console.log(data?.data.data.storeCategories)
+        // console.log(data?.data.data.storeCategories)
         if (data?.data.data.storeCategories) {
             setStoreCategories(data?.data.data.storeCategories)
         }
-    }, [data]);
+        if (category) {
+            setFormValues({
+                name: category?.name,
+                description: category?.description
+            })
+        }
+    }, [data, category]);
 
     const _categoryDelete = async (id: string) => {
         const response = await deleteStoreCategory(id);
@@ -97,6 +104,33 @@ const StoreCategoriesTable = () => {
             }
         }
     }
+    const _updatedCategory = async (e: any) => {
+        e.preventDefault();
+        if (formValues.name.length < 3) {
+            setError("Invalid Category Name");
+            return;
+        }
+        const name = formValues.name;
+        const description = formValues.description;
+        const data: { name: string, description: string } = {
+            name,
+            description
+        };
+        const storeCategory: AxiosResponse<any, any> = await updateStoreCategory(category.id, data);
+        // console.log("storeCategory >>>", storeCategory);
+        if (storeCategory.data.success === true) {
+            setOpenModal(false);
+            refetch();
+            // window.location.reload();
+        } else {
+            // if message is an array, join the array seperated by a comma
+            if (Array.isArray(storeCategory.data.message)) {
+                setError(storeCategory.data.message.join(', '));
+            } else {
+                setError(storeCategory.data.message);
+            }
+        }
+    }
 
     return (
         <div className="overflow-x-auto rounded-none mt-8">
@@ -113,7 +147,7 @@ const StoreCategoriesTable = () => {
                 </TableHead>
                 <TableBody className="divide-y">
                     {
-                        storeCategories.map((category: any, index: number) => {
+                        storeCategories.map((category: IStoreCategory, index: number) => {
                             return (
                                 <TableRow key={index} onClick={() => { }} className="bg-white cursor-pointer dark:border-gray-700 dark:bg-gray-800">
                                     <TableCell className="whitespace-nowrap capitalize font-medium text-gray-900 dark:text-white">
@@ -125,7 +159,10 @@ const StoreCategoriesTable = () => {
                                     <TableCell></TableCell>
                                     <TableCell></TableCell>
                                     <TableCell className='space-x-2'>
-                                        <button onClick={() => { }} className="font-medium no-underline bg-green-500 w-20 text-white px-4 py-1">
+                                        <button onClick={() => {
+                                            setCategory(category);
+                                            setOpenModal(true);
+                                        }} className="font-medium no-underline bg-green-500 w-20 text-white px-4 py-1">
                                             Edit
                                         </button>
                                         <button onClick={() => _categoryDelete(category.id)} className="font-medium no-underline bg-red-500 w-20 px-4 py-1 text-white">
@@ -151,7 +188,7 @@ const StoreCategoriesTable = () => {
                 <Modal.Body>
                     <div className="text-center">
                         <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400 uppercase">
-                            Add a new store category
+                            {category != null ? 'Update Store Category' : 'Add a new store category'}
                         </h3>
                         {
                             error &&
@@ -199,7 +236,7 @@ const StoreCategoriesTable = () => {
                             </div>
                         </div>
                         <button
-                            onClick={_onSubmitForm}
+                            onClick={category != null ? _updatedCategory : _onSubmitForm}
                             className="bg-blue-700 hover:bg-blue-600 text-white px-8 py-2 uppercase text-sm md:text-lg lg:text-xl mt-4"
                         >
                             submit
@@ -207,7 +244,7 @@ const StoreCategoriesTable = () => {
                     </div>
                 </Modal.Body>
             </Modal>
-        </div>
+        </div >
     );
 }
 

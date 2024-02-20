@@ -22,7 +22,7 @@ const ErrandersTable = () => {
     const [openErranderModal, setOpenErranderModal] = useState(false);
     const router = useRouter();
     const { data, refetch } = useQuery({
-        queryKey: ['customers'],
+        queryKey: ['erranders'],
         queryFn: getVendors,
         enabled: true,
     });
@@ -99,7 +99,6 @@ const ErrandersTable = () => {
                             Add an errander
                         </h3>
                         <div className="my-4">
-
                         </div>
                     </div>
                 </Modal.Body>

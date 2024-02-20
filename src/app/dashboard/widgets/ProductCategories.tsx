@@ -1,6 +1,5 @@
 'use client';
 
-'use client';
 import {
     Alert,
     Label,
@@ -13,7 +12,12 @@ import {
     Textarea,
 } from 'flowbite-react';
 import { useQuery } from '@tanstack/react-query';
-import { createProductCategory, deleteProductCategory, deleteUser, getProductCategories } from '@/shared';
+import {
+    createProductCategory,
+    deleteProductCategory,
+    getProductCategories,
+    updateProductCategory
+} from '@/shared';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { TableCell, TableRow } from 'flowbite-react';
@@ -36,6 +40,7 @@ const initialValues: ISCatValues = {
 const ProductCategoriesTable = () => {
     const [productCategories, setProductCategories] = useState([])
     const [formValues, setFormValues] = useState(initialValues);
+    const [category, setCategory]: any = useState(null);
     const [openModal, setOpenModal] = useState(false);
     const [error, setError] = useState('');
     const router = useRouter();
@@ -52,7 +57,13 @@ const ProductCategoriesTable = () => {
         if (data?.data.data.productCategories) {
             setProductCategories(data?.data.data.productCategories)
         }
-    }, [data]);
+        if (category) {
+            setCategory({
+                name: category?.name,
+                description: category?.description,
+            })
+        }
+    }, [data, category]);
 
     const _categoryDelele = async (id: string) => {
         const response = await deleteProductCategory(id);
@@ -99,6 +110,35 @@ const ProductCategoriesTable = () => {
         }
     }
 
+    // update category
+    const _updateCategory = async (e: any) => {
+        e.preventDefault();
+        if (formValues.name.length < 3) {
+            setError("Invalid Category Name");
+            return;
+        }
+        const name = formValues.name;
+        const description = formValues.description;
+        const data: { name: string, description: string } = {
+            name,
+            description
+        };
+        const productCategory: AxiosResponse<any, any> = await updateProductCategory(category.id, data);
+        // console.log("productCategory >>>", productCategory);
+        if (productCategory.data.success === true) {
+            setOpenModal(false);
+            refetch();
+            // window.location.reload();
+        } else {
+            // if message is an array, join the array seperated by a comma
+            if (Array.isArray(productCategory.data.message)) {
+                setError(productCategory.data.message.join(', '));
+            } else {
+                setError(productCategory.data.message);
+            }
+        }
+    }
+
     return (
         <div className="overflow-x-auto rounded-none mt-8">
             <Table striped>
@@ -115,7 +155,9 @@ const ProductCategoriesTable = () => {
                     {
                         productCategories.map((category: any, index: number) => {
                             return (
-                                <TableRow key={index} onClick={() => { }} className="bg-white cursor-pointer dark:border-gray-700 dark:bg-gray-800">
+                                <TableRow key={index} onClick={() => {
+
+                                }} className="bg-white cursor-pointer dark:border-gray-700 dark:bg-gray-800">
                                     <TableCell className="whitespace-nowrap capitalize font-medium text-gray-900 dark:text-white">
                                         {category.name}
                                     </TableCell>
@@ -125,7 +167,10 @@ const ProductCategoriesTable = () => {
                                     <TableCell></TableCell>
                                     <TableCell></TableCell>
                                     <TableCell className='space-x-2'>
-                                        <button onClick={() => { }} className="font-medium no-underline bg-green-500 w-20 text-white px-4 py-1">
+                                        <button onClick={() => {
+                                            setCategory(category);
+                                            setOpenModal(true);
+                                        }} className="font-medium no-underline bg-green-500 w-20 text-white px-4 py-1">
                                             Edit
                                         </button>
                                         <button onClick={() => _categoryDelele(category.id)} className="font-medium no-underline bg-red-500 w-20 px-4 py-1 text-white">
@@ -151,7 +196,7 @@ const ProductCategoriesTable = () => {
                 <Modal.Body>
                     <div className="text-center">
                         <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400 uppercase">
-                            Add a new Product Category category
+                            {category != null ? 'Update Product Category' : 'Add a new Product Category category'}
                         </h3>
                         {
                             error &&
@@ -199,7 +244,7 @@ const ProductCategoriesTable = () => {
                             </div>
                         </div>
                         <button
-                            onClick={_onSubmitForm}
+                            onClick={category != null ? _updateCategory : _onSubmitForm}
                             className="bg-blue-700 hover:bg-blue-600 text-white px-8 py-2 uppercase text-sm md:text-lg lg:text-xl mt-4"
                         >
                             submit

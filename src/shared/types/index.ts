@@ -96,3 +96,24 @@ export type IUser = {
     updatedAt: string;
     cart: IProduct[]; // Assuming cart can contain any type of data
 };
+
+export type IProductCategory = {
+    id: string,
+    name: string,
+    description: string,
+    productId?: string,
+    product?: IProduct,
+    createdAt?: string,
+    updatedAt?: string,
+}
+
+export type IStoreCategory = {
+    id: string,
+    name: string,
+    description: string,
+    storeId?: string,
+    store?: IStore,
+    createdAt?: string,
+    updatedAt?: string,
+}
+

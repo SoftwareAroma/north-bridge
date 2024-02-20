@@ -9,4 +9,4 @@ const StoreCategoriesPage = () => {
     );
 }
 
-export default StoreCategoriesPage
+export default StoreCategoriesPage;
