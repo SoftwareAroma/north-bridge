@@ -18,7 +18,7 @@ const TableItem = (
     const { name, quantity, amount, currency, onDelete, onEdit, onClick } = props;
     return (
         <React.Fragment>
-            <TableRow className="bg-white dark:border-gray-700 dark:bg-gray-800">
+            <TableRow className="bg-white dark:border-gray-700 dark:bg-gray-800 cursor-default">
                 <TableCell onClick={onClick} className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                     {name}
                 </TableCell>

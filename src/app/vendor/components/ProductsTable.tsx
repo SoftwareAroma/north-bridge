@@ -7,6 +7,8 @@ import {
 } from 'flowbite-react';
 import TableItem from './TableItem';
 import { useSelector } from 'react-redux';
+import { deleteProduct } from '@/shared';
+import { useMemo } from 'react';
 
 const ProductsTable = () => {
 
@@ -14,30 +16,25 @@ const ProductsTable = () => {
     const products: any = [];
 
     // map through the stores and add the products to the products array
-    vendor?.stores.map((store: any) => {
-        store.products.map((product: any) => {
-            products.push(product);
+    useMemo(() => {
+        vendor?.stores.map((store: any) => {
+            store.products.map((product: any) => {
+                products.push(product);
+            });
         });
-    });
-
-    console.log(products)
+    }, [vendor]);
 
     const _productDeletion = async (id: string) => {
-        // const response = await axios({
-        //     url: deleteProduct(id),
-        //     method: "DELETE",
-        //     withCredentials: true,
-        //     headers: {
-        //         "Accept": "application/json",
-        //         'Content-Type': 'application/json',
-        //         'Access-Control-Allow-Origin': '*',
-        //     },
-        // });
-        // if (response.data.success === true) {
-        //     console.log(response.data);
-        //     // refresh the page
-        //     window.location.reload();
-        // }
+        try {
+            const response = await deleteProduct(id);
+            if (response.data.success === true) {
+                console.log(response.data);
+                // refresh the page
+                window.location.reload();
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (
@@ -58,8 +55,8 @@ const ProductsTable = () => {
                                 <TableItem
                                     key={index}
                                     name={product.name}
-                                    category={product.category}
-                                    price={product.price.amount}
+                                    quantity={product.quantity}
+                                    amount={product.price.amount}
                                     currency={product.price.currency}
                                     onDelete={_productDeletion.bind(this, product.id)}
                                     onEdit={() => { }}

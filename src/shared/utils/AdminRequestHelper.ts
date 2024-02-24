@@ -8,7 +8,7 @@ import {
     GetRequest,
     PostRequest
 } from "@shared";
-import {AxiosResponse} from "axios";
+import { AxiosResponse } from "axios";
 
 export const registerAdmin = (data: any): Promise<AxiosResponse<any, any>> => {
     return PostRequest(adminRegisterApi, data);

@@ -5,8 +5,8 @@ import React, { useMemo } from 'react';
 import { Alert } from 'flowbite-react';
 import { HiInformationCircle } from 'react-icons/hi';
 import { useRouter } from 'next/navigation';
-import { AxiosResponse } from 'axios';
-import { ILoginFormValues, TQuery, getAdminProfile, loginAdmin, setVendor } from "@shared";
+import { AxiosResponse, isAxiosError } from 'axios';
+import { ILoginFormValues, TQuery, getAdminProfile, loginAdmin, setAdmin, setVendor } from "@shared";
 import { useQuery } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 
@@ -36,42 +36,47 @@ const LoginPage = () => {
 
     const submitForm = async (e: any): Promise<void> => {
         e.preventDefault();
-        const email: string = formValues.email;
-        const password: string = formValues.password;
+        try {
+            const email: string = formValues.email;
+            const password: string = formValues.password;
 
-        // if email and password are empty, return
-        if (!email.includes('@') || !email.includes('.com')) {
-            setError('Please provide a valid email');
-            return;
-        }
-        // if password is less than 8 characters return 
-        if (password.length < 8) {
-            setError("Weak Password");
-            return;
-        }
-
-        const data: { email: string, password: string } = {
-            email,
-            password
-        };
-        const login: AxiosResponse<any, any> = await loginAdmin(data);
-        // console.log("Login>>>", login);
-        if (login.data.success === true) {
-            window.location.reload();
-            // navigate to the dashboard
-            setIsLogIn(true);
-            router.push('/dashboard/');
-        } else {
-            // if message is an array, join the array seperated by a comma
-            if (Array.isArray(login.data.message)) {
-                setError(login.data.message.join(', '));
-            } else {
-                setError(login.data.message);
+            // if email and password are empty, return
+            if (!email.includes('@') || !email.includes('.com')) {
+                setError('Please provide a valid email');
+                return;
             }
+            // if password is less than 8 characters return 
+            if (password.length < 8) {
+                setError("Weak Password");
+                return;
+            }
+            const _data: { email: string, password: string } = {
+                "email": email,
+                "password": password
+            };
+            const login: AxiosResponse<any, any> = await loginAdmin(_data);
+            console.log("Login>>>", login);
+            if (login.data.success === true) {
+                window.location.reload();
+                // navigate to the dashboard
+                setIsLogIn(true);
+            } else {
+                // if message is an array, join the array seperated by a comma
+                if (Array.isArray(login.data.message)) {
+                    setError(login.data.message.join(', '));
+                } else {
+                    setError(login.data.message);
+                }
+            }
+        } catch (err: any) {
+            if (isAxiosError(err)) {
+                setError(err.response?.data.message);
+            }
+
         }
     }
 
-    const { data }: TQuery = useQuery({
+    const { data } = useQuery({
         queryKey: ['adminProfile'],
         queryFn: getAdminProfile,
         enabled: true,
@@ -79,7 +84,8 @@ const LoginPage = () => {
 
     useMemo(() => {
         if (data) {
-            dispatch(setVendor(data?.data.data.vendor));
+            dispatch(setAdmin(data?.data.data.admin));
+            router.push('/dashboard/');
         }
     }, [data, isLogin]);
 

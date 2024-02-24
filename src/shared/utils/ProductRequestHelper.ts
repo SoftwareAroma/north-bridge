@@ -12,7 +12,9 @@ import {
     DeleteRequest,
     GetRequest,
     PatchRequest,
-    PostRequest
+    PostRequest,
+    PostFormDataRequest,
+    PatchFormDataRequest
 } from "@shared";
 import { AxiosResponse } from "axios";
 
@@ -20,8 +22,8 @@ import { AxiosResponse } from "axios";
  * Create Product
  * @param data
  */
-export const createProduct = (data: any, contentType?: string): Promise<AxiosResponse<any, any>> => {
-    return PostRequest(productCreateApi, data, contentType);
+export const createProduct = (data: any): Promise<AxiosResponse<any, any>> => {
+    return PostFormDataRequest(productCreateApi, data);
 }
 
 /**
@@ -40,8 +42,8 @@ export const getProduct = (id: string): Promise<AxiosResponse<any, any>> => {
  * @param id
  * @param data
  */
-export const updateProduct = (id: string, data: any, contentType?: string): Promise<AxiosResponse<any, any>> => {
-    return PatchRequest(productUpdateApi(id), data, contentType);
+export const updateProduct = (id: string, data: any): Promise<AxiosResponse<any, any>> => {
+    return PatchFormDataRequest(productUpdateApi(id), data);
 }
 
 /**

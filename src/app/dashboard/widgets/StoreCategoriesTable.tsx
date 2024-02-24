@@ -61,12 +61,16 @@ const StoreCategoriesTable = () => {
     }, [data, category]);
 
     const _categoryDelete = async (id: string) => {
-        const response = await deleteStoreCategory(id);
-        if (response.data.success === true) {
-            // console.log(response?.data);
-            // refresh the page
-            // window.location.reload();
-            refetch();
+        try {
+            const response = await deleteStoreCategory(id);
+            if (response.data.success === true) {
+                // console.log(response?.data);
+                // refresh the page
+                // window.location.reload();
+                refetch();
+            }
+        } catch (error) {
+            console.log(error);
         }
     }
 
@@ -79,56 +83,67 @@ const StoreCategoriesTable = () => {
 
     const _onSubmitForm = async (e: any) => {
         e.preventDefault();
-        if (formValues.name.length < 3) {
-            setError("Invalid Category Name");
-            return;
-        }
-        const name = formValues.name;
-        const description = formValues.description;
-        const data: { name: string, description: string } = {
-            name,
-            description
-        };
-        const storeCategory: AxiosResponse<any, any> = await createStoreCategory(data);
-        // console.log("Login>>>", login);
-        if (storeCategory.data.success === true) {
-            setOpenModal(false);
-            refetch();
-            // window.location.reload();
-        } else {
-            // if message is an array, join the array seperated by a comma
-            if (Array.isArray(storeCategory.data.message)) {
-                setError(storeCategory.data.message.join(', '));
-            } else {
-                setError(storeCategory.data.message);
+        try {
+            if (formValues.name.length < 3) {
+                setError("Invalid Category Name");
+                return;
             }
+            const name = formValues.name;
+            const description = formValues.description;
+            const data: { name: string, description: string } = {
+                name,
+                description
+            };
+            const storeCategory: AxiosResponse<any, any> = await createStoreCategory(data);
+            // console.log("Login>>>", login);
+            if (storeCategory.data.success === true) {
+                setOpenModal(false);
+                // reset form values
+                setFormValues(initialValues);
+                refetch();
+                // window.location.reload();
+            } else {
+                // if message is an array, join the array seperated by a comma
+                if (Array.isArray(storeCategory.data.message)) {
+                    setError(storeCategory.data.message.join(', '));
+                } else {
+                    setError(storeCategory.data.message);
+                }
+            }
+        } catch (error) {
+            console.log(error);
         }
     }
     const _updatedCategory = async (e: any) => {
         e.preventDefault();
-        if (formValues.name.length < 3) {
-            setError("Invalid Category Name");
-            return;
-        }
-        const name = formValues.name;
-        const description = formValues.description;
-        const data: { name: string, description: string } = {
-            name,
-            description
-        };
-        const storeCategory: AxiosResponse<any, any> = await updateStoreCategory(category.id, data);
-        // console.log("storeCategory >>>", storeCategory);
-        if (storeCategory.data.success === true) {
-            setOpenModal(false);
-            refetch();
-            // window.location.reload();
-        } else {
-            // if message is an array, join the array seperated by a comma
-            if (Array.isArray(storeCategory.data.message)) {
-                setError(storeCategory.data.message.join(', '));
-            } else {
-                setError(storeCategory.data.message);
+        try {
+            if (formValues.name.length < 3) {
+                setError("Invalid Category Name");
+                return;
             }
+            const name = formValues.name;
+            const description = formValues.description;
+            const data: { name: string, description: string } = {
+                name,
+                description
+            };
+            const storeCategory: AxiosResponse<any, any> = await updateStoreCategory(category.id, data);
+            // console.log("storeCategory >>>", storeCategory);
+            if (storeCategory.data.success === true) {
+                setOpenModal(false);
+                refetch();
+                setFormValues(initialValues);
+                // window.location.reload();
+            } else {
+                // if message is an array, join the array seperated by a comma
+                if (Array.isArray(storeCategory.data.message)) {
+                    setError(storeCategory.data.message.join(', '));
+                } else {
+                    setError(storeCategory.data.message);
+                }
+            }
+        } catch (error) {
+            console.log(error);
         }
     }
 

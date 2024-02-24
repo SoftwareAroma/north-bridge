@@ -112,7 +112,7 @@ const StoreView = ({ params }: { params: { id: string } }) => {
                         </h3>
                         <div className="my-4 w-full">
                             <ProductForm
-                                isEdditing={product != null}
+                                isEdditing={!(product == null)}
                                 product={product}
                                 closeModal={() => setOpenProductModal(false)}
                                 storeId={id}

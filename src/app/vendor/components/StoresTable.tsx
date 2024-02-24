@@ -1,48 +1,54 @@
 'use client';
 import {
+    Button,
     Modal,
     Table,
     TableBody,
     TableHead,
     TableHeadCell,
 } from 'flowbite-react';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import StoreTableItem from './StoreTableItem';
 import StoreForm from './StoreForm';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { deleteStore } from '@/shared';
 
 
 const StoresTable = () => {
     const [openStoreModal, setOpenStoreModal] = useState(false);
     const [activeStore, setActiveStore] = useState(null);
     const vendor = useSelector((state: any) => state.vendor.vendor);
-    const stores = vendor?.stores;
+    const [stores, setStores] = useState([]);
     const router = useRouter();
-    // console.log(stores);
 
     const _storeDeletion = async (id: string) => {
-        // const response = await axios({
-        //     url: deleteStore(id),
-        //     method: "DELETE",
-        //     withCredentials: true,
-        //     headers: {
-        //         "Accept": "application/json",
-        //         'Content-Type': 'application/json',
-        //         'Access-Control-Allow-Origin': '*',
-        //     },
-        // });
-        // if (response.data.success === true) {
-        //     console.log(response?.data);
-        //     // refresh the page
-        //     window.location.reload();
-        // }
+        try {
+            const response = await deleteStore(id);
+            if (response.data.success === true) {
+                window.location.reload();
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
+
+    useMemo(() => {
+        setStores(vendor?.stores);
+    }, [vendor]);
 
     return (
         <React.Fragment>
             <div className="overflow-x-auto mt-4 ">
+                <div className="flex flex-row justify-between items-center px-8 mb-4 bg-blue-200 py-2">
+                    <div className=""></div>
+                    <div>
+                        <Button className='bg-blue-600 px-4' onClick={() => setOpenStoreModal(true)}>
+                            Add store
+                        </Button>
+                    </div>
+                </div>
                 <Table striped>
                     <TableHead>
                         <TableHeadCell>Store name</TableHeadCell>
@@ -87,7 +93,7 @@ const StoresTable = () => {
                             </h3>
                             <div className="my-4">
                                 <StoreForm
-                                    isEdditing={true}
+                                    isEdditing={!(activeStore == null)}
                                     store={activeStore}
                                     closeModal={() => setOpenStoreModal(false)}
                                 />

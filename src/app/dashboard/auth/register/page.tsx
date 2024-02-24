@@ -3,10 +3,10 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useMemo } from 'react';
-import { AxiosResponse } from 'axios';
+import { AxiosResponse, isAxiosError } from 'axios';
 import { Alert } from 'flowbite-react';
 import { HiInformationCircle } from 'react-icons/hi';
-import { IVendorRegisterData, IVendorRegisterFormValues, TQuery, getAdminProfile, registerAdmin, registerVendor, setVendor } from "@shared";
+import { IVendorRegisterData, IVendorRegisterFormValues, TQuery, getAdminProfile, registerAdmin, registerVendor, setAdmin, setVendor } from "@shared";
 import { useDispatch } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
 
@@ -40,55 +40,64 @@ const RegisterPage = () => {
 
     const submitForm = async (e: any): Promise<void> => {
         e.preventDefault();
-        const email: string = formValues.email;
-        const password: string = formValues.password;
-        const userName: string = formValues.userName;
-        const firstName: string = formValues.firstName;
-        const lastName: string = formValues.lastName;
-        const otherName: string | undefined = formValues.otherName;
-        const phone: string = formValues.phone;
+        try {
+            const email: string = formValues.email;
+            const password: string = formValues.password;
+            const userName: string = formValues.userName;
+            const firstName: string = formValues.firstName;
+            const lastName: string = formValues.lastName;
+            const otherName: string | undefined = formValues.otherName;
+            const phone: string = formValues.phone;
 
-        // if email and password are empty, return
-        if (!email.includes('@') || !email.includes('.com')) {
-            setError('Please provide a valid email');
-            return;
-        }
-        // if password is less than 8 characters return 
-        if (password.length < 8) {
-            setError("Weak Password");
-            return;
-        }
-        // if password is less than 8 characters return 
-        if (firstName.length < 3 || lastName.length < 3 || userName.length < 3) {
-            setError("Please fill all required fields");
-            return;
-        }
-        const _data: IVendorRegisterData = {
-            email,
-            password,
-            userName,
-            firstName,
-            lastName,
-            otherName,
-            phone,
-        }
-        const response: AxiosResponse<any, any> = await registerAdmin(_data);
-        // console.log("Login>>>", response);
-        if (response.data.success === true) {
-            // navigate to the vendor dashboard
-            setIsLogIn(true);
-            router.push('/dashboard/');
-        } else {
-            // if message is an array, join the array seperated by a comma
-            if (Array.isArray(response.data.message)) {
-                setError(response.data.message.join(', '));
+            // if email and password are empty, return
+            if (!email.includes('@') || !email.includes('.com')) {
+                setError('Please provide a valid email');
+                return;
+            }
+            // if password is less than 8 characters return 
+            if (password.length < 8) {
+                setError("Weak Password");
+                return;
+            }
+            // if password is less than 8 characters return 
+            if (firstName.length < 3 || lastName.length < 3 || userName.length < 3) {
+                setError("Please fill all required fields");
+                return;
+            }
+            const _data = {
+                "email": email,
+                "password": password,
+                "userName": userName,
+                "firstName": firstName,
+                "lastName": lastName,
+                "otherName": otherName,
+                "phone": phone,
+            }
+            const response: AxiosResponse<any, any> = await registerAdmin(_data);
+            // console.log("Login>>>", response);
+            if (response.data.success === true) {
+                // navigate to the vendor dashboard
+                setIsLogIn(true);
             } else {
-                setError(response.data.message);
+                // if message is an array, join the array seperated by a comma
+                if (Array.isArray(response.data.message)) {
+                    setError(response.data.message.join(', '));
+                } else {
+                    setError(response.data.message);
+                }
+            }
+        } catch (err: any) {
+            if (isAxiosError(err)) {
+                if (Array.isArray(err?.response?.data.message)) {
+                    setError(err?.response?.data.message.join(', '));
+                } else {
+                    setError(err?.response?.data.message);
+                }
             }
         }
     }
 
-    const { data }: TQuery = useQuery({
+    const { data } = useQuery({
         queryKey: ['adminProfile'],
         queryFn: getAdminProfile,
         enabled: true,
@@ -96,7 +105,8 @@ const RegisterPage = () => {
 
     useMemo(() => {
         if (data) {
-            dispatch(setVendor(data?.data.data.vendor));
+            dispatch(setAdmin(data?.data.data.admin));
+            router.push('/dashboard/');
         }
     }, [data, isLogin]);
 

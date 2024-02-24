@@ -1,5 +1,5 @@
 'use client';
-import { IProductCategory, createProduct, getStoreCategories, updateProduct } from '@shared';
+import { IProductCategory, createProduct, getProductCategories, getStoreCategories, updateProduct } from '@shared';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { Alert, Button, Label, TextInput, Textarea } from 'flowbite-react';
@@ -8,6 +8,7 @@ import { useDropzone } from 'react-dropzone';
 import { HiInformationCircle } from 'react-icons/hi';
 import AddToPhotosOutlinedIcon from '@mui/icons-material/AddToPhotosOutlined';
 import { IconButton } from '@mui/material';
+import axios, { AxiosError, isAxiosError } from 'axios';
 
 const initialValues = {
     "name": "",
@@ -20,13 +21,6 @@ const initialValues = {
     "category": ""
 };
 
-// const thumbInner = {
-//     display: 'flex',
-//     minWidth: 0,
-//     overflow: 'hidden'
-// };
-
-
 type InProduct = {
     name: string;
     description: string;
@@ -35,7 +29,7 @@ type InProduct = {
     quantity: number;
     images: string[];
     storeId: string;
-    category?: string;
+    category: string;
 };
 
 type ProductFormProps = {
@@ -64,6 +58,7 @@ const ProductForm = (props: ProductFormProps) => {
         // set error to empty
         setError('');
         const { name, value } = e.target;
+        // console.log("name >>>> ", name, "value >>>> ", value);
         setFormValues({ ...formValues, [name]: value });
     }
 
@@ -78,48 +73,50 @@ const ProductForm = (props: ProductFormProps) => {
             setError('Please fill all the fields');
             return;
         }
-
-        const formData = new FormData();
-
-        const _price = {
-            currency: formValues.currency,
-            amount: parseFloat(formValues.amount.toString()),
-        }
-
-        // add form data
-        formData.append("name", formValues.name);
-        formData.append("description", formValues.description);
-        formData.append("price", JSON.stringify({
-            currency: formValues.currency,
-            amount: parseFloat(formValues.amount.toString()),
-        }));
-        formData.append("categories", JSON.stringify([
-            formValues.category,
-        ]));
-        formData.append("quantity", formValues.quantity);
-        formData.append("storeId", storeId);
-        formData.append("images", JSON.stringify([]));
-        // add images
-        files.forEach((file: any) => {
-            formData.append('files', file, file.name);
-        });
-
-        // console.log(formData.values());
-        // console.log(formData.getAll('images'));
-
-        return await createProduct(formData, 'multipart/form-data')
-            .then((response) => {
-                if (response.data.success === true) {
-                    setInfo(response.data.message);
-                    setFormValues(initialValues);
-                    closeModal;
-                } else {
-                    setInfo(response.data.message);
-                }
-            })
-            .catch((error) => {
-                setError(error.message);
+        try {
+            const formData: any = axios.toFormData({
+                'name': formValues.name,
+                "description": formValues.description,
+                "price": {
+                    currency: formValues.currency,
+                    amount: formValues.amount,
+                },
+                "categories": [
+                    formValues.category,
+                ],
+                "quantity": formValues.quantity,
+                "storeId": storeId,
+                "images": [],
+                "rating": "1.0",
             });
+            // add images
+            files.forEach((file: any) => {
+                formData.append('files', file, file.name);
+            });
+
+            const response = await createProduct(formData);
+
+            // console.log("form add response >>>>> ", response);
+
+            if (response.data.success === true) {
+                setInfo(response.data.message);
+                setFormValues(initialValues);
+                closeModal && closeModal();
+                window.location.reload();
+            } else {
+                setInfo(response.data.message);
+            }
+        } catch (_error) {
+            if (isAxiosError(_error)) {
+                // console.log("error >>>> ", _error.response?.data.message);
+                if (Array.isArray(_error.response?.data.message)) {
+                    setError(_error.response?.data.message.join(', '));
+                } else {
+                    setError(_error.response?.data.message);
+                }
+            }
+            // console.log("error >>>> ", e);
+        }
     };
 
     /**
@@ -129,48 +126,52 @@ const ProductForm = (props: ProductFormProps) => {
      */
     const _updateProduct = async (e: any) => {
         e.preventDefault();
-        if (formValues.name === '' || formValues.description === '' || formValues.price.amount === 0) {
-            setError('Please fill all the fields');
-            return;
-        }
+        try {
+            if (formValues.name === '' || formValues.description === '' || formValues.price.amount === 0) {
+                setError('Please fill all the fields');
+                return;
+            }
 
-        const formData = new FormData();
+            const formData = new FormData();
 
-        const _price = {
-            "currency": formValues.currency,
-            "amount": parseFloat(formValues.amount.toString()),
-        }
-
-        formData.append("name", formValues.name);
-        formData.append("description", formValues.description);
-        formData.append("price", JSON.stringify({
-            currency: formValues.currency,
-            amount: parseFloat(formValues.amount.toString()),
-        }));
-        formData.append("categories", JSON.stringify([
-            formValues.category,
-        ]));
-        formData.append("quantity", formValues.quantity);
-        formData.append("storeId", storeId);
-        formData.append("images", JSON.stringify([]));
-        // add images
-        files.forEach((file: any) => {
-            formData.append('files', file, file.name);
-        });
-
-        return await updateProduct(product.id, formData)
-            .then((response) => {
-                if (response.data.success === true) {
-                    setInfo(response.data.message);
-                    setFormValues(initialValues);
-                    closeModal;
-                } else {
-                    setInfo(response.data.message);
-                }
-            })
-            .catch((error) => {
-                setError(error.message);
+            formData.append("name", formValues.name);
+            formData.append("description", formValues.description);
+            formData.append("price", JSON.stringify({
+                currency: formValues.currency,
+                amount: parseFloat(formValues.amount.toString()),
+            }));
+            formData.append("categories", JSON.stringify([
+                formValues.category,
+            ]));
+            formData.append("quantity", formValues.quantity);
+            formData.append("storeId", storeId);
+            // formData.append("images", JSON.stringify([]));
+            // add images
+            files.forEach((file: any) => {
+                formData.append('files', file, file.name);
             });
+
+            return await updateProduct(product.id, formData)
+                .then((response) => {
+                    if (response.data.success === true) {
+                        setInfo(response.data.message);
+                        setFormValues(initialValues);
+                        closeModal;
+                    } else {
+                        setInfo(response.data.message);
+                    }
+                })
+                .catch((error) => {
+                    if (isAxiosError(error)) {
+                        setError(error.response?.data.message);
+                    }
+                });
+        } catch (_error) {
+            console.log("error >>>> ", _error);
+            if (isAxiosError(_error)) {
+                setError(_error?.response?.data.message);
+            }
+        }
     }
 
     /**
@@ -178,7 +179,7 @@ const ProductForm = (props: ProductFormProps) => {
      */
     const { data } = useQuery({
         queryKey: ['categories'],
-        queryFn: getStoreCategories,
+        queryFn: getProductCategories,
         enabled: true,
     });
 
@@ -191,7 +192,7 @@ const ProductForm = (props: ProductFormProps) => {
      */
     useMemo(() => {
         if (data) {
-            setCategories(data?.data.data.storeCategories);
+            setCategories(data?.data.data.productCategories);
         }
     }, [data]);
 
@@ -318,6 +319,7 @@ const ProductForm = (props: ProductFormProps) => {
                                         <option
                                             key={index}
                                             value={category.id}
+                                            onChange={handleFormChange}
                                             className='capitalize'
                                         >
                                             {category.name}

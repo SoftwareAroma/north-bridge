@@ -2,11 +2,19 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React from 'react';
-import { AxiosResponse } from 'axios';
+import React, { useEffect, useMemo } from 'react';
+import { AxiosResponse, isAxiosError } from 'axios';
 import { Alert } from 'flowbite-react';
 import { HiInformationCircle } from 'react-icons/hi';
-import { IVendorRegisterData, IVendorRegisterFormValues, registerVendor } from "@shared";
+import {
+    IVendorRegisterData,
+    IVendorRegisterFormValues,
+    getVendorProfile,
+    registerVendor,
+    setVendor
+} from "@shared";
+import { useQuery } from '@tanstack/react-query';
+import { useDispatch } from 'react-redux';
 
 const defaultValues: IVendorRegisterFormValues = {
     'email': '',
@@ -25,7 +33,10 @@ const RegisterPage = () => {
     const [formValues, setFormValues] = React.useState(defaultValues);
     const [error, setError] = React.useState('');
     const [showPassword, setShowPassword] = React.useState(false);
+    const [isLogin, setIsLogIn] = React.useState(false);
+    const [isRequesting, setIsRequesting] = React.useState(false);
     const router = useRouter();
+    const dispatch = useDispatch();
 
     const handleFormChange = (e: any): void => {
         // set error to empty
@@ -59,29 +70,57 @@ const RegisterPage = () => {
             setError("Please fill all required fields");
             return;
         }
-        const _data: IVendorRegisterData = {
-            email,
-            password,
-            userName,
-            firstName,
-            lastName,
-            otherName,
-            phone,
-        }
-        const response: AxiosResponse<any, any> = await registerVendor(_data);
-        // console.log("Login>>>", response);
-        if (response.data.success === true) {
-            // navigate to the vendor dashboard
-            router.push('/vendor/');
-        } else {
-            // if message is an array, join the array seperated by a comma
-            if (Array.isArray(response.data.message)) {
-                setError(response.data.message.join(', '));
+        try {
+            setIsRequesting(true);
+            const _data = {
+                "email": email,
+                "password": password,
+                "userName": userName,
+                "firstName": firstName,
+                "lastName": lastName,
+                "otherName": otherName,
+                "phone": phone,
+            }
+            const response: AxiosResponse<any, any> = await registerVendor(_data);
+            // console.log("Login>>>", response);
+            if (response.data.success === true) {
+                setIsLogIn(true);
+                setIsRequesting(false);
+                window.location.reload();
             } else {
-                setError(response.data.message);
+                setIsRequesting(false);
+                // if message is an array, join the array seperated by a comma
+                if (Array.isArray(response.data.message)) {
+                    setError(response.data.message.join(', '));
+                } else {
+                    setError(response.data.message);
+                }
+            }
+        } catch (_error) {
+            // console.log(_error);
+            setIsRequesting(false);
+            if (isAxiosError(_error)) {
+                if (Array.isArray(_error?.response?.data.message)) {
+                    setError(_error?.response.data.message.join(', '));
+                } else {
+                    setError(_error?.response?.data.message);
+                }
             }
         }
     }
+
+    const { data } = useQuery({
+        queryKey: ['vendorProfile'],
+        queryFn: getVendorProfile,
+        enabled: true,
+    });
+
+    useMemo(() => {
+        if (data?.data.data.vendor) {
+            dispatch(setVendor(data?.data.data.vendor));
+            router.push('/vendor/');
+        }
+    }, [data, isLogin]);
 
     return (
         <React.Fragment>
@@ -202,12 +241,18 @@ const RegisterPage = () => {
                                 Show Password
                             </label>
                         </div>
-                        <button
-                            type="submit"
-                            className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                        >
-                            Register
-                        </button>
+                        {
+                            isRequesting ?
+                                <div className="flex flex-row justify-center items-center px-4 py-2">
+                                    {/* spin progress indicator */}
+                                    <div className="w-4 h-4 border-t-2 border-b-2 border-blue-500 rounded-full animate-spin"></div>
+                                </div> : <button
+                                    type="submit"
+                                    className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                >
+                                    Register
+                                </button>
+                        }
                         <div className="text-sm font-medium text-gray-500 dark:text-gray-300 flex flex-row justify-center items-center">
                             Already have an account?
                             <Link href="/vendor/auth/" className="text-blue-700 hover:underline dark:text-blue-500 mx-4">
@@ -221,4 +266,4 @@ const RegisterPage = () => {
     );
 }
 
-export default RegisterPage
+export default RegisterPage;

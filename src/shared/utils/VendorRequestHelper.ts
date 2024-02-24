@@ -24,10 +24,8 @@ export const registerVendor = async (data: any): Promise<AxiosResponse<any, any>
  * Login Vendor
  * @param data
  */
-export const loginVendor = async (data: { email: string, password: string }): Promise<AxiosResponse<any, any>> => {
-    const email: string = data.email;
-    const password: string = data.password;
-    return PostRequest(vendorLoginApi, { email, password });
+export const loginVendor = async (data: any): Promise<AxiosResponse<any, any>> => {
+    return PostRequest(vendorLoginApi, data);
 }
 
 /**

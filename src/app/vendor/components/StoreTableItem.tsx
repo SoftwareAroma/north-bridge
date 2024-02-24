@@ -12,10 +12,10 @@ const StoreTableItem = (props: any) => {
                 <TableCell>{address}</TableCell>
                 <TableCell>{location}</TableCell>
                 <TableCell className='space-x-2'>
-                    <button onClick={onEdit} className="font-medium no-underline bg-success w-20 text-white px-4 py-1">
+                    <button onClick={onEdit} className="font-medium no-underline bg-green-500 w-20 text-white px-4 py-1">
                         Edit
                     </button>
-                    <button onClick={onDelete} className="font-medium no-underline bg-error w-20 px-4 py-1 text-white">
+                    <button onClick={onDelete} className="font-medium no-underline bg-red-500 w-20 px-4 py-1 text-white">
                         Delete
                     </button>
                 </TableCell>

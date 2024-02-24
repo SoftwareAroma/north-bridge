@@ -84,58 +84,68 @@ const ProductCategoriesTable = () => {
 
     const _onSubmitForm = async (e: any) => {
         e.preventDefault();
-        if (formValues.name.length < 3) {
-            setError("Invalid Category Name");
-            return;
-        }
-        const name = formValues.name;
-        const description = formValues.description;
-        const data: { name: string, description: string } = {
-            name,
-            description
-        };
-        const productCategory: AxiosResponse<any, any> = await createProductCategory(data);
-        // console.log("Login>>>", login);
-        if (productCategory.data.success === true) {
-            setOpenModal(false);
-            refetch();
-            // window.location.reload();
-        } else {
-            // if message is an array, join the array seperated by a comma
-            if (Array.isArray(productCategory.data.message)) {
-                setError(productCategory.data.message.join(', '));
-            } else {
-                setError(productCategory.data.message);
+        try {
+            if (formValues.name.length < 3) {
+                setError("Invalid Category Name");
+                return;
             }
+            const name = formValues.name;
+            const description = formValues.description;
+            const data: { name: string, description: string } = {
+                name,
+                description
+            };
+            const productCategory: AxiosResponse<any, any> = await createProductCategory(data);
+            // console.log("Login>>>", login);
+            if (productCategory.data.success === true) {
+                setOpenModal(false);
+                refetch();
+                setFormValues(initialValues);
+                // window.location.reload();
+            } else {
+                // if message is an array, join the array seperated by a comma
+                if (Array.isArray(productCategory.data.message)) {
+                    setError(productCategory.data.message.join(', '));
+                } else {
+                    setError(productCategory.data.message);
+                }
+            }
+        } catch (error) {
+            console.log(error);
         }
     }
 
     // update category
     const _updateCategory = async (e: any) => {
         e.preventDefault();
-        if (formValues.name.length < 3) {
-            setError("Invalid Category Name");
-            return;
-        }
-        const name = formValues.name;
-        const description = formValues.description;
-        const data: { name: string, description: string } = {
-            name,
-            description
-        };
-        const productCategory: AxiosResponse<any, any> = await updateProductCategory(category.id, data);
-        // console.log("productCategory >>>", productCategory);
-        if (productCategory.data.success === true) {
-            setOpenModal(false);
-            refetch();
-            // window.location.reload();
-        } else {
-            // if message is an array, join the array seperated by a comma
-            if (Array.isArray(productCategory.data.message)) {
-                setError(productCategory.data.message.join(', '));
-            } else {
-                setError(productCategory.data.message);
+        try {
+            if (formValues.name.length < 3) {
+                setError("Invalid Category Name");
+                return;
             }
+            const name = formValues.name;
+            const description = formValues.description;
+            const data: { name: string, description: string } = {
+                name,
+                description
+            };
+            const productCategory: AxiosResponse<any, any> = await updateProductCategory(category.id, data);
+            // console.log("productCategory >>>", productCategory);
+            if (productCategory.data.success === true) {
+                setOpenModal(false);
+                refetch();
+                setFormValues(initialValues);
+                // window.location.reload();
+            } else {
+                // if message is an array, join the array seperated by a comma
+                if (Array.isArray(productCategory.data.message)) {
+                    setError(productCategory.data.message.join(', '));
+                } else {
+                    setError(productCategory.data.message);
+                }
+            }
+        } catch (error) {
+            console.log(error);
         }
     }
 

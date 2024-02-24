@@ -1,11 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Alert } from 'flowbite-react';
 import { HiInformationCircle } from 'react-icons/hi';
 import { useRouter } from 'next/navigation';
-import { AxiosResponse } from 'axios';
+import { AxiosResponse, isAxiosError } from 'axios';
 import { ILoginFormValues, TQuery, getVendorProfile, loginVendor, setVendor } from "@shared";
 import { useQuery } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
@@ -23,6 +23,7 @@ const LoginPage = () => {
     const [error, setError] = React.useState('');
     const [showPassword, setShowPassword] = React.useState(false);
     const [isLogin, setIsLogIn] = React.useState(false);
+    const [isRequesting, setIsRequesting] = React.useState(false);
     const router = useRouter();
     const dispatch = useDispatch();
 
@@ -49,36 +50,52 @@ const LoginPage = () => {
             return;
         }
 
-        const data: { email: string, password: string } = {
-            email,
-            password
-        };
-        const login: AxiosResponse<any, any> = await loginVendor(data);
-        // console.log("Login>>>", login);
-        if (login.data.success === true) {
-            // navigate to the vendor dashboard
-            // Queries
-            setIsLogIn(true);
-            router.push('/vendor/');
-        } else {
-            // if message is an array, join the array seperated by a comma
-            if (Array.isArray(login.data.message)) {
-                setError(login.data.message.join(', '));
+        try {
+            setIsRequesting(true);
+            const _data: { email: string, password: string } = {
+                "email": email,
+                "password": password
+            };
+            const login: AxiosResponse<any, any> = await loginVendor(_data);
+            // console.log("Login>>>", login);
+            if (login.data.success === true) {
+                setIsLogIn(true);
+                setIsRequesting(false);
+
+                /// reload the screen
+                window.location.reload();
             } else {
-                setError(login.data.message);
+                setIsRequesting(false);
+                // if message is an array, join the array seperated by a comma
+                if (Array.isArray(login.data.message)) {
+                    setError(login.data.message.join(', '));
+                } else {
+                    setError(login.data.message);
+                }
+            }
+        } catch (_error) {
+            // console.log(_error);
+            setIsRequesting(false);
+            if (isAxiosError(_error)) {
+                if (Array.isArray(_error?.response?.data.message)) {
+                    setError(_error?.response.data.message.join(', '));
+                } else {
+                    setError(_error?.response?.data.message);
+                }
             }
         }
     }
 
-    const { data }: TQuery = useQuery({
+    const { data } = useQuery({
         queryKey: ['vendorProfile'],
         queryFn: getVendorProfile,
         enabled: true,
     });
 
     useMemo(() => {
-        if (data) {
+        if (data?.data.data.vendor) {
             dispatch(setVendor(data?.data.data.vendor));
+            router.push('/vendor/');
         }
     }, [data, isLogin]);
 
@@ -167,13 +184,19 @@ const LoginPage = () => {
                                 Lost Password?
                             </Link>
                         </div>
-                        <button
-                            type="submit"
-                            className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                            onClick={submitForm}
-                        >
-                            Login
-                        </button>
+                        {
+                            isRequesting ?
+                                <div className="flex flex-row justify-center items-center px-4 py-2">
+                                    {/* spin progress indicator */}
+                                    <div className="w-4 h-4 border-t-2 border-b-2 border-blue-500 rounded-full animate-spin"></div>
+                                </div> : <button
+                                    type="submit"
+                                    className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                    onClick={submitForm}
+                                >
+                                    Login
+                                </button>
+                        }
                         <div className="text-sm font-medium text-gray-500 dark:text-gray-300 flex flex-row justify-center items-center">
                             Not registered?
                             <Link href="/vendor/auth/register/" className="text-blue-700 hover:underline dark:text-blue-500 mx-4">
