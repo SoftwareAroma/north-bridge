@@ -44,6 +44,7 @@ export type IProduct = {
     storeId: string;
     createdAt: string;
     updatedAt: string;
+    images: any[]; // You might want to replace `any[]` with the actual type for categories
     categories: any[]; // You might want to replace `any[]` with the actual type for categories
 }
 

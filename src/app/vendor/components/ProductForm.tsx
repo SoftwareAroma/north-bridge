@@ -1,14 +1,11 @@
 'use client';
 import { IProductCategory, createProduct, getProductCategories, getStoreCategories, updateProduct } from '@shared';
 import { useQuery } from '@tanstack/react-query';
-import Image from 'next/image';
 import { Alert, Button, Label, TextInput, Textarea } from 'flowbite-react';
-import { Dispatch, Key, SetStateAction, useCallback, useEffect, useMemo, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { HiInformationCircle } from 'react-icons/hi';
-import AddToPhotosOutlinedIcon from '@mui/icons-material/AddToPhotosOutlined';
-import { IconButton } from '@mui/material';
-import axios, { AxiosError, isAxiosError } from 'axios';
+import axios, { isAxiosError } from 'axios';
 
 const initialValues = {
     "name": "",
@@ -19,17 +16,6 @@ const initialValues = {
     "images": [],
     "storeId": "",
     "category": ""
-};
-
-type InProduct = {
-    name: string;
-    description: string;
-    amount: number;
-    currency: string;
-    quantity: number;
-    images: string[];
-    storeId: string;
-    category: string;
 };
 
 type ProductFormProps = {
@@ -132,40 +118,34 @@ const ProductForm = (props: ProductFormProps) => {
                 return;
             }
 
-            const formData = new FormData();
-
-            formData.append("name", formValues.name);
-            formData.append("description", formValues.description);
-            formData.append("price", JSON.stringify({
-                currency: formValues.currency,
-                amount: parseFloat(formValues.amount.toString()),
-            }));
-            formData.append("categories", JSON.stringify([
-                formValues.category,
-            ]));
-            formData.append("quantity", formValues.quantity);
-            formData.append("storeId", storeId);
-            // formData.append("images", JSON.stringify([]));
+            const formData: any = axios.toFormData({
+                'name': formValues.name,
+                "description": formValues.description,
+                "price": {
+                    currency: formValues.currency,
+                    amount: formValues.amount,
+                },
+                "categories": [
+                    formValues.category,
+                ],
+                "quantity": formValues.quantity,
+                "storeId": storeId.length > 0 ? storeId : null,
+                "images": [],
+                "rating": "1.0",
+            });
             // add images
-            files.forEach((file: any) => {
+            files?.forEach((file: any) => {
                 formData.append('files', file, file.name);
             });
 
-            return await updateProduct(product.id, formData)
-                .then((response) => {
-                    if (response.data.success === true) {
-                        setInfo(response.data.message);
-                        setFormValues(initialValues);
-                        closeModal;
-                    } else {
-                        setInfo(response.data.message);
-                    }
-                })
-                .catch((error) => {
-                    if (isAxiosError(error)) {
-                        setError(error.response?.data.message);
-                    }
-                });
+            const response = await updateProduct(product.id, formData);
+            if (response.data.success === true) {
+                setInfo(response.data.message);
+                setFormValues(initialValues);
+                closeModal && closeModal();
+            } else {
+                setInfo(response.data.message);
+            }
         } catch (_error) {
             console.log("error >>>> ", _error);
             if (isAxiosError(_error)) {
@@ -218,7 +198,6 @@ const ProductForm = (props: ProductFormProps) => {
     return (
         <div className="w-full">
             <div className="w-full flex flex-col items-start">
-
                 {
                     error &&
                     <Alert
@@ -283,7 +262,7 @@ const ProductForm = (props: ProductFormProps) => {
                                 id="currency"
                                 type="text"
                                 name='currency'
-                                value={formValues.currency}
+                                value={isEdditing ? product.price.currency : formValues.currency}
                                 onChange={handleFormChange}
                                 placeholder="GHS"
                                 className='w-full'
@@ -296,7 +275,7 @@ const ProductForm = (props: ProductFormProps) => {
                                 id="amount"
                                 type="number"
                                 name='amount'
-                                value={formValues.amount}
+                                value={isEdditing ? product.price.amount : formValues.amount}
                                 onChange={handleFormChange}
                                 placeholder="Amount"
                                 className='w-full'
@@ -338,7 +317,8 @@ const ProductForm = (props: ProductFormProps) => {
                             value={formValues.description}
                             onChange={handleFormChange}
                             placeholder="Something about the product..."
-                            required rows={4}
+                            required
+                            rows={4}
                         />
                     </div>
 
@@ -367,7 +347,7 @@ const ProductForm = (props: ProductFormProps) => {
                                     </button>
                                 }
                                 {
-                                    files.map((file: any) => (
+                                    files?.map((file: any) => (
                                         <div
                                             key={file.name}
                                             className="rounded-md w-100 h-100"

@@ -1,5 +1,6 @@
 'use client';
 import {
+    Modal,
     Table,
     TableBody,
     TableHead,
@@ -7,28 +8,31 @@ import {
 } from 'flowbite-react';
 import TableItem from './TableItem';
 import { useSelector } from 'react-redux';
-import { deleteProduct } from '@/shared';
-import { useMemo } from 'react';
+import { IProduct, IStore, deleteProduct } from '@/shared';
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import ProductForm from './ProductForm';
 
 const ProductsTable = () => {
-
     const vendor = useSelector((state: any) => state.vendor.vendor);
-    const products: any = [];
+    const [products, setProducts]: [
+        IProduct[] | null,
+        Dispatch<SetStateAction<IProduct[] | null>>
+    ] = useState<IProduct[] | null>([]);
+    const router = useRouter();
+    const [openProductModal, setOpenProductModal] = useState(false);
+    const [product, setProduct]: [IProduct | null, Dispatch<SetStateAction<IProduct | null>>] = useState<IProduct | null>(null);
 
     // map through the stores and add the products to the products array
-    useMemo(() => {
-        vendor?.stores.map((store: any) => {
-            store.products.map((product: any) => {
-                products.push(product);
-            });
-        });
+    useEffect(() => {
+        setProducts(vendor?.stores.map((store: IStore) => store.products).flat());
     }, [vendor]);
 
     const _productDeletion = async (id: string) => {
         try {
             const response = await deleteProduct(id);
             if (response.data.success === true) {
-                console.log(response.data);
+                // console.log(response.data);
                 // refresh the page
                 window.location.reload();
             }
@@ -50,7 +54,7 @@ const ProductsTable = () => {
                 </TableHead>
                 <TableBody className="divide-y">
                     {
-                        products.map((product: any, index: number) => {
+                        products?.map((product: any, index: number) => {
                             return (
                                 <TableItem
                                     key={index}
@@ -58,15 +62,41 @@ const ProductsTable = () => {
                                     quantity={product.quantity}
                                     amount={product.price.amount}
                                     currency={product.price.currency}
-                                    onDelete={_productDeletion.bind(this, product.id)}
+                                    onDelete={() => _productDeletion(product.id)}
                                     onEdit={() => { }}
-                                    onClick={() => { }}
+                                    onClick={() => {
+                                        router.push(`/vendor/product/${product.id}`);
+                                    }}
                                 />
                             );
                         })
                     }
                 </TableBody>
             </Table>
+
+            {/* add product modal */}
+            <Modal
+                show={openProductModal}
+                size="2xl" onClose={() => setOpenProductModal(false)}
+                popup
+            >
+                <Modal.Header />
+                <Modal.Body>
+                    <div className="text-center w-full">
+                        <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400 uppercase">
+                            {product != null ? 'Update Product' : 'Add Product to Store'}
+                        </h3>
+                        <div className="my-4 w-full">
+                            <ProductForm
+                                isEdditing={!(product == null)}
+                                product={product}
+                                closeModal={() => setOpenProductModal(false)}
+                                storeId={product?.storeId ?? ''}
+                            />
+                        </div>
+                    </div>
+                </Modal.Body>
+            </Modal>
         </div>
     );
 }

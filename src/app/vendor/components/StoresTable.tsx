@@ -66,7 +66,7 @@ const StoresTable = () => {
                                     name={store.name}
                                     address={store.address}
                                     location={store.location}
-                                    onDelete={_storeDeletion.bind(this, store.id)}
+                                    onDelete={() => _storeDeletion(store.id)}
                                     onEdit={() => {
                                         console.log("edit store clicked");
                                         setOpenStoreModal(true);

@@ -3,18 +3,21 @@
 import { IProduct, IStore, getStore } from '@shared';
 import { useQuery } from '@tanstack/react-query';
 import React, { Dispatch, SetStateAction, useMemo, useState } from 'react';
-import LoadingSkeleton from '../../components/LoadingSkeleton';
+import LoadingSkeleton from '@/shared/components/LoadingSkeleton';
 import { Modal, Table, TableBody, TableHead, TableHeadCell } from 'flowbite-react';
 import TableItem from '../../components/TableItem';
 import ProductForm from '../../components/ProductForm';
 import { Fab } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import { useRouter } from 'next/navigation';
 
 const StoreView = ({ params }: { params: { id: string } }) => {
     const { id } = params;
     const [openProductModal, setOpenProductModal] = useState(false);
     const [product, setProduct]: [IProduct | null, Dispatch<SetStateAction<IProduct | null>>] = useState<IProduct | null>(null);
     const [store, setStore]: [IStore | null, Dispatch<SetStateAction<IStore | null>>] = useState<IStore | null>(null);
+
+    const router = useRouter();
 
     const getStoreDetail = async () => {
         return await getStore(id);
@@ -72,12 +75,14 @@ const StoreView = ({ params }: { params: { id: string } }) => {
                                                     quantity={product.quantity}
                                                     amount={product.price.amount}
                                                     currency={product.price.currency}
-                                                    onDelete={_productDelete.bind(this, product.id)}
+                                                    onDelete={() => _productDelete(product.id)}
                                                     onEdit={() => {
                                                         setProduct(product);
                                                         setOpenProductModal(true);
                                                     }}
-                                                    onClick={() => { }}
+                                                    onClick={() => {
+                                                        router.push(`/vendor/stores/${id}/${product.id}`);
+                                                    }}
                                                 />
                                             );
                                         })
