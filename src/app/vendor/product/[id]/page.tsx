@@ -1,10 +1,10 @@
 'use client';
 
 import { IProduct, getProduct } from '@/shared';
-import LoadingSkeleton from '@/shared/components/LoadingSkeleton';
 import { useQuery } from '@tanstack/react-query';
 import React, { Dispatch, SetStateAction, useMemo, useState } from 'react';
 import ProductDetailView from '../../components/ProductDetailView';
+import LoadingSkeleton from '../../components/LoadingSkeleton';
 
 const VendorProductPage = ({ params }: { params: { id: string } }) => {
     const { id } = params;

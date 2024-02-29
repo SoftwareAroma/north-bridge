@@ -1,6 +1,9 @@
+import { IProduct, IUser } from '@/shared/types';
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = {
+const initialState: {
+    user: IUser | null,
+} = {
     user: null,
 }
 
@@ -15,6 +18,8 @@ export const userSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setUser } = userSlice.actions;
+export const {
+    setUser,
+} = userSlice.actions;
 
 export default userSlice.reducer;

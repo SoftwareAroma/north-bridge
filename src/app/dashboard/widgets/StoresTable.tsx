@@ -13,7 +13,7 @@ import { IStore, deleteStore, getStores } from '@/shared';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { TableCell, TableRow } from 'flowbite-react';
-import LoadingSkeleton from '@/shared/components/LoadingSkeleton';
+import LoadingSkeleton from '@/app/vendor/components/LoadingSkeleton';
 
 
 const StoresTable = () => {

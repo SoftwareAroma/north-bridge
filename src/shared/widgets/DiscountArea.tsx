@@ -14,28 +14,28 @@ const DiscountArea = () => {
                         <DiscountCard
                             description="Explore Our Furniture &amp; Home Furnishing Range"
                             amount={100}
-                            currency="$"
+                            currency="GH¢"
                             image={"/images/sofa-min.png"}
                         />
 
                         <DiscountCard
                             description="Explore Our Furniture &amp; Home Furnishing Range"
                             amount={29}
-                            currency="$"
+                            currency="GH¢"
                             image={"/images/book-min.png"}
                         />
 
                         <DiscountCard
                             description="Explore Our Furniture &amp; Home Furnishing Range"
                             amount={67}
-                            currency="$"
+                            currency="GH¢"
                             image={"/images/shirt-min.png"}
                         />
 
                         <DiscountCard
                             description="Explore Our Furniture &amp; Home Furnishing Range"
                             amount={59}
-                            currency="$"
+                            currency="GH¢"
                             image={"/images/bug-book-min.png"}
                         />
                     </div>

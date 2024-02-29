@@ -2,7 +2,6 @@
 
 'use client';
 import {
-    Modal,
     Table,
     TableBody,
     TableHead,
@@ -13,7 +12,7 @@ import { IVendor, deleteVendor, getVendors } from '@/shared';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { TableCell, TableRow } from 'flowbite-react';
-import LoadingSkeleton from '@/shared/components/LoadingSkeleton';
+import LoadingSkeleton from '@/app/vendor/components/LoadingSkeleton';
 
 
 const VendorsTable = () => {

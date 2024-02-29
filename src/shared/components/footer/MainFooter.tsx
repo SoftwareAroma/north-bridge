@@ -1,7 +1,5 @@
 import React from 'react';
 import CopyRight from './CopyRight';
-import AcceptedPayments from './AcceptedPayments';
-import AcceptedPaymentCards from './AcceptedPaymentCards';
 import FooterAboutUsNav from './FooterAboutUsNav';
 import FooterServicesNav from './FooterServicesNav';
 import FooterHelpNav from './FooterHelpNav';
@@ -17,11 +15,11 @@ const MainFooter = () => {
                         <div className="footer-columns">
                             <div className="footer-about-us mb-30">
                                 <Logo />
-                                <p className="footer-paragraph mb-40">
+                                <p className="footer-paragraph mb-40 mt-4">
                                     Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis
                                     enim velit mollit.
                                 </p>
-                                <AcceptedPaymentCards />
+                                {/* <AcceptedPaymentCards /> */}
                                 <br />
                                 {/* uncomment to show toggle theme button */}
                                 {/* <ThemeSwitcher /> */}
@@ -30,15 +28,10 @@ const MainFooter = () => {
                             <FooterAboutUsNav />
                             <FooterServicesNav />
                             <FooterHelpNav />
-                            <AcceptedPayments />
+                            {/* <AcceptedPayments /> */}
                         </div>
                     </div>
                     <CopyRight />
-                </div>
-                <div className="courser-area clickable-off">
-                    <div className="courser-wrap">
-                        <div className="cursor-text">Drag</div>
-                    </div>
                 </div>
             </div>
         </React.Fragment>

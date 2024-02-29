@@ -1,31 +1,17 @@
-import {configureStore, EnhancedStore, StoreEnhancer, ThunkDispatch, Tuple} from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import userReducer from "./reducers/UserReducer";
 import adminReducer from "./reducers/AdminReducer";
 import vendorReducer from "./reducers/VendorReducer";
-import {UnknownAction} from "redux";
+import cartReducer from "./reducers/CartReducer";
+import wishListReducer from "./reducers/WishListReducer";
 
-const store: EnhancedStore<
-    {
-        user: { user: null },
-        admin: { admin: null },
-        vendor: { vendor: null }
-    },
-    UnknownAction,
-    Tuple<[
-        StoreEnhancer<{
-            dispatch: ThunkDispatch<
-                {
-                    user: { user: null },
-                    admin: { admin: null },
-                    vendor: { vendor: null }
-                }, undefined, UnknownAction>
-        }
-        >, StoreEnhancer
-    ]>> = configureStore({
+const store = configureStore({
     reducer: {
         user: userReducer,
         admin: adminReducer,
         vendor: vendorReducer,
+        cart: cartReducer,
+        wishList: wishListReducer,
     },
 });
 

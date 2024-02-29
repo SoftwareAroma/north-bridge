@@ -55,10 +55,13 @@ export type IStore = {
     phone: string;
     address: string;
     location: string;
+    deliveryTime?: string;
+    thumbnail: any;
     vendorId: string;
     createdAt: string;
     updatedAt: string;
     products: IProduct[];
+    images: any[];
     categories: [];
 }
 
@@ -78,6 +81,23 @@ export type IVendor = {
     createdAt: string;
     updatedAt: string;
     stores: IStore[];
+}
+
+export type IAdmin = {
+    id: string;
+    email: string;
+    password: string;
+    userName: string;
+    firstName: string;
+    lastName: string;
+    otherName: string;
+    phone: string;
+    salt: string;
+    isActive: boolean;
+    isEmailVerified: boolean;
+    role: string;
+    createdAt: string;
+    updatedAt: string;
 }
 
 export type IUser = {
@@ -102,6 +122,7 @@ export type IProductCategory = {
     id: string,
     name: string,
     description: string,
+    image?: string,
     productId?: string,
     product?: IProduct,
     createdAt?: string,
@@ -117,4 +138,11 @@ export type IStoreCategory = {
     createdAt?: string,
     updatedAt?: string,
 }
+
+export type IState = {
+    user: { user: IUser | null },
+    admin: { admin: IAdmin | null },
+    vendor: { vendor: IVendor | null }
+}
+
 

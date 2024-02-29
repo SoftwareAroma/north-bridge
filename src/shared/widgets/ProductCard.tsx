@@ -1,11 +1,14 @@
-import Link from 'next/link';
+
 import React from 'react';
 import WishListIcon from './WishListIcon';
 import RatingStarIcon from './RatingStar';
 import { Rating } from 'flowbite-react';
+import { useRouter } from 'next/navigation';
 
 const ProductCard = (props: any) => {
     const {
+        id,
+        category = 'category',
         image,
         name,
         price,
@@ -14,12 +17,18 @@ const ProductCard = (props: any) => {
         description,
         isExt,
         isCursorOff = true,
-        showShadow = false
+        showShadow = false,
+        onAddToCart,
     } = props;
+
+    const router = useRouter();
+
     return (
         <React.Fragment>
             <div
-                className={`product-single-item swiper-slide bg-white dark:bg-gray-950 ${showShadow ? "shadow-md" : ""}`}
+                className={
+                    `product-single-item swiper-slide bg-white dark:bg-gray-950 ${showShadow ? "shadow-md" : ""}`
+                }
             >
                 <div className={`product-thumbnail-wrap ${isCursorOff ? 'cursor-off' : ''}`}>
                     <img
@@ -33,7 +42,7 @@ const ProductCard = (props: any) => {
                     </div>
                 </div>
                 <div className="product-content px-2 py-1">
-                    <div className="product-title-wrap">
+                    <div onClick={() => router.push(`/products/${category}/${id}`)} className="product-title-wrap">
                         <h3 className="product-title">{name}</h3>
                         <div className="product-price">
                             <span className="text-span">{currency ?? "GH¢"}</span>
@@ -56,11 +65,11 @@ const ProductCard = (props: any) => {
                     </div>
                     <div className="is-magnetic">
                         <div className="btn-wrapper">
-                            <Link href="#" className="primary-button border cart-button w-inline-block">
+                            <button onClick={onAddToCart} className="primary-button border cart-button w-inline-block">
                                 <div className="button-content">
                                     <div className="button-color color-black">Add to Cart</div>
                                 </div>
-                            </Link>
+                            </button>
                         </div>
                     </div>
                 </div>

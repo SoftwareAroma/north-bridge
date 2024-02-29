@@ -1,10 +1,33 @@
 'use client';
 
 import Link from 'next/link';
-import React from 'react';
+import React, { useMemo } from 'react';
 import Logo from '../Logo';
+import { useQuery } from '@tanstack/react-query';
+import { IProductCategory, getProductCategories } from '@/shared';
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
+    const [show, setShow] = React.useState(false);
+    const [categories, setCategories] = React.useState([]);
+    const cart = useSelector((state: any) => state.cart.cart);
+
+    const handleShow = () => {
+        setShow(!show);
+    }
+
+    const { data } = useQuery({
+        queryKey: ['categories'],
+        queryFn: getProductCategories,
+        enabled: true,
+    });
+
+    useMemo(() => {
+        if (data?.data.data.productCategories) {
+            setCategories(data?.data.data.productCategories);
+        }
+    }, [data]);
+
     return (
         <React.Fragment>
             <section className="navbar-logo-left">
@@ -15,32 +38,65 @@ const Navbar = () => {
                             <Logo />
                             <nav role="navigation" className="nav-menu-wrapper w-nav-menu">
                                 <ul role="list" className="nav-menu-two w-list-unstyled">
+                                    {/* categories menu with dropdown */}
                                     <li>
-                                        <div className="link-list-dropdown-wrapper w-dropdown">
-                                            <div className="link-list-dropdown-toggle w-dropdown-toggle">
-                                                <div className="text-block-7">Category</div>
-                                                <div className="link-list-dropdown-icon w-embed">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12">
-                                                        <g className="nc-icon-wrapper" fill="currentColor">
-                                                            <path d="M10.293,3.293,6,7.586,1.707,3.293A1,1,0,0,0,.293,4.707l5,5a1,1,0,0,0,1.414,0l5-5a1,1,0,1,0-1.414-1.414Z"
-                                                                fill="currentColor"></path>
-                                                        </g>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                            <nav className="navmenu-dropdown w-dropdown-list">
-                                                {/* category list */}
-                                            </nav>
-                                        </div>
+                                        <li
+                                            className="nav-link no-underline relative cursor-default"
+                                            onMouseEnter={handleShow}
+                                        // onMouseLeave={handleShow}
+                                        >
+                                            Categories
+                                        </li>
+                                        {
+                                            show && (
+                                                <ul
+                                                    className="absolute bg-white shadow-md px-4 py-2 flex flex-col justify-start items-start"
+                                                    onMouseLeave={handleShow}
+                                                >
+                                                    {
+                                                        categories?.map((category: IProductCategory) => {
+                                                            return (
+                                                                <li
+                                                                    key={category.id}
+                                                                    className='capitalize text-sm hover:text-primary cursor-pointer w-full py-2 px-2 text-gray-800 transition duration-300 ease-in-out hover:bg-gray-100'
+                                                                >
+                                                                    <Link
+                                                                        href={`/products/${category.name}`}
+                                                                        className="nav-link no-underline"
+                                                                    >
+                                                                        {category.name}
+                                                                    </Link>
+                                                                </li>
+                                                            );
+                                                        })
+                                                    }
+                                                </ul>
+                                            )
+                                        }
                                     </li>
                                     <li>
-                                        <a href="#" className="nav-link">Deals</a>
+                                        <Link
+                                            href="#"
+                                            className="nav-link no-underline"
+                                        >
+                                            Deals
+                                        </Link>
                                     </li>
                                     <li className="d-ipad-pro-none">
-                                        <a href="#" className="nav-link">What&apos;s New</a>
+                                        <Link
+                                            href="/products/"
+                                            className="nav-link no-underline"
+                                        >
+                                            What&apos;s New
+                                        </Link>
                                     </li>
                                     <li className="d-ipad-pro-none">
-                                        <a href="#" className="nav-link">Delivery</a>
+                                        <Link
+                                            href="#"
+                                            className="nav-link no-underline"
+                                        >
+                                            Delivery
+                                        </Link>
                                     </li>
                                 </ul>
                                 <div className="search">
@@ -81,14 +137,21 @@ const Navbar = () => {
                                     </div>
                                     <div>Account</div>
                                 </Link>
-                                <a href="/checkout/" className="nav-right-link mr-45 w-inline-block">
+                                <Link href="/cart/" className="nav-right-link mr-45 w-inline-block">
                                     <div className="nav-icon">
                                         <img
-                                            src="/images/shopping-cart-add.png" loading="lazy"
-                                            alt="" />
+                                            src="/images/shopping-cart-add.png"
+                                            loading="lazy"
+                                            alt="cart_icon"
+                                        />
                                     </div>
-                                    <div>Cart</div>
-                                </a>
+                                    {/* cart with number badge */}
+                                    {
+                                        cart ? <div className="bg-red-500 px-2 py-1 text-white">
+                                            {cart?.length}
+                                        </div> : <div>Cart</div>
+                                    }
+                                </Link>
                             </div>
                             <div className="menu-button w-nav-button">
                                 <div className="w-icon-nav-menu"></div>

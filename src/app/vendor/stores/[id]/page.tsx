@@ -3,7 +3,7 @@
 import { IProduct, IStore, getStore } from '@shared';
 import { useQuery } from '@tanstack/react-query';
 import React, { Dispatch, SetStateAction, useMemo, useState } from 'react';
-import LoadingSkeleton from '@/shared/components/LoadingSkeleton';
+import LoadingSkeleton from '@/app/vendor/components/LoadingSkeleton';
 import { Modal, Table, TableBody, TableHead, TableHeadCell } from 'flowbite-react';
 import TableItem from '../../components/TableItem';
 import ProductForm from '../../components/ProductForm';

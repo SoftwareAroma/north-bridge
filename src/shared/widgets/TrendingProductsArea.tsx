@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 
 const TrendingProductsArea = () => {
@@ -29,11 +30,13 @@ const TrendingProductsArea = () => {
                                     Delivery with in 24 hours
                                 </div>
                                 <div className="is-magnetic">
-                                    <div className="btn-wrapper"><a href="#" className="primary-button black w-inline-block">
-                                        <div className="button-content">
-                                            <div className="button-color">Shop Now</div>
-                                        </div>
-                                    </a></div>
+                                    <div className="btn-wrapper">
+                                        <Link href="/products/" className="no-underline primary-button black w-inline-block">
+                                            <div className="button-content">
+                                                <div className="button-color">Shop Now</div>
+                                            </div>
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -54,11 +57,11 @@ const TrendingProductsArea = () => {
                                 </div>
                                 <div className="is-magnetic">
                                     <div className="btn-wrapper">
-                                        <a href="#" className="primary-button black w-inline-block">
+                                        <Link href="/products/" className="no-underline primary-button black w-inline-block">
                                             <div className="button-content">
                                                 <div className="button-color">Shop Now</div>
                                             </div>
-                                        </a>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>

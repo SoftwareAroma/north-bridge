@@ -1,6 +1,28 @@
-import React from 'react';
+'use client';
+
+import React, { useMemo } from 'react';
+import { IStore, getStores } from '@shared';
+import { useQuery } from '@tanstack/react-query';
+import BestSellingStoreCard from './BestSellingStoreCard';
 
 const BestSellingStore = () => {
+
+    const [stores, setStores] = React.useState([]);
+
+    const { data, isLoading } = useQuery({
+        queryKey: ['stores'],
+        queryFn: getStores,
+        enabled: true,
+    });
+
+    // console.log('categories >>> ', data);
+
+    useMemo(() => {
+        if (data?.data.data.stores) {
+            setStores(data?.data.data.stores);
+        }
+    }, [data]);
+
     return (
         <React.Fragment>
             <section className="best-selling-store-area">
@@ -9,133 +31,38 @@ const BestSellingStore = () => {
                         <h3 className="section-title mb-40">Best Selling Store</h3>
                     </div>
                     <div className="best-selling-store-item-wrap">
-                        <div className="best-selling-single-item">
-                            <div className="best-selling-thumbnail-wrap">
-                                <img
-                                    src="/images/store one-min.png" loading="lazy" alt=""
-                                    className="best-selling-image" /></div>
-                            <div className="best-selling-content">
-                                <div className="store-thumbnail-wrap">
-                                    <img
-                                        src="/images/Ellipse 287.png"
-                                        loading="lazy"
-                                        alt=""
-                                    />
+                        {
+                            (isLoading) && (
+                                <div className='space-y-2'>
+                                    <div className="animate-pulse flex items-center space-x-4">
+                                        <div className="w-3/4 h-4 bg-gray-200 dark:bg-gray-800 rounded-full"></div>
+                                    </div>
+                                    <div className="animate-pulse flex items-center space-x-4">
+                                        <div className="w-3/4 h-4 bg-gray-200 dark:bg-gray-800 rounded-full"></div>
+                                    </div>
+                                    <div className="animate-pulse flex items-center space-x-4">
+                                        <div className="w-3/4 h-4 bg-gray-200 dark:bg-gray-800 rounded-full"></div>
+                                    </div>
                                 </div>
-                                <h3 className="selling-store-title">Staples</h3>
-                                <div className="selling-category-wrap">
-                                    <div className="selliing-category">Bag</div>
-                                    <div className="dot"></div>
-                                    <div className="selliing-category">Perfume</div>
-                                </div>
-                                <div className="selling-paragraph-wrap">
-                                    <img
-                                        src="/images/Icon.png" loading="lazy"
-                                        alt=""
-                                        className="image"
-                                    />
-                                    <div className="trending-product-paragraph-two">Delivery with in 24 hours</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="best-selling-single-item">
-                            <div className="best-selling-thumbnail-wrap">
-                                <img
-                                    src="/images/store two-min.png"
-                                    loading="lazy"
-                                    alt=""
-                                    className="best-selling-image"
-                                />
-
-                            </div>
-                            <div className="best-selling-content">
-                                <div className="store-thumbnail-wrap">
-                                    <img
-                                        src="/images/Ellipse 287-1.png"
-                                        loading="lazy"
-                                        alt=""
-                                    />
-
-                                </div>
-                                <h3 className="selling-store-title">Now Delivery</h3>
-                                <div className="selling-category-wrap">
-                                    <div className="selliing-category">Bag</div>
-                                    <div className="dot"></div>
-                                    <div className="selliing-category">Perfume</div>
-                                </div>
-                                <div className="selling-paragraph-wrap">
-                                    <img
-                                        src="/images/Icon.png" loading="lazy" alt=""
-                                        className="image"
-                                    />
-                                    <div className="trending-product-paragraph-two">Delivery with in 24 hours</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="best-selling-single-item">
-                            <div className="best-selling-thumbnail-wrap">
-                                <img
-                                    src="/images/store three-min.png"
-                                    loading="lazy"
-                                    alt=""
-                                    className="best-selling-image"
-                                />
-                            </div>
-                            <div className="best-selling-content">
-                                <div className="store-thumbnail-wrap">
-                                    <img
-                                        src="/images/Ellipse 287-2.png"
-                                        loading="lazy"
-                                        alt=""
-                                    />
-                                </div>
-                                <h3 className="selling-store-title">Bevmo</h3>
-                                <div className="selling-category-wrap">
-                                    <div className="selliing-category">Bag</div>
-                                    <div className="dot"></div>
-                                    <div className="selliing-category">Perfume</div>
-                                </div>
-                                <div className="selling-paragraph-wrap">
-                                    <img
-                                        src="/images/Icon.png" loading="lazy" alt=""
-                                        className="image"
-                                    />
-                                    <div className="trending-product-paragraph-two">Delivery with in 24 hours</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="best-selling-single-item">
-                            <div className="best-selling-thumbnail-wrap">
-                                <img
-                                    src="/images/store four-min.png"
-                                    loading="lazy"
-                                    alt=""
-                                    className="best-selling-image"
-                                />
-                            </div>
-                            <div className="best-selling-content">
-                                <div className="store-thumbnail-wrap">
-                                    <img
-                                        src="/images/Ellipse 287-3.png" loading="lazy"
-                                        alt="" />
-                                </div>
-                                <h3 className="selling-store-title">Quicklly</h3>
-                                <div className="selling-category-wrap">
-                                    <div className="selliing-category">Bag</div>
-                                    <div className="dot"></div>
-                                    <div className="selliing-category">Perfume</div>
-                                </div>
-                                <div className="selling-paragraph-wrap">
-                                    <img
-                                        src="/images/Icon.png"
-                                        loading="lazy"
-                                        alt=""
-                                        className="image"
-                                    />
-                                    <div className="trending-product-paragraph-two">Delivery with in 24 hours</div>
-                                </div>
-                            </div>
-                        </div>
+                            )
+                        }
+                        {
+                            stores.map((store: IStore, index: number) => {
+                                // console.log('store >>> ', store);
+                                if (index < 4) {
+                                    return (
+                                        <BestSellingStoreCard
+                                            key={index}
+                                            image={"/images/store one-min.png"}
+                                            thumbnail={store?.thumbnail ?? "/images/Ellipse 287.png"}
+                                            title={store.name}
+                                            categories={store.categories}
+                                            tagline={store?.deliveryTime ?? "Delivery with in 24 hours"}
+                                        />
+                                    );
+                                }
+                            })
+                        }
                     </div>
                 </div>
             </section>

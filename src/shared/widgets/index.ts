@@ -15,3 +15,4 @@ export * from './ServiceHelpArea';
 export * from './TopCategories';
 export * from './TrendingProductsArea';
 export * from './WishListIcon';
+export * from './BestSellingStoreCard';
