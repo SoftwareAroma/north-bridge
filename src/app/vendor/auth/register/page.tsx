@@ -2,12 +2,11 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { AxiosResponse, isAxiosError } from 'axios';
 import { Alert } from 'flowbite-react';
 import { HiInformationCircle } from 'react-icons/hi';
 import {
-    IVendorRegisterData,
     IVendorRegisterFormValues,
     getVendorProfile,
     registerVendor,
@@ -249,6 +248,7 @@ const RegisterPage = () => {
                                 </div> : <button
                                     type="submit"
                                     className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                    onClick={submitForm}
                                 >
                                     Register
                                 </button>

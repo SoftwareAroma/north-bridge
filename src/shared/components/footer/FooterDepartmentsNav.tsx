@@ -25,8 +25,8 @@ const FooterDepartmentsNav = () => {
 
     return (
         <React.Fragment>
-            <div className="footer-nav">
-                <h2 className="footer-menu-title">Categories</h2>
+            <div className="flex flex-col bg-[#f5f6f6] rounded-md shadow-sm px-4 py-4">
+                <h2 className="footer-menu-title cursor-pointer">Categories</h2>
                 <ul role="list" className="footer-menu-list w-list-unstyled">
                     {
                         (isLoading) && (
@@ -44,9 +44,19 @@ const FooterDepartmentsNav = () => {
                         )
                     }
                     {
-                        (!isLoading && data) && categories?.map((category: IProductCategory) => (
-                            <li key={category.id} className="list-item">{category.name}</li>
-                        ))
+                        (!isLoading && data) && categories?.map((category: IProductCategory, index: number) => {
+                            // sort and choose five at random
+                            // categories.sort(() => Math.random() - 0.5);
+
+                            // return for the first 5 categories
+                            if (index < 5) {
+                                return (
+                                    <li key={category.id} className="list-item cursor-pointer">
+                                        {category.name}
+                                    </li>
+                                );
+                            }
+                        })
                     }
                 </ul>
             </div>

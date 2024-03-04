@@ -45,9 +45,9 @@ const ProductCard = (props: any) => {
                     <div onClick={() => router.push(`/products/${category}/${id}`)} className="product-title-wrap">
                         <h3 className="product-title">{name}</h3>
                         <div className="product-price">
-                            <span className="text-span">{currency ?? "GH¢"}</span>
+                            <p className="text-span">{currency ?? "GH¢"}</p>
                             {price}
-                            <span className="text-span">{isExt ? ".00" : ""}</span>
+                            <p className="text-span">{isExt ? ".00" : ""}</p>
                         </div>
                     </div>
                     <div className="product-color">{description}</div>

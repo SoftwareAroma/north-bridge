@@ -23,7 +23,7 @@ const initialState = {
 
 const CheckoutView = () => {
     const [formValues, setFormValues] = React.useState(initialState);
-    const [paymentPayload, setPaymentPayload] = React.useState({} as any);
+    const [paymentPayload, setPaymentPayload] = React.useState({});
     const [isRequesting, setIsRequesting] = React.useState(false);
     const [error, setError] = React.useState('');
     const [info, setInfo] = React.useState('');
@@ -37,6 +37,8 @@ const CheckoutView = () => {
 
     const cart = useSelector((state: any) => state.cart.cart);
     const user = useSelector((state: any) => state.user.user);
+
+    // console.log("Response>>>", paymentPayload);
 
     const calculateTotal = () => {
         let subTotal = 0;
@@ -79,10 +81,9 @@ const CheckoutView = () => {
             // console.log("Response>>>", response);
             if (response.data.success === true) {
                 setInfo(response.data.message);
-                setPaymentPayload(response?.data.data.payload.data);
                 setIsRequesting(false);
                 // redirect to payment page in a different tab
-                router.push(paymentPayload.authorization_url);
+                router.push(response?.data.data.payload['data']['authorization_url']);
                 // console.log("Response>>>", paymentPayload);
             } else {
                 setIsRequesting(false);

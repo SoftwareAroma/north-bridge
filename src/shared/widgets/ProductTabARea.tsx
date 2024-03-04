@@ -63,7 +63,7 @@ const ProductTabARea = () => {
             <section className="product-tab-area">
                 <div className="container">
                     <div className="section-title-wrap">
-                        <h3 className="section-title mb-40">Today&apos;s Best Deals for you!</h3>
+                        <h3 className="section-title mb-40">Popular Products</h3>
                     </div>
                     <div className="product-tabs w-tabs">
                         <div className="product-tabs-menu w-tab-menu">

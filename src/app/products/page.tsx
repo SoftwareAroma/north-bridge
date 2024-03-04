@@ -15,13 +15,14 @@ const initialFilters = {
 
 
 const ProductsPage = () => {
+    const searchedTerm = useSelector((state: any) => state.searchTerm.term);
+    const user = useSelector((state: any) => state.user.user);
     const [filters, setFilters] = React.useState(initialFilters);
     const [products, setProducts] = React.useState([]);
     const [stores, setStores] = React.useState([]);
     const [categories, setCategories] = React.useState([]);
-    const [searchTerm, setSearchTerm] = React.useState('');
+    const [searchTerm, setSearchTerm] = React.useState(searchedTerm);
 
-    const user = useSelector((state: any) => state.user.user);
 
     const dispatch = useDispatch();
     const addProdToCart = async (product: IProduct) => {
@@ -64,7 +65,6 @@ const ProductsPage = () => {
         });
     }
 
-
     useMemo(() => {
         if (data?.data.data.products) {
             setProducts(data?.data.data.products);
@@ -105,6 +105,12 @@ const ProductsPage = () => {
             });
             setProducts(filteredProducts);
         }
+        // if (searchedTerm != null || searchedTerm !== '') {
+        //     const filteredProducts = data?.data.data.products.filter((product: IProduct) => {
+        //         return product.name.toLowerCase().includes(searchedTerm.toLowerCase());
+        //     });
+        //     setProducts(filteredProducts);
+        // }
     }, [data, storesData, prodCategories, searchTerm, filters]);
 
     return (
@@ -136,7 +142,7 @@ const ProductsPage = () => {
                             <div className="mt-4">
                                 <label className="form-control w-full">
                                     <div className="label">
-                                        <span className="label-text">Price</span>
+                                        <p className="label-text">Price</p>
                                     </div>
                                     <select
                                         className="select select-bordered w-full"
@@ -182,7 +188,7 @@ const ProductsPage = () => {
                             <div className="mt-4 w-full">
                                 <label className="form-control w-full">
                                     <div className="label w-full">
-                                        <span className="label-text">Store</span>
+                                        <p className="label-text">Store</p>
                                     </div>
                                     <select
                                         className="select select-bordered w-full"

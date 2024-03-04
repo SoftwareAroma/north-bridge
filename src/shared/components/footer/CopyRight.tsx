@@ -24,22 +24,6 @@ const CopyRight = () => {
                         />
                         <div className="footer-menu-text">Dashboard</div>
                     </Link>
-                    {/* <div id="button" className="topbar-left-menu d-block">
-                        <img
-                            src="/images/gift.svg"
-                            loading="lazy" alt=""
-                            className="copyright-menu-icon"
-                        />
-                        <div className="footer-menu-text">Gift Cards</div>
-                    </div> */}
-                    {/* <div id="button" className="topbar-left-menu d-block">
-                        <img
-                            src="/images/help-circle.svg"
-                            loading="lazy" alt=""
-                            className="copyright-menu-icon"
-                        />
-                        <div className="footer-menu-text">Help Canter</div>
-                    </div> */}
                 </div>
                 <div className="copyright-menu">
                     <Link href="#" className="footer-menu-link no-underline hover:underline">

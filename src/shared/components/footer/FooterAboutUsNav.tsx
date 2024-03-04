@@ -4,14 +4,14 @@ import React from 'react';
 const FooterAboutUsNav = () => {
     return (
         <React.Fragment>
-            <div className="footer-nav">
-                <h2 className="footer-menu-title">About us</h2>
+            <div className="flex flex-col bg-[#f5f6f6] rounded-md shadow-sm px-4 py-4">
+                <h2 className="footer-menu-title cursor-pointer">About us</h2>
                 <ul role="list" className="footer-menu-list w-list-unstyled">
                     <Link href="#" className='no-underline'>
-                        <li className="list-item">About North Briddge</li>
+                        <li className="list-item cursor-pointer">About North Briddge</li>
                     </Link>
                     <Link href="#" className='no-underline'>
-                        <li className="list-item">News &amp; Blog</li>
+                        <li className="list-item cursor-pointer">News &amp; Blog</li>
                     </Link>
                 </ul>
             </div>

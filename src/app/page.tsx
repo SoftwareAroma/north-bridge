@@ -8,10 +8,10 @@ import ServiceHelpArea from '@shared/widgets/ServiceHelpArea';
 import BestSellingStore from '@shared/widgets/BestSellingStore';
 import TrendingProductsArea from '@shared/widgets/TrendingProductsArea';
 import MostSellingProductArea from '@shared/widgets/MostSellingProductArea';
-import DiscountBannerArea from '@shared/widgets/DiscountBannerArea';
 import MainHeader from '@shared/components/header/MainHeader';
 import MainFooter from '@shared/components/footer/MainFooter';
 import ProductTabARea from "@shared/widgets/ProductTabARea";
+import TestimonySection from '@/shared/widgets/TestimonySection';
 
 const HomePage = () => {
     return (
@@ -20,13 +20,14 @@ const HomePage = () => {
             <MainHeader />
 
             <BannerArea />
-            <TopCategories />
+            {/* <TopCategories /> */}
             <BestDealArea />
             <ChooseByBrand />
             <ProductTabARea />
             <DiscountArea />
-            <DiscountBannerArea />
+            {/* <DiscountBannerArea /> */}
             <MostSellingProductArea />
+            <TestimonySection />
             <TrendingProductsArea />
             <BestSellingStore />
             <ServiceHelpArea />
