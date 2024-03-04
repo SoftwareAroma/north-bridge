@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const ProductDetailsPage = ({ params }: { params: { id: string } }) => {
 
     const [product, setProduct]: any = useState<IProduct[] | null>(null);
+    const [activeImage, setActiveImage] = useState(0);
     const user = useSelector((state: any) => state.user.user);
     const dispatch = useDispatch();
     const addProdToCart = async (product: IProduct) => {
@@ -55,13 +56,16 @@ const ProductDetailsPage = ({ params }: { params: { id: string } }) => {
                                                     src={image?.path ?? "https://readymadeui.com/images/product1.webp"}
                                                     alt="Product1"
                                                     className="w-full cursor-pointer outline"
+                                                    onClick={() => setActiveImage(index)}
                                                 />
                                             )
                                         })
                                     }
                                 </div>
                                 <img
-                                    src={product?.images[0]?.path ?? "https://readymadeui.com/images/product1.webp"}
+                                    src={
+                                        product?.images[activeImage]?.path ?? "https://readymadeui.com/images/product1.webp"
+                                    }
                                     alt="Product"
                                     className="w-4/5 rounded object-contain"
                                 />

@@ -27,7 +27,7 @@ const ProductCard = (props: any) => {
         <React.Fragment>
             <div
                 className={
-                    `product-single-item swiper-slide bg-white dark:bg-gray-950 ${showShadow ? "shadow-md" : ""}`
+                    `product-single-item cursor-pointer swiper-slide bg-white dark:bg-gray-950 ${showShadow ? "shadow-md" : ""}`
                 }
             >
                 <div className={`product-thumbnail-wrap ${isCursorOff ? 'cursor-off' : ''}`}>
@@ -35,7 +35,7 @@ const ProductCard = (props: any) => {
                         src={image}
                         loading="lazy"
                         alt="product image"
-                        className="deal-image"
+                        className="deal-image h-64 w-full object-cover object-center"
                     />
                     <div className="product-wishlist">
                         <WishListIcon />
@@ -45,9 +45,9 @@ const ProductCard = (props: any) => {
                     <div onClick={() => router.push(`/products/${category}/${id}`)} className="product-title-wrap">
                         <h3 className="product-title">{name}</h3>
                         <div className="product-price">
-                            <p className="text-span">{currency ?? "GH¢"}</p>
+                            <span className="text-span">{currency ?? "GH¢"}</span>
                             {price}
-                            <p className="text-span">{isExt ? ".00" : ""}</p>
+                            <span className="text-span">{isExt ? ".00" : ""}</span>
                         </div>
                     </div>
                     <div className="product-color">{description}</div>

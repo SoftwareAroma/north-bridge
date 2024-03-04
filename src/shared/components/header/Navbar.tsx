@@ -6,6 +6,7 @@ import Logo from '../Logo';
 import { useQuery } from '@tanstack/react-query';
 import { IProductCategory, getProductCategories, setTerm, setUser } from '@/shared';
 import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/navigation';
 
 const Navbar = () => {
     const [show, setShow] = React.useState(false);
@@ -14,6 +15,7 @@ const Navbar = () => {
     const user = useSelector((state: any) => state.user.user);
     const searchTerm = useSelector((state: any) => state.searchTerm.term);
     const dispatch = useDispatch();
+    const router = useRouter();
 
     const handleShow = () => setShow(!show);
 
@@ -116,33 +118,37 @@ const Navbar = () => {
                                     <div className="zero-widht">
                                         <div className="card-star"></div>
                                     </div>
-                                    <form action="/products/" className="search-form w-form">
-                                        <input
-                                            id="search"
-                                            autoComplete="off"
-                                            placeholder="Search Product"
-                                            onChange={handleSearchOnChange}
-                                            value={searchTerm}
-                                            type="search"
-                                            name="search"
-                                            className="search-input jetboost-list-search-input-znwz w-input"
-                                        />
-                                        <div className="search-loader"></div>
-                                        <button className="search-btn">
-                                            <div className="btn-container">
-                                                <div className="svg w-embed">
-                                                    <svg
-                                                        width="20"
-                                                        height="20"
-                                                        viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path opacity="0.8"
-                                                            d="M8.33317 3.33317C5.57175 3.33317 3.33317 5.57175 3.33317 8.33317C3.33317 11.0946 5.57175 13.3332 8.33317 13.3332C11.0946 13.3332 13.3332 11.0946 13.3332 8.33317C13.3332 5.57175 11.0946 3.33317 8.33317 3.33317ZM1.6665 8.33317C1.6665 4.65127 4.65127 1.6665 8.33317 1.6665C12.0151 1.6665 14.9998 4.65127 14.9998 8.33317C14.9998 9.87376 14.4773 11.2923 13.5997 12.4212L18.0891 16.9106C18.4145 17.236 18.4145 17.7637 18.0891 18.0891C17.7637 18.4145 17.236 18.4145 16.9106 18.0891L12.4212 13.5997C11.2923 14.4773 9.87376 14.9998 8.33317 14.9998C4.65127 14.9998 1.6665 12.0151 1.6665 8.33317Z"
-                                                            fill="#231F1E"></path>
-                                                    </svg>
-                                                </div>
+                                    <input
+                                        id="search"
+                                        autoComplete="off"
+                                        placeholder="Search Product"
+                                        onChange={handleSearchOnChange}
+                                        value={searchTerm}
+                                        type="search"
+                                        name="search"
+                                        className="search-input jetboost-list-search-input-znwz w-input"
+                                    />
+                                    <div className="search-loader"></div>
+                                    <button
+                                        onClick={() => {
+                                            dispatch(setTerm(searchTerm));
+                                            router.push(`products/`);
+                                        }}
+                                        className="search-btn"
+                                    >
+                                        <div className="btn-container">
+                                            <div className="svg w-embed">
+                                                <svg
+                                                    width="20"
+                                                    height="20"
+                                                    viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path opacity="0.8"
+                                                        d="M8.33317 3.33317C5.57175 3.33317 3.33317 5.57175 3.33317 8.33317C3.33317 11.0946 5.57175 13.3332 8.33317 13.3332C11.0946 13.3332 13.3332 11.0946 13.3332 8.33317C13.3332 5.57175 11.0946 3.33317 8.33317 3.33317ZM1.6665 8.33317C1.6665 4.65127 4.65127 1.6665 8.33317 1.6665C12.0151 1.6665 14.9998 4.65127 14.9998 8.33317C14.9998 9.87376 14.4773 11.2923 13.5997 12.4212L18.0891 16.9106C18.4145 17.236 18.4145 17.7637 18.0891 18.0891C17.7637 18.4145 17.236 18.4145 16.9106 18.0891L12.4212 13.5997C11.2923 14.4773 9.87376 14.9998 8.33317 14.9998C4.65127 14.9998 1.6665 12.0151 1.6665 8.33317Z"
+                                                        fill="#231F1E"></path>
+                                                </svg>
                                             </div>
-                                        </button>
-                                    </form>
+                                        </div>
+                                    </button>
                                 </div>
                             </nav>
                             <div className="nav-right-content">

@@ -1,15 +1,15 @@
 'use client';
+
 import MainFooter from '@/shared/components/footer/MainFooter';
 import MainHeader from '@/shared/components/header/MainHeader';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import CheckoutItemCard from './CheckoutItemCard';
-import { IProduct, initializePayment } from '@/shared';
+import { IProduct, initializePayment, verifyPayment } from '@/shared';
 import Link from 'next/link';
-import { Alert } from 'flowbite-react';
+import { Alert, Button, Modal } from 'flowbite-react';
 import { HiInformationCircle } from 'react-icons/hi';
 import { isAxiosError } from 'axios';
-import { parse } from 'path';
 import { useRouter } from 'next/navigation';
 
 const initialState = {
@@ -23,7 +23,11 @@ const initialState = {
 
 const CheckoutView = () => {
     const [formValues, setFormValues] = React.useState(initialState);
-    const [paymentPayload, setPaymentPayload] = React.useState({});
+    const [paymentPayload, setPaymentPayload]: any = React.useState({
+        authorization_url: null,
+        reference: null,
+        access_code: null,
+    });
     const [isRequesting, setIsRequesting] = React.useState(false);
     const [error, setError] = React.useState('');
     const [info, setInfo] = React.useState('');
@@ -33,6 +37,8 @@ const CheckoutView = () => {
     const [delivery, setDelivery] = React.useState(0.0);
     const [tax, setTax] = React.useState(0);
     const [currency, setCurrency] = React.useState('GHS');
+    const [openModal, setOpenModal] = useState(false);
+    const [isPaymentDone, setIsPaymentDone] = useState(false);
     const router = useRouter();
 
     const cart = useSelector((state: any) => state.cart.cart);
@@ -82,8 +88,8 @@ const CheckoutView = () => {
             if (response.data.success === true) {
                 setInfo(response.data.message);
                 setIsRequesting(false);
-                // redirect to payment page in a different tab
-                router.push(response?.data.data.payload['data']['authorization_url']);
+                setPaymentPayload(response?.data.data.payload['data']);
+                setOpenModal(true);
                 // console.log("Response>>>", paymentPayload);
             } else {
                 setIsRequesting(false);
@@ -97,6 +103,45 @@ const CheckoutView = () => {
         } catch (_error) {
             // console.log(_error);
             setIsRequesting(false);
+            if (isAxiosError(_error)) {
+                if (Array.isArray(_error?.response?.data.message)) {
+                    setError(_error?.response.data.message.join(', '));
+                } else {
+                    setError(_error?.response?.data.message);
+                }
+            }
+        }
+    }
+
+    const verifyPaymentDone = async (reference: string) => {
+        try {
+            const _data = {
+                reference: reference
+            };
+            const response = await verifyPayment(_data);
+            var _isTrue = response?.data?.data.payload.data.receipt_number;
+            if (response.data.success === true) {
+                setInfo(response.data.message);
+                if (_isTrue !== null || _isTrue !== undefined || _isTrue !== '') {
+                    setInfo('Payment Verified, wait while we complete your order');
+                    setError('');
+                    router.push('/order/');
+                } else {
+                    setError('Payment cannot be verified');
+                    setInfo('');
+                }
+                // console.log("Response>>>", response);
+                // redirect to the order page
+            } else {
+                // if message is an array, join the array seperated by a comma
+                if (Array.isArray(response.data.message)) {
+                    setError(response.data.message.join(', '));
+                } else {
+                    setError(response.data.message);
+                }
+            }
+        } catch (_error) {
+            // console.log(_error);
             if (isAxiosError(_error)) {
                 if (Array.isArray(_error?.response?.data.message)) {
                     setError(_error?.response.data.message.join(', '));
@@ -124,7 +169,12 @@ const CheckoutView = () => {
                 phone: user.phone,
             })
         }
-    }, [cart]);
+        if (isPaymentDone) {
+            setInfo('Payment Done, wait while we verify your payment');
+            setError('');
+            verifyPaymentDone(paymentPayload.reference);
+        }
+    }, [cart, isPaymentDone]);
 
     return (
         <React.Fragment>
@@ -340,6 +390,50 @@ const CheckoutView = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Modal for payment */}
+            <Modal show={openModal} onClose={() => {
+                setOpenModal(false);
+                setIsPaymentDone(false);
+            }}>
+                <Modal.Header>
+                    <h3>
+                        Complete Purchase
+                    </h3>
+                    {/* click done after transaction to close this modal info */}
+                    <p className="pc-4 py-2">
+                        Click done after transaction to close this modal
+                    </p>
+                </Modal.Header>
+                <Modal.Body>
+                    {/* show the paymentPayload['data']['authorization_url'] in this modal */}
+
+                    <iframe
+                        src={paymentPayload.authorization_url ?? ""}
+                        width="100%"
+                        height="500px"
+                        title="Payment"
+                    ></iframe>
+
+                </Modal.Body>
+                <Modal.Footer className="w-full">
+                    <div className="flex flex-row justify-between items-center px-4 w-full">
+                        <Button className='bg-red-500 text-white px-4 py-2' onClick={() => {
+                            setOpenModal(false);
+                            setIsPaymentDone(false);
+                        }}>
+                            Cancel
+                        </Button>
+                        <Button className='bg-green-500 text-white px-4 py-2' onClick={() => {
+                            setOpenModal(false);
+                            setIsPaymentDone(true);
+                        }}>
+                            Done
+                        </Button>
+                    </div>
+                </Modal.Footer>
+            </Modal>
+
             <MainFooter />
         </React.Fragment>
     );

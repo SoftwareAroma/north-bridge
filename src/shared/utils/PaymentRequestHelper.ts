@@ -5,7 +5,7 @@ import {
     paymentVerifyApi,
     PostRequest
 } from "@shared";
-import {AxiosResponse} from "axios";
+import { AxiosResponse } from "axios";
 
 /**
  * Initialize Payment

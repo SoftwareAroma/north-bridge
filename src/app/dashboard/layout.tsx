@@ -40,22 +40,4 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             </Box>
         </Box>
     );
-    // return (
-    //     <main>
-    //         {children}
-    //     </main>
-    // <main className='flex flex-row justify-start items-start'>
-    //     <div className="w-64 sticky top-0">
-    //         <AdminSideBar />
-    //     </div>
-    //     <div className="w-full h-full flex flex-col justify-start items-start">
-    //         <div className="w-full sticky top-0">
-    //             <AdminNavBar />
-    //         </div>
-    //         <div className="w-full h-full px-4 py-1">
-    //             {children}
-    //         </div>
-    //     </div>
-    // </main>
-    // );
 }

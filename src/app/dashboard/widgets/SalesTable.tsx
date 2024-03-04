@@ -14,18 +14,18 @@ import { TableCell, TableRow } from 'flowbite-react';
 
 
 const SalesTable = () => {
-    const [products, setProducts] = useState([])
+    const [transactions, setPayments]: any = useState([])
     const router = useRouter();
     const { data, refetch } = useQuery({
         queryKey: ['transactions'],
-        queryFn: getPaymentHistory,
+        queryFn: getProducts,
         enabled: true,
     });
 
     useMemo(() => {
         // console.log(data?.data.data.vendors)
-        if (data?.data.data.transactions) {
-            setProducts(data?.data.data.transactions)
+        if (data?.data.data.products) {
+            setPayments(data?.data.data.products)
         }
     }, [data]);
 
@@ -53,7 +53,7 @@ const SalesTable = () => {
                 </TableHead>
                 <TableBody className="divide-y">
                     {
-                        products.map((product: IProduct, index: number) => {
+                        transactions?.map((product: any, index: number) => {
                             return (
                                 <TableRow key={index} onClick={() => { }} className="bg-white cursor-pointer dark:border-gray-700 dark:bg-gray-800">
                                     <TableCell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">

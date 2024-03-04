@@ -11,7 +11,7 @@ const DiscountBannerArea = () => {
                                 Get 5% Cash back
                             </h2>
                             <p className="banner-discount-paragraph mb-30">
-                                on NorthBriddge.com
+                                on NorthBridge.com
                             </p>
                             <div className="is-magnetic">
                                 <div className="btn-wrapper">

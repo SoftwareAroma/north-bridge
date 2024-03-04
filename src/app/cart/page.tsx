@@ -126,17 +126,6 @@ const CartPage = () => {
                         >
                             Check out
                         </Link>
-
-                        {/* <div className="mt-10">
-                            <h3 className="text-xl font-extrabold text-[#333] mb-6">Apply promo code</h3>
-                            <div className="flex border border-blue-600 overflow-hidden max-w-md rounded">
-                                <input type="email" placeholder="Promo code"
-                                    className="w-full outline-none bg-white text-gray-600 text-md px-4 py-2.5" />
-                                <button type='button' className="flex items-center justify-center bg-blue-600 hover:bg-blue-700 px-6 text-md text-white">
-                                    Apply
-                                </button>
-                            </div>
-                        </div> */}
                     </div>
                 </div>}
             </div>

@@ -11,7 +11,12 @@ const TopBar = () => {
                     <div className="flex flex-row justify-between items-center">
                         <div className="flex flex-row justify-start items-center space-x-2">
                             <img src="/images/Call.svg" loading="lazy" alt="" />
-                            <div className="contact-number">+001234567890</div>
+                            <Link
+                                href={'https://wa.me/message/PXEXABFAKYRZH1'} target='_blank'
+                                className="contact-number no-underline hover:underline"
+                            >
+                                +233 20 057 7746
+                            </Link>
                         </div>
                         <div id="button" className="topbar-left-menu">
                             <div className="text-block-6">
