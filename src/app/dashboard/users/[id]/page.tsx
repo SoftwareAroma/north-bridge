@@ -3,10 +3,10 @@
 import { IProduct, IUser, deleteProduct, deleteUser, getProduct, getUser } from '@shared';
 import { useQuery } from '@tanstack/react-query';
 import React, { useMemo, useState } from 'react';
-import LoadingSkeleton from '@/shared/components/LoadingSkeleton';
 import { useRouter } from 'next/navigation';
 import { Card } from 'flowbite-react';
 import Image from 'next/image';
+import LoadingSkeleton from '@/app/vendor/components/LoadingSkeleton';
 
 
 const UserView = ({ params }: { params: { id: string } }) => {

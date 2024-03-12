@@ -4,7 +4,7 @@ import { IProduct, IStore, IVendor, deleteProduct, deleteStore, deleteVendor, ge
 import { useQuery } from '@tanstack/react-query';
 import { Card } from 'flowbite-react';
 import React, { useMemo, useState } from 'react';
-import LoadingSkeleton from '@/shared/components/LoadingSkeleton';
+import LoadingSkeleton from '@/app/vendor/components/LoadingSkeleton';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
