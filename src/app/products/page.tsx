@@ -116,7 +116,7 @@ const ProductsPage = () => {
     return (
         <React.Fragment>
             <MainHeader />
-            <div className="flex flex-col justify-center items-center h-full px-4">
+            <div className="max-w-screen-xl mx-auto w-full flex flex-col justify-center items-center h-full px-4">
                 <div className='w-full px-12 items-center align-center-both py-4'>
                     <input
                         type="text"
@@ -126,8 +126,8 @@ const ProductsPage = () => {
                         onChange={(e) => handleSearchChange(e)}
                     />
                 </div>
-                <div className="grid grid-cols-12 w-full">
-                    <aside className='col-span-3 px-8 w-full'>
+                <div className="flex flex-col lg:grid grid-cols-12 w-full">
+                    <aside className='col-span-3 px-8 w-full hidden md:block'>
                         {/* filter by price, brand, store */}
                         <div className="w-full max-w-6xl">
                             <div className="flex justify-between items-center">

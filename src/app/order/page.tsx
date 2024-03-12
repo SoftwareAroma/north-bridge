@@ -6,7 +6,9 @@ const OrderPage = () => {
     return (
         <React.Fragment>
             <MainHeader />
+            <section className="max-w-screen-xl mx-auto w-full py-4">
 
+            </section>
             <MainFooter />
         </React.Fragment>
     );

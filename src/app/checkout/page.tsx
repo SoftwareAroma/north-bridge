@@ -54,7 +54,9 @@ const CheckoutView = () => {
         setSubTotal(subTotal);
         setDelivery(0);
         setTax(0);
-        setTotal(subTotal + delivery + tax);
+        const totalAmount = subTotal + delivery + tax;
+        const total = Math.round(totalAmount * 100) / 100;
+        setTotal(total);
     }
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

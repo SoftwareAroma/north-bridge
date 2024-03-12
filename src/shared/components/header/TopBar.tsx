@@ -28,11 +28,11 @@ const TopBar = () => {
                                 </span>
                             </div>
                         </div>
-                        <div className="flex flex-row justify-center items-center space-x-2">
-                            <div className="">
+                        <div className="hidden sm:py-4 md:flex flex-row justify-center items-center space-x-2">
+                            <div className="h-full w-full">
                                 <SelectCountry />
                             </div>
-                            <div className="">
+                            <div className="h-full w-full">
                                 <SelectLanguage />
                             </div>
                         </div>

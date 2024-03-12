@@ -1,6 +1,6 @@
 import {
     addToUserCartApi, DeleteRequest,
-    GetRequest, PatchRequest,
+    GetRequest, orderCreateApi, orderDeleteApi, orderDetailApi, ordersApi, orderUpdateApi, PatchRequest,
     PostRequest,
     removeFromUserCartApi,
     updateUserCartApi,
@@ -9,10 +9,12 @@ import {
     userListApi,
     userLoginApi,
     userLogoutApi,
+    userOrdersApi,
     userProfileApi,
-    userRegisterApi, userUpdateApi
+    userRegisterApi,
+    userUpdateApi
 } from "@shared";
-import {AxiosResponse} from "axios";
+import { AxiosResponse } from "axios";
 
 export const registerUser = (data: any): Promise<AxiosResponse<any, any>> => {
     return PostRequest(userRegisterApi, data);
@@ -45,14 +47,38 @@ export const logoutUser = (): Promise<AxiosResponse<any, any>> => {
     return GetRequest(userLogoutApi);
 }
 
-export const addProductToCart = (id: string, data:any): Promise<AxiosResponse<any, any>> => {
+export const addProductToCart = (id: string, data: any): Promise<AxiosResponse<any, any>> => {
     return PatchRequest(addToUserCartApi(id), data);
 }
 
-export const updateUserCart = (id: string, cartId: string, data:any): Promise<AxiosResponse<any, any>> => {
+export const updateUserCart = (id: string, cartId: string, data: any): Promise<AxiosResponse<any, any>> => {
     return PatchRequest(updateUserCartApi(id, cartId), data);
 }
 
 export const removeProductFromCart = (id: string, cartId: string): Promise<AxiosResponse<any, any>> => {
     return DeleteRequest(removeFromUserCartApi(id, cartId));
+}
+
+export const addOrder = (data: any): Promise<AxiosResponse<any, any>> => {
+    return PostRequest(orderCreateApi, data);
+}
+
+export const getOrders = (): Promise<AxiosResponse<any, any>> => {
+    return GetRequest(ordersApi);
+}
+
+export const getOrderDetail = (id: string): Promise<AxiosResponse<any, any>> => {
+    return GetRequest(orderDetailApi(id));
+}
+
+export const getUserOrders = (id: string): Promise<AxiosResponse<any, any>> => {
+    return GetRequest(userOrdersApi(id));
+}
+
+export const updateOrder = (id: string, data: any): Promise<AxiosResponse<any, any>> => {
+    return PatchRequest(orderUpdateApi(id), data);
+}
+
+export const deleteOrder = (id: string): Promise<AxiosResponse<any, any>> => {
+    return DeleteRequest(orderDeleteApi(id));
 }

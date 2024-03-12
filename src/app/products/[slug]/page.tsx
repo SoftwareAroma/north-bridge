@@ -45,7 +45,7 @@ const ProductCategoryPage = ({ params }: { params: { slug: string } }) => {
     return (
         <React.Fragment>
             <MainHeader />
-            <div className="max-w-screen-2xl w-full mx-auto flex flex-col justify-center items-center h-full px-4">
+            <div className="max-w-screen-xl mx-auto w-full flex flex-col justify-center items-center h-full px-4">
                 <div className='w-full px-12 items-center align-center-both py-4'>
                     <input
                         type="text"

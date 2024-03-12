@@ -8,24 +8,27 @@ const BannerArea = () => {
                     <div className="banner-inner">
                         <div className="banner-content">
                             <div className="overflow-hidden">
-                                <h1 className="banner-title">shopping and</h1>
+                                <h1 className="banner-title">Looking into the</h1>
                             </div>
                             <div className="overflow-hidden mb-30">
-                                <h1 className="banner-title">department store.</h1>
+                                <h1 className="banner-title">Future - <span className='font-bold'>BOLD</span>.</h1>
                             </div>
-                            <div className="overflow-hidden">
+                            <div className="overflow-hidden sm:w-full md:w-1/2">
                                 <p>
-                                    Shopping is a bit of a relaxing hobby for me, <br /> which is sometimes troubling for the bank balance.
+                                    North bridge is an online platform that connects you with the shops around
+                                    you in your immediate vicinity. Shop with us and explore the possibilities of technology.
                                 </p>
                             </div>
                         </div>
                         <div className="banner-button">
                             <div className="is-magnetic">
-                                <div className="btn-wrapper"><a href="#" className="primary-button bg-main w-inline-block">
-                                    <div className="button-content">
-                                        <div className="button-color">Learn More</div>
-                                    </div>
-                                </a></div>
+                                <div className="btn-wrapper">
+                                    <a href="/products/" className="primary-button mt-4 bg-main w-inline-block">
+                                        <div className="button-content">
+                                            <div className="button-color">View Products</div>
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>

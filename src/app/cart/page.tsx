@@ -1,11 +1,12 @@
 'use client';
 import MainFooter from '@/shared/components/footer/MainFooter';
 import MainHeader from '@/shared/components/header/MainHeader';
-import React, { use, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import CartCard from './CartCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { IProduct, decreaseQuantity, increaseQuantity, removeFromCart } from '@/shared';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const CartPage = () => {
 
@@ -17,7 +18,9 @@ const CartPage = () => {
     const [currency, setCurrency] = React.useState('GH¢');
 
     const cart = useSelector((state: any) => state.cart.cart);
+    const user = useSelector((state: any) => state.user.user);
     const dispatch = useDispatch();
+    const router = useRouter();
 
     const calculateTotal = () => {
         let subTotal = 0;
@@ -27,7 +30,9 @@ const CartPage = () => {
         setSubTotal(subTotal);
         setDelivery(0);
         setTax(0);
-        setTotal(subTotal + delivery + tax);
+        const totalAmount = subTotal + delivery + tax;
+        const total = Math.round(totalAmount * 100) / 100;
+        setTotal(total);
     }
 
     // console.log(cart);
@@ -119,13 +124,21 @@ const CartPage = () => {
                                 Total <span className="ml-auto">{currency} {total}</span>
                             </li>
                         </ul>
-                        <Link
+                        <button
                             type="button"
-                            href={'/checkout/'}
+                            onClick={() => {
+                                // if use is not logged in, redirect to login page
+                                if (!user) {
+                                    router.push('/auth/');
+                                    return;
+                                } else {
+                                    router.push('/checkout/');
+                                }
+                            }}
                             className="no-underline text-center mt-6 text-md px-6 py-2.5 w-full bg-blue-600 hover:bg-blue-700 text-white rounded"
                         >
                             Check out
-                        </Link>
+                        </button>
                     </div>
                 </div>}
             </div>

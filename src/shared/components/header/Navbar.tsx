@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 
 const Navbar = () => {
     const [show, setShow] = React.useState(false);
+    const [mobileMenu, setMobileMenu] = React.useState(false);
     const [categories, setCategories] = React.useState([]);
     const cart = useSelector((state: any) => state.cart.cart);
     const user = useSelector((state: any) => state.user.user);
@@ -179,7 +180,11 @@ const Navbar = () => {
                                 </Link>
                             </div>
                             <div className="menu-button w-nav-button">
-                                <div className="w-icon-nav-menu"></div>
+                                <button onClick={() => setMobileMenu(!mobileMenu)}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25" />
+                                    </svg>
+                                </button>
                             </div>
                         </div>
                     </div>

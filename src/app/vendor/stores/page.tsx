@@ -11,7 +11,7 @@ const StoresPage = () => {
     return (
         <React.Fragment>
             {(vendor) && <StoresTable />}
-            {(!vendor) && <UnAuthorizedView />}
+            {/* {(!vendor) && <UnAuthorizedView />} */}
         </React.Fragment>
     );
 }

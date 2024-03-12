@@ -37,6 +37,17 @@ export const updateUserCartApi = (id: string, cartId: string): string => `${_use
 export const removeFromUserCartApi = (id: string, cartId: string): string => `${_userApiEndpoint}/remove-cart/${id}/${cartId}`;
 
 /**
+ * Order API Endpoints
+ */
+const _orderApiEndpoint: string = `${_userApiEndpoint}`;
+export const orderCreateApi: string = `${_orderApiEndpoint}/add-order`;
+export const ordersApi: string = `${_orderApiEndpoint}/orders`;
+export const userOrdersApi = (id: string): string => `${_orderApiEndpoint}/orders/${id}`;
+export const orderDetailApi = (id: string): string => `${_orderApiEndpoint}/order/${id}`;
+export const orderUpdateApi = (id: string): string => `${_orderApiEndpoint}/update-order/${id}`;
+export const orderDeleteApi = (id: string): string => `${_orderApiEndpoint}/order/${id}`;
+
+/**
  * Vendor API Endpoints
  */
 const _vendorApiEndpoint: string = `${_apiEndpoint}/vendor`;

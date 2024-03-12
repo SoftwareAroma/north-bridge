@@ -12,7 +12,7 @@ const VendorProductsPage = () => {
         <React.Fragment>
             {/*{isLoading && <LoadingSkeleton />}*/}
             {(vendor) && <ProductsTable />}
-            {(!vendor) && <UnAuthorizedView />}
+            {/* {(!vendor) && <UnAuthorizedView />} */}
         </React.Fragment>
     );
 }

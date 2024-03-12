@@ -37,7 +37,7 @@ const ProductDetailsPage = ({ params }: { params: { id: string } }) => {
     return (
         <React.Fragment>
             <MainHeader />
-            <div className="font-[sans-serif]">
+            <div className="max-w-screen-xl mx-auto w-full">
                 <div className="p-6 lg:max-w-6xl max-w-2xl mx-auto">
                     {
                         isLoading && <div className="flex justify-center items-center h-96">
