@@ -5,11 +5,21 @@ import ProductCard from '@shared/widgets/ProductCard';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useQuery } from '@tanstack/react-query';
-import { IProduct, getProducts } from '@shared';
+import { IProduct, addProductToCart, addToCart, getProducts } from '@shared';
+import { useDispatch, useSelector } from 'react-redux';
 
 const MostSellingProductArea = () => {
 
     const [products, setProducts] = React.useState([]);
+    const user = useSelector((state: any) => state.user.user);
+
+    const dispatch = useDispatch();
+    const addProdToCart = async (product: IProduct) => {
+        if (user) {
+            await addProductToCart(user.id, product);
+        }
+        dispatch(addToCart({ product, quantity: 1 }));
+    }
 
     const { data, isLoading } = useQuery({
         queryKey: ['products'],
@@ -36,6 +46,26 @@ const MostSellingProductArea = () => {
                         modules={[Navigation, Pagination, Scrollbar, A11y]}
                         spaceBetween={80}
                         slidesPerView={3}
+                        breakpoints={
+                            {
+                                0: {
+                                    slidesPerView: 1,
+                                    spaceBetween: 20,
+                                },
+                                768: {
+                                    slidesPerView: 2,
+                                    spaceBetween: 20,
+                                },
+                                1024: {
+                                    slidesPerView: 3,
+                                    spaceBetween: 20,
+                                },
+                                1280: {
+                                    slidesPerView: 3,
+                                    spaceBetween: 20,
+                                },
+                            }
+                        }
                         // navigation 
                         pagination={{ clickable: true }}
                         scrollbar={{ draggable: true }}
@@ -73,68 +103,13 @@ const MostSellingProductArea = () => {
                                                 description={product.description}
                                                 rating={product.rating}
                                                 isExt={true}
+                                                onAddToCart={() => addProdToCart(product)}
                                             />
                                         </SwiperSlide>
                                     );
                                 }
                             })
                         }
-
-                        {/* <SwiperSlide>
-                            <ProductCard
-                                image="/images/instax mini 11-min.png"
-                                name="Instax Mini 11"
-                                price="89"
-                                description="Selfie mode and selfie mirror, Macro mode"
-                                rating="121"
-                                currency="GH¢"
-                                isExt={true}
-                            />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <ProductCard
-                                image="/images/watch-min.png"
-                                name="Instax Mini 11"
-                                price="89"
-                                description="Selfie mode and selfie mirror, Macro mode"
-                                rating="121"
-                                currency="GH¢"
-                                isExt={true}
-                            />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <ProductCard
-                                image="/images/adidas sneakers-min.png"
-                                name="Instax Mini 11"
-                                price="89"
-                                description="Selfie mode and selfie mirror, Macro mode"
-                                rating="121"
-                                currency="GH¢"
-                                isExt={true}
-                            />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <ProductCard
-                                image="/images/pendleton water bottle-min.png"
-                                name="Instax Mini 11"
-                                price="89"
-                                description="Selfie mode and selfie mirror, Macro mode"
-                                rating="121"
-                                currency="GH¢"
-                                isExt={true}
-                            />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <ProductCard
-                                image="/images/cabin-min.png"
-                                name="Instax Mini 11"
-                                price="89"
-                                description="Selfie mode and selfie mirror, Macro mode"
-                                rating="121"
-                                currency="GH¢"
-                                isExt={true}
-                            />
-                        </SwiperSlide> */}
                         <div className="pt-6"></div>
                     </Swiper>
                 </div>
