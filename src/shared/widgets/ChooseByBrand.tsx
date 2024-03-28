@@ -12,43 +12,18 @@ const ChooseByBrand = () => {
                     </div>
                     <div className="choose-brand-item-wrap">
                         <BrandItem
-                            image="/images/brand-min (2).png"
-                            name="Sprouts"
+                            image="/images/Coca-Cola-Logo.png"
+                            name=""
                             deliveryDescription="Delivery with in 24 hours"
                         />
                         <BrandItem
-                            image="/images/brand (3)-min.png"
-                            name="Staples"
+                            image="/images/New_Guinness_Ghana_Logo.png"
+                            name="Guinness"
                             deliveryDescription="Delivery with in 24 hours"
                         />
                         <BrandItem
-                            image="/images/brand (6)-min.png"
-                            name="Whole Foods"
-                            deliveryDescription="Delivery with in 24 hours"
-                        />
-                        <BrandItem
-                            image="/images/brand (5)-min.png"
-                            name="Grocery outlet"
-                            deliveryDescription="Delivery with in 24 hours"
-                        />
-                        <BrandItem
-                            image="/images/brand (4)-min.png"
-                            name="Sports Basement"
-                            deliveryDescription="Delivery with in 24 hours"
-                        />
-                        <BrandItem
-                            image="/images/brand (2)-min.png"
-                            name="Container Store"
-                            deliveryDescription="Delivery with in 24 hours"
-                        />
-                        <BrandItem
-                            image="/images/brandmin.png"
-                            name="Target"
-                            deliveryDescription="Delivery with in 24 hours"
-                        />
-                        <BrandItem
-                            image="/images/brand-min.png"
-                            name="Bevmo!"
+                            image="/images/FANMILK.webp"
+                            name=""
                             deliveryDescription="Delivery with in 24 hours"
                         />
                     </div>

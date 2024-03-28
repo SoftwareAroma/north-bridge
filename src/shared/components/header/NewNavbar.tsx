@@ -111,7 +111,7 @@ const NewNavbar = () => {
                             {
                                 show && (
                                     <ul
-                                        className="absolute bg-white shadow-md px-4 py-2 flex flex-col justify-start items-start w-full"
+                                        className="absolute bg-white shadow-md px-4 py-2 flex flex-col justify-start items-start w-full z-50"
                                         onMouseLeave={handleShow}
                                     >
                                         {

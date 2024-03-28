@@ -5,11 +5,21 @@ import ProductCard from '@shared/widgets/ProductCard';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useQuery } from '@tanstack/react-query';
-import { IProduct, getProducts } from '@shared';
+import { IProduct, addProductToCart, addToCart, getProducts } from '@shared';
+import { useDispatch, useSelector } from 'react-redux';
 
 const BestDealArea = () => {
 
     const [products, setProducts] = React.useState([]);
+    const user = useSelector((state: any) => state.user.user);
+
+    const dispatch = useDispatch();
+    const addProdToCart = async (product: IProduct) => {
+        if (user) {
+            await addProductToCart(user.id, product);
+        }
+        dispatch(addToCart({ product, quantity: 1 }));
+    }
 
     const { data, isLoading } = useQuery({
         queryKey: ['products'],
@@ -40,6 +50,26 @@ const BestDealArea = () => {
                         modules={[Navigation, Pagination, Scrollbar, A11y]}
                         spaceBetween={80}
                         slidesPerView={3}
+                        breakpoints={
+                            {
+                                0: {
+                                    slidesPerView: 1,
+                                    spaceBetween: 20,
+                                },
+                                768: {
+                                    slidesPerView: 2,
+                                    spaceBetween: 20,
+                                },
+                                1024: {
+                                    slidesPerView: 3,
+                                    spaceBetween: 20,
+                                },
+                                1280: {
+                                    slidesPerView: 3,
+                                    spaceBetween: 20,
+                                },
+                            }
+                        }
                         // navigation
                         pagination={{ clickable: true }}
                         scrollbar={{ draggable: true }}
@@ -77,56 +107,13 @@ const BestDealArea = () => {
                                                 rating={product.rating}
                                                 currency={product.price.currency}
                                                 isExt={true}
+                                                onAddToCart={() => addProdToCart(product)}
                                             />
                                         </SwiperSlide>
                                     );
                                 }
                             })
                         }
-                        {/* <SwiperSlide>
-                            <ProductCard
-                                image="/images/homepad-mini-min.png"
-                                name="HomePod mini"
-                                price="239"
-                                description="Table with air purifier, stained veneer/black"
-                                rating="121"
-                                currency="GH¢"
-                                isExt={true}
-                            />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <ProductCard
-                                image="/images/instax mini 9-min.png"
-                                name="Instax Mini 9"
-                                price="99"
-                                description="Selfie mode and selfie mirror, Macro mode"
-                                rating="121"
-                                currency="GH¢"
-                                isExt={true}
-                            />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <ProductCard
-                                image="/images/base camp duffel 02-min.png"
-                                name="Base Camp Duffel M"
-                                price="159"
-                                description="Table with air purifier, stained veneer/black"
-                                rating="121"
-                                currency="GH¢"
-                                isExt={true}
-                            />
-                        </SwiperSlide>
-                        <SwiperSlide>
-                            <ProductCard
-                                image="/images/Tote Medium-min.png"
-                                name="Tot e Medium"
-                                price="239"
-                                description="Canvas, full grain leather"
-                                rating="239"
-                                currency="GH¢"
-                                isExt={true}
-                            />
-                        </SwiperSlide> */}
                         <div className="pt-6"></div>
                     </Swiper>
                 </div>

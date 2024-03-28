@@ -61,8 +61,8 @@ const RegisterPage = () => {
             setError("Weak Password");
             return;
         }
+        setIsRequesting(true);
         try {
-            setIsRequesting(true);
             const _data = {
                 "email": email,
                 "password": password,

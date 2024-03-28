@@ -14,7 +14,7 @@ const BannerArea = () => {
                                 <h1 className="banner-title">Future - <span className='font-bold'>BOLD</span>.</h1>
                             </div>
                             <div className="overflow-hidden sm:w-full md:w-1/2">
-                                <p>
+                                <p className='text-green-700'>
                                     North bridge is an online platform that connects you with the shops around
                                     you in your immediate vicinity. Shop with us and explore the possibilities of technology.
                                 </p>

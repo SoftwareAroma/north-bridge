@@ -3,9 +3,9 @@
 import MainFooter from '@/shared/components/footer/MainFooter';
 import MainHeader from '@/shared/components/header/MainHeader';
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CheckoutItemCard from './CheckoutItemCard';
-import { IProduct, initializePayment, verifyPayment } from '@/shared';
+import { IProduct, clearCart, initializePayment, removeFromCart, removeProductFromCart, verifyPayment } from '@/shared';
 import Link from 'next/link';
 import { Alert, Button, Modal } from 'flowbite-react';
 import { HiInformationCircle } from 'react-icons/hi';
@@ -41,11 +41,16 @@ const CheckoutView = () => {
     const [openModal, setOpenModal] = useState(false);
     const [isPaymentDone, setIsPaymentDone] = useState(false);
     const router = useRouter();
+    const dispatch = useDispatch();
 
     const cart = useSelector((state: any) => state.cart.cart);
     const user = useSelector((state: any) => state.user.user);
 
     // console.log("Response>>>", paymentPayload);
+
+    const addOrder = () => {
+        // add order to database
+    }
 
     const calculateTotal = () => {
         let subTotal = 0;
@@ -91,8 +96,16 @@ const CheckoutView = () => {
             if (response.data.success === true) {
                 setInfo(response.data.message);
                 setIsRequesting(false);
+                dispatch(clearCart());
                 setPaymentPayload(response?.data.data.payload['data']);
                 setOpenModal(true);
+                // iff user is logged in and payment is successful, remove everything from user cart in database
+                if (user) {
+                    await removeProductFromCart(
+                        user.id,
+                        cart.map((item: { product: IProduct, quantity: number }) => item.product.id)
+                    );
+                }
                 // console.log("Response>>>", paymentPayload);
             } else {
                 setIsRequesting(false);
