@@ -22,11 +22,6 @@ const defaultValues: IVendorRegisterFormValues = {
     'showPassword': 'no',
 }
 
-export const metadata: Metadata = {
-    title: "Register | North Bridge - Looking into the future - BOLD",
-    description: "North bridge is an online platform that connects you with the shops around you in your immediate vicinity. Shop with us and explore the possibilities of technology.",
-};
-
 const RegisterPage = () => {
 
     const [formValues, setFormValues] = React.useState(defaultValues);
