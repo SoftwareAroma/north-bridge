@@ -6,13 +6,13 @@ import MainHeader from "@shared/components/header/MainHeader";
 import { useQuery } from '@tanstack/react-query';
 import { IProduct, IProductCategory, IStore, addProductToCart, addToCart, getProductCategories, getProducts, getStores } from '@/shared';
 import { useDispatch, useSelector } from 'react-redux';
+import { Metadata } from 'next';
 
 const initialFilters = {
     price: 'None',
     category: 'None',
     store: 'None',
 };
-
 
 const ProductsPage = () => {
     const searchedTerm = useSelector((state: any) => state.searchTerm.term);

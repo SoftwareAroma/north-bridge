@@ -11,6 +11,7 @@ import { Alert, Button, Modal } from 'flowbite-react';
 import { HiInformationCircle } from 'react-icons/hi';
 import { isAxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
+import { Metadata } from 'next';
 
 const initialState = {
     firstName: '',
@@ -66,7 +67,7 @@ const CheckoutView = () => {
         setFormValues({
             ...formValues,
             [name]: value
-        })
+        });
     }
 
     const handlePayment = async (e: any) => {

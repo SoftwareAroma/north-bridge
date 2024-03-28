@@ -2,6 +2,7 @@
 
 import MainFooter from '@/shared/components/footer/MainFooter';
 import MainHeader from '@/shared/components/header/MainHeader';
+import { Metadata } from 'next';
 import Link from 'next/link';
 import React from 'react';
 
@@ -10,6 +11,7 @@ const initialValues = {
     email: '',
     message: ''
 }
+
 
 const ContactUsPage = () => {
     const [values, setValues] = React.useState(initialValues);
@@ -28,8 +30,8 @@ const ContactUsPage = () => {
             return;
         }
 
-        // mail to musahibrahimali@gmail.com
-        window.open(`mailto:musahibrahimali@gmail.com?subject=Feedback from ${values.name}&body=${values.message}`);
+        // mail to northbriddge@gmail.com
+        window.open(`mailto:northbriddge@gmail.com?subject=Feedback from ${values.name}&body=${values.message}`);
     }
 
     const handleChange = (e: any) => {

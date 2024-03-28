@@ -8,6 +8,7 @@ import { IProduct, decreaseQuantity, increaseQuantity, removeFromCart } from '@/
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
+
 const CartPage = () => {
 
     const [isLoading, setIsLoading] = React.useState(true);

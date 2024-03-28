@@ -4,6 +4,7 @@ import { ILoginFormValues, getUserProfile, loginUser, setUser } from '@/shared';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosResponse, isAxiosError } from 'axios';
 import { Alert } from 'flowbite-react';
+import { Metadata } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useMemo } from 'react';

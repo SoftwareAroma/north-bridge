@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import { AxiosResponse, isAxiosError } from 'axios';
 import { Alert } from 'flowbite-react';
 import { HiInformationCircle } from 'react-icons/hi';
+import { Metadata } from 'next';
 
 const defaultValues: IVendorRegisterFormValues = {
     'email': '',
@@ -20,6 +21,11 @@ const defaultValues: IVendorRegisterFormValues = {
     'phone': '',
     'showPassword': 'no',
 }
+
+export const metadata: Metadata = {
+    title: "Register | North Bridge - Looking into the future - BOLD",
+    description: "North bridge is an online platform that connects you with the shops around you in your immediate vicinity. Shop with us and explore the possibilities of technology.",
+};
 
 const RegisterPage = () => {
 
