@@ -15,8 +15,7 @@ const BannerArea = () => {
                             </div>
                             <div className="overflow-hidden sm:w-full md:w-1/2">
                                 <p className='text-green-700'>
-                                    North bridge is an online platform that connects you with the shops around
-                                    you in your immediate vicinity. Shop with us and explore the possibilities of technology.
+                                    Experience the marketplace without leaving your home - North Bridge connects you with numerous nearby shops, empowering you to explore multiple stores simultaneously.
                                 </p>
                             </div>
                         </div>
