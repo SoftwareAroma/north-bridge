@@ -23,6 +23,7 @@ const LoginPage = () => {
     const [error, setError] = React.useState('');
     const [showPassword, setShowPassword] = React.useState(false);
     const [isLogin, setIsLogIn] = React.useState(false);
+    const [isRequesting, setIsRequesting] = React.useState(false);
     const router = useRouter();
     const dispatch = useDispatch();
 
@@ -37,6 +38,7 @@ const LoginPage = () => {
     const submitForm = async (e: any): Promise<void> => {
         e.preventDefault();
         try {
+            setIsRequesting(true);
             const email: string = formValues.email;
             const password: string = formValues.password;
 
@@ -60,7 +62,9 @@ const LoginPage = () => {
                 window.location.reload();
                 // navigate to the dashboard
                 setIsLogIn(true);
+                setIsRequesting(false);
             } else {
+                setIsRequesting(false);
                 // if message is an array, join the array seperated by a comma
                 if (Array.isArray(login.data.message)) {
                     setError(login.data.message.join(', '));
@@ -69,6 +73,7 @@ const LoginPage = () => {
                 }
             }
         } catch (err: any) {
+            setIsRequesting(false);
             if (isAxiosError(err)) {
                 setError(err.response?.data.message);
             }
@@ -173,13 +178,19 @@ const LoginPage = () => {
                                 Lost Password?
                             </Link>
                         </div>
-                        <button
-                            type="submit"
-                            className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                            onClick={submitForm}
-                        >
-                            Login
-                        </button>
+                        {
+                            isRequesting ?
+                                <div className="flex flex-row justify-center items-center px-4 py-2">
+                                    {/* spin progress indicator */}
+                                    <div className="w-4 h-4 border-t-2 border-b-2 border-blue-500 rounded-full animate-spin"></div>
+                                </div> : <button
+                                    type="submit"
+                                    className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                    onClick={submitForm}
+                                >
+                                    Login
+                                </button>
+                        }
                         <div className="text-sm font-medium text-gray-500 dark:text-gray-300 flex flex-row justify-center items-center">
                             Not registered?
                             <Link href="/dashboard/auth/register/" className="text-blue-700 hover:underline dark:text-blue-500 mx-4">
