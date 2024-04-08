@@ -1,8 +1,6 @@
 'use client';
 
-'use client';
 import {
-    Modal,
     Table,
     TableBody,
     TableHead,
@@ -35,7 +33,7 @@ const StoresTable = () => {
     const _storeDelete = async (id: string) => {
         const response = await deleteStore(id);
         if (response.data.success === true) {
-            console.log(response?.data);
+            // console.log(response?.data);
             // refresh the page
             // window.location.reload();
             refetch();

@@ -5,20 +5,19 @@ import ProductCard from '@shared/widgets/ProductCard';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useQuery } from '@tanstack/react-query';
-import { IProduct, addProductToCart, addToCart, getProducts } from '@shared';
-import { useDispatch, useSelector } from 'react-redux';
+import { IProduct, addToCart, getProducts, useAppDispatch, useAppSelector } from '@shared';
 
 const MostSellingProductArea = () => {
 
     const [products, setProducts] = React.useState([]);
-    const user = useSelector((state: any) => state.user.user);
+    const user = useAppSelector((state) => state.user.user);
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const addProdToCart = async (product: IProduct) => {
-        if (user) {
-            await addProductToCart(user.id, product);
-        }
         dispatch(addToCart({ product, quantity: 1 }));
+        if (user) {
+            // await addProductToCart(user.id, product);
+        }
     }
 
     const { data, isLoading } = useQuery({

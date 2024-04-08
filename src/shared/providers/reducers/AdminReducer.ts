@@ -1,15 +1,21 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { IAdmin } from '@/shared/types';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-const initialState = {
+const initialState: {
+    admin: IAdmin | null,
+    authState: boolean,
+} = {
     admin: null,
+    authState: false,
 }
 
 export const adminSlice = createSlice({
     name: 'admin',
     initialState,
     reducers: {
-        setAdmin: (state, action) => {
+        setAdmin: (state, action: PayloadAction<any>) => {
             state.admin = action.payload;
+            state.authState = action.payload !== null
         },
     },
 });

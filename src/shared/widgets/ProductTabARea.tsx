@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import ProductOptionChip from "@shared/widgets/ProductOptionChip";
 import ProductCard from "@shared/widgets/ProductCard";
 import { useQuery } from '@tanstack/react-query';
-import { IProduct, IProductCategory, getProductCategories, getProducts } from '@shared';
+import { IProduct, IProductCategory, addToCart, getProductCategories, getProducts, useAppDispatch, useAppSelector } from '@shared';
 
 type TState = {
     name: string;
@@ -15,11 +15,19 @@ const initialActiveState: Array<TState> = [
     { name: 'All', state: true },
 ];
 
-const ProductTabARea = () => {
+const ProductTabArea = () => {
 
     const [activeState, setActiveState] = React.useState(initialActiveState);
-
     const [products, setProducts] = React.useState([]);
+    const user = useAppSelector((state) => state.user.user);
+
+    const dispatch = useAppDispatch();
+    const addProdToCart = async (product: IProduct) => {
+        dispatch(addToCart({ product, quantity: 1 }));
+        if (user) {
+            // await addProductToCart(user.id, product);
+        }
+    }
 
     const { data, isLoading } = useQuery({
         queryKey: ['products'],
@@ -129,6 +137,7 @@ const ProductTabARea = () => {
                                                     description={product.description}
                                                     rating={product.rating}
                                                     showShadow={true}
+                                                    onAddToCart={() => addProdToCart(product)}
                                                 />
                                             );
                                         } else if (product.categories[0]?.name === activeState.find((state: TState) => state.state === true)?.name) {
@@ -143,77 +152,13 @@ const ProductTabARea = () => {
                                                     description={product.description}
                                                     rating={product.rating}
                                                     showShadow={true}
+                                                    onAddToCart={() => addProdToCart(product)}
                                                 />
                                             );
                                         }
                                     }
                                 })
                             }
-
-                            {/* <ProductCard
-                                image="/images/leptop sleeve-min.png"
-                                name="Laptop sleeve MacBook"
-                                price={59}
-                                description="Organic Cotton, fairtrade certified"
-                                rating={121}
-                                showShadow={true}
-                            />
-                            <ProductCard
-                                image="/images/airpod max-min.png"
-                                name="AirPods Max"
-                                price={559}
-                                description="A perfect balance of high-fidelity audio"
-                                rating={121}
-                                showShadow={true}
-                            />
-                            <ProductCard
-                                image="/images/flower leptop sleeve-min.png"
-                                name="Flower Laptop Sleeve"
-                                price={39}
-                                description="15 in. x 10 in. -Flap top closure"
-                                rating={121}
-                                showShadow={true}
-                            />
-                            <ProductCard
-                                image="/images/water pot-min.png"
-                                name="Supreme Water Bottle"
-                                price={19}
-                                description="Table with air purifier, stained veneer/black"
-                                rating={121}
-                                showShadow={true}
-                            />
-                            <ProductCard
-                                image="/images/leptop sleeve macbook-min.png"
-                                name="Laptop sleeve MacBook"
-                                price={59}
-                                description="Organic Cotton, fairtrade certified"
-                                rating={121}
-                                showShadow={true}
-                            />
-                            <ProductCard
-                                image="/images/macbook 13-min.png"
-                                name="Macbook pro 13"
-                                price={1099}
-                                description="256, 8 core GPU, 8 GB"
-                                rating={121}
-                                showShadow={true}
-                            />
-                            <ProductCard
-                                image="/images/homepad-mini-min.png"
-                                name="HomePod mini"
-                                price={59}
-                                description="5 Colors Available"
-                                rating={121}
-                                showShadow={true}
-                            />
-                            <ProductCard
-                                image="/images/ipad mini-min.png"
-                                name="Ipad Mini"
-                                price={539}
-                                description="Table with air purifier, stained veneer/black"
-                                rating={121}
-                                showShadow={true}
-                            /> */}
                         </div>
                     </div>
                 </div>
@@ -222,5 +167,5 @@ const ProductTabARea = () => {
     );
 }
 
-export default ProductTabARea;
+export default ProductTabArea;
 

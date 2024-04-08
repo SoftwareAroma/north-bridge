@@ -1,19 +1,18 @@
 'use client';
 
-import { IProduct, addProductToCart, addToCart, getProduct } from '@/shared';
+import { IProduct, addProductToCart, addToCart, getProduct, useAppDispatch, useAppSelector } from '@/shared';
 import MainFooter from '@/shared/components/footer/MainFooter';
 import MainHeader from '@/shared/components/header/MainHeader';
 import { useQuery } from '@tanstack/react-query';
 import React, { useMemo, useState } from 'react'
 import RatingStarIcon from '@/shared/widgets/RatingStar';
-import { useDispatch, useSelector } from 'react-redux';
 
 const ProductDetailsPage = ({ params }: { params: { id: string } }) => {
 
     const [product, setProduct]: any = useState<IProduct[] | null>(null);
     const [activeImage, setActiveImage] = useState(0);
-    const user = useSelector((state: any) => state.user.user);
-    const dispatch = useDispatch();
+    const user = useAppSelector((state) => state.user.user);
+    const dispatch = useAppDispatch();
     const addProdToCart = async (product: IProduct) => {
         if (user) {
             await addProductToCart(user.id, product);

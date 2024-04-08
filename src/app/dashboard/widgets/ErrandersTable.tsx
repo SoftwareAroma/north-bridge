@@ -10,7 +10,6 @@ import {
 } from 'flowbite-react';
 import { useQuery } from '@tanstack/react-query';
 import { deleteUser, getVendors } from '@/shared';
-import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { TableCell, TableRow } from 'flowbite-react';
 import { Fab, Tooltip } from '@mui/material';
@@ -20,7 +19,6 @@ import AddIcon from '@mui/icons-material/Add';
 const ErrandersTable = () => {
     const [erranders, setErranders] = useState([])
     const [openErranderModal, setOpenErranderModal] = useState(false);
-    const router = useRouter();
     const { data, refetch } = useQuery({
         queryKey: ['erranders'],
         queryFn: getVendors,
@@ -37,7 +35,7 @@ const ErrandersTable = () => {
     const _userDeleted = async (id: string) => {
         const response = await deleteUser(id);
         if (response.data.success === true) {
-            console.log(response?.data);
+            // console.log(response?.data);
             // refresh the page
             // window.location.reload();
             refetch();

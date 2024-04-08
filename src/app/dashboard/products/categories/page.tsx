@@ -2,10 +2,10 @@
 import React from 'react';
 import ProductCategoriesTable from '../../widgets/ProductCategories';
 import UnAuthorizedView from '../../widgets/UnAuthorizedView';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@/shared';
 
 const ProductCategoriesPage = () => {
-    const admin = useSelector((state: any) => state.admin.admin);
+    const admin = useAppSelector((state) => state.admin.admin);
     return (
         <React.Fragment>
             {(admin) && <ProductCategoriesTable />}

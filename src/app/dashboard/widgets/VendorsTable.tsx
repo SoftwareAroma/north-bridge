@@ -1,6 +1,5 @@
 'use client';
 
-'use client';
 import {
     Table,
     TableBody,
@@ -16,7 +15,7 @@ import LoadingSkeleton from '@/app/vendor/components/LoadingSkeleton';
 
 
 const VendorsTable = () => {
-    const [vendors, setVendors] = useState([])
+    const [vendors, setVendors] = useState([]);
     const router = useRouter();
     const { data, isLoading, refetch } = useQuery({
         queryKey: ['vendors'],

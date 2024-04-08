@@ -6,7 +6,6 @@ const UserProfilePage = () => {
     return (
         <React.Fragment>
             <MainHeader />
-
             <MainFooter />
         </React.Fragment>
     );

@@ -3,15 +3,17 @@
 import MainFooter from '@/shared/components/footer/MainFooter';
 import MainHeader from '@/shared/components/header/MainHeader';
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
 import CheckoutItemCard from './CheckoutItemCard';
-import { IProduct, clearCart, initializePayment, removeFromCart, removeProductFromCart, verifyPayment } from '@/shared';
+import {
+    IProduct, addOrder, clearCart,
+    initializePayment,
+    useAppDispatch, useAppSelector, verifyPayment
+} from '@/shared';
 import Link from 'next/link';
 import { Alert, Button, Modal } from 'flowbite-react';
 import { HiInformationCircle } from 'react-icons/hi';
 import { isAxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
-import { Metadata } from 'next';
 
 const initialState = {
     firstName: '',
@@ -29,27 +31,51 @@ const CheckoutView = () => {
         reference: null,
         access_code: null,
     });
-    const [isRequesting, setIsRequesting] = React.useState(false);
-    const [error, setError] = React.useState('');
-    const [info, setInfo] = React.useState('');
-    const [isLoading, setIsLoading] = React.useState(true);
-    const [subTotal, setSubTotal] = React.useState(0.0);
-    const [total, setTotal] = React.useState(0.0);
-    const [delivery, setDelivery] = React.useState(0.0);
-    const [tax, setTax] = React.useState(0);
-    const [currency, setCurrency] = React.useState('GHS');
-    const [openModal, setOpenModal] = useState(false);
-    const [isPaymentDone, setIsPaymentDone] = useState(false);
+    const [isRequesting, setIsRequesting] = React.useState<boolean>(false);
+    const [error, setError] = React.useState<string>('');
+    const [info, setInfo] = React.useState<string>('');
+    const [isLoading, setIsLoading] = React.useState<boolean>(true);
+    const [subTotal, setSubTotal] = React.useState<number>(0.0);
+    const [total, setTotal] = React.useState<number>(0.0);
+    const [delivery, setDelivery] = React.useState<number>(0.0);
+    const [tax, setTax] = React.useState<number>(0);
+    const [currency, setCurrency] = React.useState<string>('GHS');
+    const [openModal, setOpenModal] = useState<boolean>(false);
+    const [isPaymentDone, setIsPaymentDone] = useState<boolean>(false);
     const router = useRouter();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const cart = useSelector((state: any) => state.cart.cart);
-    const user = useSelector((state: any) => state.user.user);
+    const cart = useAppSelector((state) => state.cart.cart);
+    const user = useAppSelector((state) => state.user.user);
 
     // console.log("Response>>>", paymentPayload);
 
-    const addOrder = () => {
-        // add order to database
+    const createOrder = async () => {
+        try {
+            const orderData = {
+                "userId": user?.id,
+                "address": formValues.address,
+                "paymentMethod": "Paystack",
+                "paidAmount": total,
+                "deliveryFee": delivery,
+                "totalPrice": total,
+                "orderItems": [
+                    ...cart.map((prod: { product: IProduct, quantity: number }) => {
+                        return {
+                            "quantity": prod.quantity,
+                            "price": prod.product.price.amount,
+                            "currency": prod.product.price.currency,
+                            "productId": prod.product.id,
+                        }
+                    }),
+                ]
+            }
+            await addOrder(orderData);
+            // add order to database
+            dispatch(clearCart());
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     const calculateTotal = () => {
@@ -96,17 +122,17 @@ const CheckoutView = () => {
             if (response.data.success === true) {
                 setInfo(response.data.message);
                 setIsRequesting(false);
-                dispatch(clearCart());
                 setPaymentPayload(response?.data.data.payload['data']);
                 setOpenModal(true);
                 // iff user is logged in and payment is successful, remove everything from user cart in database
                 if (user) {
-                    await removeProductFromCart(
-                        user.id,
-                        cart.map((item: { product: IProduct, quantity: number }) => item.product.id)
-                    );
+                    // await removeProductFromCart(
+                    //     user.id,
+                    //     cart.map((item: { product: IProduct, quantity: number }) => item.product.id)
+                    // );
                 }
                 // console.log("Response>>>", paymentPayload);
+                setInfo("");
             } else {
                 setIsRequesting(false);
                 // if message is an array, join the array seperated by a comma
@@ -140,7 +166,9 @@ const CheckoutView = () => {
                 setInfo(response.data.message);
                 if (_isTrue !== null || _isTrue !== undefined || _isTrue !== '') {
                     setInfo('Payment Verified, wait while we complete your order');
+                    createOrder();
                     setError('');
+                    setInfo("");
                     router.push('/order/');
                 } else {
                     setError('Payment cannot be verified');
@@ -408,31 +436,32 @@ const CheckoutView = () => {
             </div>
 
             {/* Modal for payment */}
-            <Modal show={openModal} onClose={() => {
-                setOpenModal(false);
-                setIsPaymentDone(false);
-            }}>
+            <Modal
+                show={openModal} onClose={() => {
+                    setOpenModal(false);
+                    setIsPaymentDone(false);
+                }}
+                size={"2xl"}
+            >
                 <Modal.Header>
-                    <h3>
+                    <div className='md:text-lg'>
                         Complete Purchase
-                    </h3>
-                    {/* click done after transaction to close this modal info */}
-                    <p className="pc-4 py-2">
-                        Click done after transaction to close this modal
-                    </p>
+                    </div>
+                    <div className="">
+                        Click done when down with transaction
+                    </div>
                 </Modal.Header>
                 <Modal.Body>
                     {/* show the paymentPayload['data']['authorization_url'] in this modal */}
-
                     <iframe
                         src={paymentPayload.authorization_url ?? ""}
                         width="100%"
-                        height="500px"
+                        height="600px"
                         title="Payment"
                     ></iframe>
 
                 </Modal.Body>
-                <Modal.Footer className="w-full">
+                <Modal.Footer className="w-full flex flex-col">
                     <div className="flex flex-row justify-between items-center px-4 w-full">
                         <Button className='bg-red-500 text-white px-4 py-2' onClick={() => {
                             setOpenModal(false);
@@ -440,12 +469,34 @@ const CheckoutView = () => {
                         }}>
                             Cancel
                         </Button>
+
                         <Button className='bg-green-500 text-white px-4 py-2' onClick={() => {
                             setOpenModal(false);
                             setIsPaymentDone(true);
                         }}>
                             Done
                         </Button>
+                    </div>
+                    <div className="flex flex-col mt-4 py-2 px-2">
+                        <div className='text-sm md:text-lg text-center'>
+                            Instructions For MTN and Telecel Users
+                        </div>
+                        <div className="flex flex-row justify-between items-start space-x-4">
+                            {/* instructions for mtn users */}
+                            <ul className='px-2'>
+                                <li>Dial *170#</li>
+                                <li>Select option 6 - My Wallet</li>
+                                <li>Select option 3 - My Approvals</li>
+                                <li>Approve Transaction</li>
+                            </ul>
+                            {/* instructions for vodaphone users */}
+                            <ul className='px-2'>
+                                <li>Dial *110#</li>
+                                <li>Select option 4 - Make Payments</li>
+                                <li>Select option 8 - Complete Payment/Transaction</li>
+                                <li>Complete Transaction</li>
+                            </ul>
+                        </div>
                     </div>
                 </Modal.Footer>
             </Modal>

@@ -9,7 +9,7 @@ export * from './DiscountBannerArea';
 export * from './DiscountCard';
 export * from './MostSellingProductArea';
 export * from './ProductCard';
-export * from './ProductTabARea';
+export * from './ProductTabArea';
 export * from './RatingStar';
 export * from './ServiceHelpArea';
 export * from './TopCategories';

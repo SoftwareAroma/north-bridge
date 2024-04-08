@@ -1,12 +1,11 @@
 'use client';
 
-import React from 'react'
-import { useSelector } from 'react-redux';
+import React from 'react';
 import ProductsTable from '../components/ProductsTable';
-import UnAuthorizedView from '../components/UnAuthorizedView';
+import { useAppSelector } from '@/shared';
 
 const VendorProductsPage = () => {
-    const vendor = useSelector((state: any) => state.vendor.vendor);
+    const vendor = useAppSelector((state) => state.vendor.vendor);
 
     return (
         <React.Fragment>

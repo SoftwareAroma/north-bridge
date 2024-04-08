@@ -4,7 +4,7 @@ import { Alert, Button, Label, TextInput, Textarea } from 'flowbite-react';
 import React, { Dispatch, SetStateAction, useMemo, useState } from 'react';
 import { HiInformationCircle } from 'react-icons/hi';
 import { AxiosResponse, isAxiosError } from 'axios';
-import { IStoreCategory, createStore, getStoreCategories, updateStore } from '@shared';
+import { IStoreCategory, createStore, getStoreCategories, updateStore, useAppSelector } from '@shared';
 import { useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
 
@@ -37,14 +37,14 @@ const StoreForm = (props: StoreFormProps) => {
     ] = useState<IStoreCategory[] | null>([]);
 
     /// active vendor
-    const vendor = useSelector((state: any) => state.vendor.vendor);
+    const vendor = useAppSelector((state) => state.vendor.vendor);
 
     const handleFormChange = (e: any) => {
         // set error to empty
         setError('');
         setInfo('');
         const { name, value } = e.target;
-        console.log("name >>>", name, "value >>>", value);
+        // console.log("name >>>", name, "value >>>", value);
         setFormValues({ ...formValues, [name]: value });
     }
 
@@ -68,8 +68,10 @@ const StoreForm = (props: StoreFormProps) => {
             const about = formValues.about;
             const address = formValues.address;
             const location = formValues.location;
-            const vendorId = vendor.id;
-            const storeCategories = [formValues.category];
+            const vendorId = vendor?.id;
+            const storeCategories = [
+                formValues.category
+            ];
             // remove the first zero of the phone number and replace it with +233
             const newPhone = formValues.phone.replace(/^0/, '+233');
             const phone = newPhone;
@@ -128,6 +130,11 @@ const StoreForm = (props: StoreFormProps) => {
     useMemo(() => {
         if (data) {
             setCategories(data?.data.data.storeCategories);
+            setFormValues({
+                categories: [
+                    data?.data.data.storeCategories[0]
+                ]
+            });
         }
     }, [data]);
 

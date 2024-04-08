@@ -4,9 +4,14 @@ import ProductCard from "@shared/widgets/ProductCard";
 import MainFooter from "@shared/components/footer/MainFooter";
 import MainHeader from "@shared/components/header/MainHeader";
 import { useQuery } from '@tanstack/react-query';
-import { IProduct, IProductCategory, IStore, addProductToCart, addToCart, getProductCategories, getProducts, getStores } from '@/shared';
+import {
+    IProduct, IProductCategory,
+    IStore, addProductToCart, addToCart,
+    getProductCategories, getProducts, getStores,
+    useAppDispatch,
+    useAppSelector
+} from '@/shared';
 import { useDispatch, useSelector } from 'react-redux';
-import { Metadata } from 'next';
 
 const initialFilters = {
     price: 'None',
@@ -15,8 +20,8 @@ const initialFilters = {
 };
 
 const ProductsPage = () => {
-    const searchedTerm = useSelector((state: any) => state.searchTerm.term);
-    const user = useSelector((state: any) => state.user.user);
+    const searchedTerm = useAppSelector((state) => state.searchTerm.term);
+    const user = useAppSelector((state) => state.user.user);
     const [filters, setFilters] = React.useState(initialFilters);
     const [products, setProducts] = React.useState([]);
     const [stores, setStores] = React.useState([]);
@@ -24,10 +29,10 @@ const ProductsPage = () => {
     const [searchTerm, setSearchTerm] = React.useState(searchedTerm);
 
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const addProdToCart = async (product: IProduct) => {
         if (user) {
-            await addProductToCart(user.id, product);
+            // await addProductToCart(user.id, product);
         }
         dispatch(addToCart({ product, quantity: 1 }));
     }

@@ -2,11 +2,10 @@
 
 import React from 'react';
 import StoresTable from '../components/StoresTable';
-import { useSelector } from 'react-redux';
-import UnAuthorizedView from '../components/UnAuthorizedView';
+import { useAppSelector } from '@/shared';
 
 const StoresPage = () => {
-    const vendor = useSelector((state: any) => state.vendor.vendor);
+    const vendor = useAppSelector((state) => state.vendor.vendor);
 
     return (
         <React.Fragment>

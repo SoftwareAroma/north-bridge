@@ -1,18 +1,21 @@
 import { IProduct, IUser } from '@/shared/types';
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 const initialState: {
     user: IUser | null,
+    authState: boolean,
 } = {
     user: null,
+    authState: false,
 }
 
 export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        setUser: (state, action) => {
+        setUser: (state, action: PayloadAction<any>) => {
             state.user = action.payload;
+            state.authState = action.payload !== null
         },
     },
 });

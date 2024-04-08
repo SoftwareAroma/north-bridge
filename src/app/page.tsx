@@ -10,7 +10,7 @@ import TrendingProductsArea from '@shared/widgets/TrendingProductsArea';
 import MostSellingProductArea from '@shared/widgets/MostSellingProductArea';
 import MainHeader from '@shared/components/header/MainHeader';
 import MainFooter from '@shared/components/footer/MainFooter';
-import ProductTabARea from "@shared/widgets/ProductTabARea";
+import ProductTabArea from "@/shared/widgets/ProductTabArea";
 import TestimonySection from '@/shared/widgets/TestimonySection';
 
 const HomePage = () => {
@@ -23,7 +23,7 @@ const HomePage = () => {
             {/* <TopCategories /> */}
             <BestDealArea />
             <ChooseByBrand />
-            <ProductTabARea />
+            <ProductTabArea />
             <DiscountArea />
             {/* <DiscountBannerArea /> */}
             <MostSellingProductArea />

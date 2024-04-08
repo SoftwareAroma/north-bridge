@@ -1,15 +1,13 @@
 'use client';
 
-import { ILoginFormValues, getUserProfile, loginUser, setUser } from '@/shared';
+import { ILoginFormValues, getUserProfile, loginUser, setUser, useAppDispatch } from '@/shared';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosResponse, isAxiosError } from 'axios';
 import { Alert } from 'flowbite-react';
-import { Metadata } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useMemo } from 'react';
 import { HiInformationCircle } from 'react-icons/hi';
-import { useDispatch } from 'react-redux';
 
 const defaultValues: ILoginFormValues = {
     'email': '',
@@ -26,7 +24,7 @@ const LoginPage = () => {
     const [isLogin, setIsLogIn] = React.useState(false);
     const [isRequesting, setIsRequesting] = React.useState(false);
     const router = useRouter();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const handleFormChange = (e: any): void => {
         // set error to empty

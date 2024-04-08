@@ -4,12 +4,11 @@ import Link from 'next/link';
 import React, { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
-import { IVendorRegisterFormValues, getUserProfile, registerUser, setUser } from '@/shared';
+import { IVendorRegisterFormValues, getUserProfile, registerUser, setUser, useAppDispatch } from '@/shared';
 import { useRouter } from 'next/navigation';
 import { AxiosResponse, isAxiosError } from 'axios';
 import { Alert } from 'flowbite-react';
 import { HiInformationCircle } from 'react-icons/hi';
-import { Metadata } from 'next';
 
 const defaultValues: IVendorRegisterFormValues = {
     'email': '',
@@ -30,7 +29,7 @@ const RegisterPage = () => {
     const [isLogin, setIsLogIn] = React.useState(false);
     const [isRequesting, setIsRequesting] = React.useState(false);
     const router = useRouter();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const handleFormChange = (e: any): void => {
         // set error to empty

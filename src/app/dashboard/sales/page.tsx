@@ -2,11 +2,11 @@
 
 import React from 'react'
 import SalesTable from '../widgets/SalesTable'
-import { useSelector } from 'react-redux';
 import UnAuthorizedView from '../widgets/UnAuthorizedView';
+import { useAppSelector } from '@/shared';
 
 const SalesPage = () => {
-    const admin = useSelector((state: any) => state.admin.admin);
+    const admin = useAppSelector((state) => state.admin.admin);
     return (
         <React.Fragment>
             {(admin) && <SalesTable />}

@@ -12,6 +12,7 @@ import { Flowbite } from 'flowbite-react';
 import store from './store';
 import { Provider } from 'react-redux';
 import theme from "@shared/components/theme/theme";
+import { persistStore } from 'redux-persist';
 
 
 
@@ -20,6 +21,8 @@ import theme from "@shared/components/theme/theme";
  * @see https://react-query.tanstack.com/
  */
 const queryClient: QueryClient = new QueryClient();
+
+persistStore(store);
 
 const AppProviders = ({ children }: { children: React.ReactNode }) => {
     return (

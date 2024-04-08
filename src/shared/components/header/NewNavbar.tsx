@@ -14,7 +14,7 @@ import {
 } from 'flowbite-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
-import { setTerm, setUser } from '@/shared/providers';
+import { setTerm, setUser, useAppDispatch, useAppSelector } from '@/shared/providers';
 import { useQuery } from '@tanstack/react-query';
 import { IProductCategory, getProductCategories } from '@/shared';
 import Link from 'next/link';
@@ -22,12 +22,11 @@ import Link from 'next/link';
 const NewNavbar = () => {
 
     const [show, setShow] = React.useState(false);
-    const [mobileMenu, setMobileMenu] = React.useState(false);
     const [categories, setCategories] = React.useState([]);
-    const cart = useSelector((state: any) => state.cart.cart);
-    const user = useSelector((state: any) => state.user.user);
-    const searchTerm = useSelector((state: any) => state.searchTerm.term);
-    const dispatch = useDispatch();
+    const cart = useAppSelector((state) => state.cart.cart);
+    const user = useAppSelector((state) => state.user.user);
+    const searchTerm = useAppSelector((state) => state.searchTerm.term);
+    const dispatch = useAppDispatch();
     const router = useRouter();
 
     const handleShow = () => setShow(!show);

@@ -1,4 +1,4 @@
-// export const mainEndpointApi: string = 'http://localhost:5000/api';
+// export const mainEndpointApi: string = 'http://localhost:5000';
 export const mainEndpointApi: string = 'https://api.northbridge.store';
 const _apiEndpoint: string = `${mainEndpointApi}/v1`;
 

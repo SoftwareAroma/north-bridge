@@ -7,15 +7,13 @@ import {
     TableHeadCell,
 } from 'flowbite-react';
 import { useQuery } from '@tanstack/react-query';
-import { IProduct, deleteProduct, getPaymentHistory, getProducts } from '@/shared';
-import { useRouter } from 'next/navigation';
+import { deleteProduct, getProducts } from '@/shared';
 import { useMemo, useState } from 'react';
 import { TableCell, TableRow } from 'flowbite-react';
 
 
 const SalesTable = () => {
     const [transactions, setPayments]: any = useState([])
-    const router = useRouter();
     const { data, refetch } = useQuery({
         queryKey: ['transactions'],
         queryFn: getProducts,
@@ -32,7 +30,7 @@ const SalesTable = () => {
     const _productDelete = async (id: string) => {
         const response = await deleteProduct(id);
         if (response.data.success === true) {
-            console.log(response?.data);
+            // console.log(response?.data);
             // refresh the page
             // window.location.reload();
             refetch();

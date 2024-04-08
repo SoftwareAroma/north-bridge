@@ -10,10 +10,10 @@ import {
     IVendorRegisterFormValues,
     getVendorProfile,
     registerVendor,
-    setVendor
+    setVendor,
+    useAppDispatch
 } from "@shared";
 import { useQuery } from '@tanstack/react-query';
-import { useDispatch } from 'react-redux';
 
 const defaultValues: IVendorRegisterFormValues = {
     'email': '',
@@ -35,7 +35,7 @@ const RegisterPage = () => {
     const [isLogin, setIsLogIn] = React.useState(false);
     const [isRequesting, setIsRequesting] = React.useState(false);
     const router = useRouter();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const handleFormChange = (e: any): void => {
         // set error to empty

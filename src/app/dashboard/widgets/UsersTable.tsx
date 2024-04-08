@@ -1,8 +1,6 @@
 'use client';
 
-'use client';
 import {
-    Modal,
     Table,
     TableBody,
     TableHead,
@@ -27,7 +25,7 @@ const UsersTable = () => {
     useMemo(() => {
         // console.log(data?.data.data.users)
         if (data?.data.data.users) {
-            setUsers(data?.data.data.users)
+            setUsers(data?.data.data.users);
         }
     }, [data]);
 

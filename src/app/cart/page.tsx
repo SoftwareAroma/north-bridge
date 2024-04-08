@@ -3,8 +3,11 @@ import MainFooter from '@/shared/components/footer/MainFooter';
 import MainHeader from '@/shared/components/header/MainHeader';
 import React, { useEffect } from 'react'
 import CartCard from './CartCard';
-import { useDispatch, useSelector } from 'react-redux';
-import { IProduct, decreaseQuantity, increaseQuantity, removeFromCart } from '@/shared';
+import {
+    IProduct, decreaseQuantity,
+    increaseQuantity, removeFromCart,
+    useAppDispatch, useAppSelector
+} from '@/shared';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -18,9 +21,9 @@ const CartPage = () => {
     const [tax, setTax] = React.useState(0);
     const [currency, setCurrency] = React.useState('GH¢');
 
-    const cart = useSelector((state: any) => state.cart.cart);
-    const user = useSelector((state: any) => state.user.user);
-    const dispatch = useDispatch();
+    const cart = useAppSelector((state) => state.cart.cart);
+    const user = useAppSelector((state) => state.user.user);
+    const dispatch = useAppDispatch();
     const router = useRouter();
 
     const calculateTotal = () => {

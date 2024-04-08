@@ -9,9 +9,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { Avatar, Box, Menu, MenuItem, Tooltip } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import { useDispatch, useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
-import { TQuery, getAdminProfile, logoutAdmin, setAdmin } from '@/shared';
+import { TQuery, getAdminProfile, logoutAdmin, setAdmin, useAppDispatch, useAppSelector } from '@/shared';
 
 
 const drawerWidth: number = 240;
@@ -50,8 +49,8 @@ const settings = [
 const AdminAppBar = (props: any) => {
     const { open, toggleDrawer } = props;
     const router = useRouter();
-    const admin = useSelector((state: any) => state.admin.admin);
-    const dispatch = useDispatch();
+    const admin = useAppSelector((state) => state.admin.admin);
+    const dispatch = useAppDispatch();
 
     // Queries
     const { data }: TQuery = useQuery({

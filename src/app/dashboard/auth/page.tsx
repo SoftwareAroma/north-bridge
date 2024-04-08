@@ -6,9 +6,12 @@ import { Alert } from 'flowbite-react';
 import { HiInformationCircle } from 'react-icons/hi';
 import { useRouter } from 'next/navigation';
 import { AxiosResponse, isAxiosError } from 'axios';
-import { ILoginFormValues, TQuery, getAdminProfile, loginAdmin, setAdmin, setVendor } from "@shared";
+import {
+    ILoginFormValues, getAdminProfile,
+    loginAdmin, setAdmin,
+    useAppDispatch
+} from "@shared";
 import { useQuery } from '@tanstack/react-query';
-import { useDispatch } from 'react-redux';
 
 
 const defaultValues: ILoginFormValues = {
@@ -25,7 +28,7 @@ const LoginPage = () => {
     const [isLogin, setIsLogIn] = React.useState(false);
     const [isRequesting, setIsRequesting] = React.useState(false);
     const router = useRouter();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const handleFormChange = (e: any): void => {
         // set error to empty
@@ -57,7 +60,7 @@ const LoginPage = () => {
                 "password": password
             };
             const login: AxiosResponse<any, any> = await loginAdmin(_data);
-            console.log("Login>>>", login);
+            // console.log("Login>>>", login);
             if (login.data.success === true) {
                 window.location.reload();
                 // navigate to the dashboard

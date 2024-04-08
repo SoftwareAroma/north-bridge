@@ -18,7 +18,6 @@ import {
     getProductCategories,
     updateProductCategory
 } from '@/shared';
-import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { TableCell, TableRow } from 'flowbite-react';
 import { Fab } from '@mui/material';
@@ -43,7 +42,6 @@ const ProductCategoriesTable = () => {
     const [category, setCategory]: any = useState(null);
     const [openModal, setOpenModal] = useState(false);
     const [error, setError] = useState('');
-    const router = useRouter();
     const { data, refetch } = useQuery({
         queryKey: ['productCategories'],
         queryFn: getProductCategories,

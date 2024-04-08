@@ -6,8 +6,7 @@ import React, { useMemo } from 'react';
 import { AxiosResponse, isAxiosError } from 'axios';
 import { Alert } from 'flowbite-react';
 import { HiInformationCircle } from 'react-icons/hi';
-import { IVendorRegisterData, IVendorRegisterFormValues, TQuery, getAdminProfile, registerAdmin, registerVendor, setAdmin, setVendor } from "@shared";
-import { useDispatch } from 'react-redux';
+import { IVendorRegisterFormValues, getAdminProfile, registerAdmin, setAdmin, useAppDispatch } from "@shared";
 import { useQuery } from '@tanstack/react-query';
 
 const defaultValues: IVendorRegisterFormValues = {
@@ -30,7 +29,7 @@ const RegisterPage = () => {
     const [isLogin, setIsLogIn] = React.useState(false);
     const [isRequesting, setIsRequesting] = React.useState(false);
     const router = useRouter();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const handleFormChange = (e: any): void => {
         // set error to empty
@@ -81,6 +80,7 @@ const RegisterPage = () => {
                 // navigate to the vendor dashboard
                 setIsLogIn(true);
                 setIsRequesting(false);
+                window.location.reload();
             } else {
                 setIsRequesting(false);
                 // if message is an array, join the array seperated by a comma

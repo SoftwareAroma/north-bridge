@@ -2,7 +2,6 @@
 
 import MainFooter from '@/shared/components/footer/MainFooter';
 import MainHeader from '@/shared/components/header/MainHeader';
-import { Metadata } from 'next';
 import Link from 'next/link';
 import React from 'react';
 
@@ -29,6 +28,8 @@ const ContactUsPage = () => {
             setErrors('All fields are required');
             return;
         }
+
+        setIsSubmitting(true);
 
         // mail to northbriddge@gmail.com
         window.open(`mailto:northbriddge@gmail.com?subject=Feedback from ${values.name}&body=${values.message}`);
@@ -134,12 +135,19 @@ const ContactUsPage = () => {
                                 required
                             ></textarea>
                         </div>
-                        <button
-                            className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
-                            onClick={onSubmit}
-                        >
-                            Submit
-                        </button>
+                        {
+                            isSubmitting ?
+                                <div className="flex flex-row justify-center items-center px-4 py-2">
+                                    {/* spin progress indicator */}
+                                    <div className="w-4 h-4 border-t-2 border-b-2 border-blue-500 rounded-full animate-spin"></div>
+                                </div> :
+                                <button
+                                    className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+                                    onClick={onSubmit}
+                                >
+                                    Submit
+                                </button>
+                        }
                         <p className="text-xs text-gray-500 mt-3">
                             By Sending this mail, you agree to our terms and conditions.
                         </p>

@@ -5,7 +5,6 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import AdminDrawer from './components/AdminDrawer';
 import AdminAppBar from './components/AdminAppBar';
-import { Metadata } from 'next';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
     const [open, setOpen] = React.useState(true);

@@ -1,15 +1,21 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { IVendor } from '@/shared';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-const initialState = {
+const initialState: {
+    vendor: IVendor | null,
+    authState: boolean,
+} = {
     vendor: null,
+    authState: false,
 }
 
 export const vendorSlice = createSlice({
     name: 'vendor',
     initialState,
     reducers: {
-        setVendor: (state, action) => {
+        setVendor: (state, action: PayloadAction<any>) => {
             state.vendor = action.payload;
+            state.authState = action.payload !== null
         },
     },
 });

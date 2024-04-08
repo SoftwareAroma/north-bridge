@@ -14,8 +14,11 @@ import {
     Textarea,
 } from 'flowbite-react';
 import { useQuery } from '@tanstack/react-query';
-import { IStoreCategory, createStoreCategory, deleteStoreCategory, deleteUser, getStoreCategories, getVendors, updateStoreCategory } from '@/shared';
-import { useRouter } from 'next/navigation';
+import {
+    IStoreCategory, createStoreCategory,
+    deleteStoreCategory, getStoreCategories,
+    updateStoreCategory
+} from '@/shared';
 import { useMemo, useState } from 'react';
 import { TableCell, TableRow } from 'flowbite-react';
 import { Fab } from '@mui/material';
@@ -40,7 +43,6 @@ const StoreCategoriesTable = () => {
     const [openModal, setOpenModal] = useState(false);
     const [category, setCategory]: any = useState(null);
     const [error, setError] = useState('');
-    const router = useRouter();
     const { data, refetch } = useQuery({
         queryKey: ['storeCategories'],
         queryFn: getStoreCategories,

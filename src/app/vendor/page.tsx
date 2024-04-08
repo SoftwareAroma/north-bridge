@@ -1,11 +1,11 @@
 'use client';
 import React, { useEffect } from 'react';
 import VendorProductsPage from './product/page';
-import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
+import { useAppSelector } from '@/shared';
 
 const VendorHome = () => {
-    const vendor = useSelector((state: any) => state.vendor.vendor);
+    const vendor = useAppSelector((state) => state.vendor.vendor);
     const router = useRouter();
 
     useEffect(() => {
